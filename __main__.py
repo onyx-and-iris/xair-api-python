@@ -1,5 +1,4 @@
 import mair
-from time import sleep
 
 def main():
     with mair.connect(kind_id, ip=ip) as mixer:
