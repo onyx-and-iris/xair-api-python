@@ -54,7 +54,8 @@ class MAirRemote(abc.ABC):
         dispatcher = Dispatcher()
         dispatcher.set_default_handler(self.msg_handler)
         self.xair_ip = kwargs["ip"] or self._ip_from_ini()
-        self.server = OSCClientServer((self.xair_ip, self.XAIR_PORT), dispatcher)
+        self.xair_port = kwargs["port"] or self.XAIR_PORT
+        self.server = OSCClientServer((self.xair_ip, self.xair_port), dispatcher)
 
     def __enter__(self):
         self.worker = threading.Thread(target=self.run_server)
@@ -107,7 +108,7 @@ def _make_remote(kind: kinds.MR18KindMap) -> MAirRemote:
     """
 
     def init(self, *args, **kwargs):
-        defaultkwargs = {"ip": None}
+        defaultkwargs = {"ip": None, "port": None}
         kwargs = defaultkwargs | kwargs
         MAirRemote.__init__(self, *args, **kwargs)
         self.kind = kind
