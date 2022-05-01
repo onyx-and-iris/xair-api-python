@@ -11,7 +11,7 @@ Before any major/minor/patch patch is released all test units will be run to ver
 
 -   [ ] Create a stable branch.
 
-## [0.1.0] - 2021-05-01
+## [0.1.0] - 2022-05-01
 
 ### Added
 
@@ -29,7 +29,7 @@ Before any major/minor/patch patch is released all test units will be run to ver
 -   link to clone repo fixed in readme.
 -   unit tests migrated from nose to pytest since nose will not be supported from python 3.10 onwards.
 
-## [0.0.1] - 2021-04-05
+## [0.0.1] - 2022-04-05
 
 ### Added
 
