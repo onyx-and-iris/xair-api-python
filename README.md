@@ -6,6 +6,8 @@
 
 This package offers a python interface for the [Behringer XAir](https://www.behringer.com/series.html?category=R-BEHRINGER-XAIRSERIES), [Midas MR](https://www.midasconsoles.com/catalog.html?catalog=Category&category=C-MIDAS-MIXERS-DIGITALSTAGEBOXMIXERS) series of digital rack mixers. I only have access to an MR18 for testing so if there is an error in the kind maps feel free to raise an issue or PR.
 
+For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
+
 ## Prerequisites
 
 -   Python 3.9+
