@@ -9,7 +9,7 @@ Before any major/minor/patch patch is released all test units will be run to ver
 
 ## [Unreleased]
 
--   [ ]
+-   [ ] Create a stable branch.
 
 ## [0.1.0] - 2021-05-01
 
