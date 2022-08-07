@@ -1,7 +1,6 @@
 import abc
 import threading
 import time
-from configparser import ConfigParser
 from pathlib import Path
 from typing import Optional, Self
 
@@ -42,7 +41,7 @@ class OSCClientServer(BlockingOSCUDPServer):
 
 
 class XAirRemote(abc.ABC):
-    """Handles the communication with the M-Air mixer via the OSC protocol"""
+    """Handles the communication with the mixer via the OSC protocol"""
 
     _CONNECT_TIMEOUT = 0.5
     _WAIT_TIME = 0.025
@@ -104,7 +103,7 @@ class XAirRemote(abc.ABC):
 
 def _make_remote(kind: KindMap) -> XAirRemote:
     """
-    Creates a new MAIR remote class.
+    Creates a new XAIR remote class.
 
     The returned class will subclass MAirRemote.
     """
@@ -125,7 +124,7 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.rtn = tuple(Rtn.make(self, i) for i in range(kind.num_rtn))
 
     return type(
-        f"MAirRemote{kind}",
+        f"XAirRemote{kind}",
         (XAirRemote,),
         {
             "__init__": init,
@@ -142,9 +141,9 @@ def request_remote_obj(kind_id: str, *args, **kwargs) -> XAirRemote:
 
     Returns a reference to an XAirRemote class of a kind
     """
-    MAIRREMOTE_cls = None
+    XAIRREMOTE_cls = None
     try:
-        MAIRREMOTE_cls = _remotes[kind_id]
+        XAIRREMOTE_cls = _remotes[kind_id]
     except ValueError as e:
         raise SystemExit(e)
-    return MAIRREMOTE_cls(*args, **kwargs)
+    return XAIRREMOTE_cls(*args, **kwargs)
