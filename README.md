@@ -28,7 +28,7 @@ A toml file named config.toml, placed into the current working directory of your
 
 ```toml
 [connection]
-ip=<ip address>
+ip = "<ip address>"
 ```
 
 Alternatively you may pass it as a keyword argument.

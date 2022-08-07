@@ -12,6 +12,6 @@ def main():
 
 if __name__ == "__main__":
     kind_id = "MR18"
-    ip = "mixer.local"
+    ip = "<ip address>"
 
     main()
