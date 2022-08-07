@@ -5,11 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-Before any major/minor/patch patch is released all test units will be run to verify they pass.
+Before any major/minor/patch patch is released all unit tests will be run to verify they pass.
 
 ## [Unreleased]
 
--   [ ] Create a stable branch.
+-   [x]
+
+## [1.0.2] - 2022-08-07
+
+### Added
+
+-   now packaged with poetry
+-   package added to pypi
+-   pypi, isort badges added to readme
+
+### Changed
+
+-   package renamed to xair-api
+-   now using tomllib for config, requires python 3.11
+-   readme, example updated.
+-   imports isorted.
 
 ## [0.1.0] - 2022-05-01
 

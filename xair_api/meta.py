@@ -1,4 +1,4 @@
-from .errors import MAirRemoteError
+from .errors import XAirRemoteError
 from .util import lin_get, lin_set
 
 
@@ -10,7 +10,7 @@ def bool_prop(param):
 
     def fset(self, val):
         if not isinstance(val, bool):
-            raise MAirRemoteError(f"{param} is a boolean parameter")
+            raise XAirRemoteError(f"{param} is a boolean parameter")
         self.setter(param, 1 if val else 0)
 
     return property(fget, fset)
@@ -24,7 +24,7 @@ def string_prop(param):
 
     def fset(self, val):
         if not isinstance(val, str):
-            raise MAirRemoteError(f"{param} is a string parameter")
+            raise XAirRemoteError(f"{param} is a string parameter")
         self.setter(param, val)
 
     return property(fget, fset)
@@ -38,7 +38,7 @@ def int_prop(param):
 
     def fset(self, val):
         if not isinstance(val, int):
-            raise MAirRemoteError(f"{param} is an integer parameter")
+            raise XAirRemoteError(f"{param} is an integer parameter")
         self.setter(param, val)
 
     return property(fget, fset)
@@ -52,7 +52,7 @@ def float_prop(param):
 
     def fset(self, val):
         if not isinstance(val, int):
-            raise MAirRemoteError(f"{param} is a float parameter")
+            raise XAirRemoteError(f"{param} is a float parameter")
         self.setter(param, val)
 
     return property(fget, fset)

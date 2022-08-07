@@ -1,6 +1,7 @@
 import abc
-from .errors import MAirRemoteError
+
 from . import kinds
+from .errors import XAirRemoteError
 from .meta import bool_prop
 from .util import _get_level_val, _set_level_val, lin_get, lin_set
 
@@ -36,7 +37,7 @@ class Config(IConfig):
         LINKS_cls = _make_links_mixins[remote.kind.id_]
         MONITOR_cls = type(f"ConfigMonitor", (Config.Monitor, cls), {})
         CONFIG_cls = type(
-            f"Config{remote.kind.id_}",
+            f"Config{remote.kind}",
             (cls, LINKS_cls),
             {"monitor": MONITOR_cls(remote)},
         )
@@ -53,7 +54,7 @@ class Config(IConfig):
     @amixenable.setter
     def amixenable(self, val: bool):
         if not isinstance(val, bool):
-            raise MAirRemoteError("amixenable is a bool parameter")
+            raise XAirRemoteError("amixenable is a bool parameter")
         self.setter("amixenable", 1 if val else 0)
 
     @property
@@ -63,7 +64,7 @@ class Config(IConfig):
     @amixlock.setter
     def amixlock(self, val: bool):
         if not isinstance(val, bool):
-            raise MAirRemoteError("amixlock is a bool parameter")
+            raise XAirRemoteError("amixlock is a bool parameter")
         self.setter("amixlock", 1 if val else 0)
 
     @property
@@ -73,7 +74,7 @@ class Config(IConfig):
     @mute_group.setter
     def mute_group(self, val: bool):
         if not isinstance(val, bool):
-            raise MAirRemoteError("mute_group is a bool parameter")
+            raise XAirRemoteError("mute_group is a bool parameter")
         self.setter("mute", 1 if val else 0)
 
     class Monitor:
@@ -98,7 +99,7 @@ class Config(IConfig):
         @source.setter
         def source(self, val: int):
             if not isinstance(val, int):
-                raise MAirRemoteError("source is an int parameter")
+                raise XAirRemoteError("source is an int parameter")
             self.setter(f"source", val)
 
         @property
@@ -108,7 +109,7 @@ class Config(IConfig):
         @sourcetrim.setter
         def sourcetrim(self, val: float):
             if not isinstance(val, float):
-                raise MAirRemoteError(
+                raise XAirRemoteError(
                     "sourcetrim is a float parameter, expected value in range -18 to 18"
                 )
             self.setter("sourcetrim", lin_set(-18, 18, val))
@@ -120,7 +121,7 @@ class Config(IConfig):
         @chmode.setter
         def chmode(self, val: bool):
             if not isinstance(val, bool):
-                raise MAirRemoteError("chmode is a bool parameter")
+                raise XAirRemoteError("chmode is a bool parameter")
             self.setter("chmode", 1 if val else 0)
 
         @property
@@ -130,7 +131,7 @@ class Config(IConfig):
         @busmode.setter
         def busmode(self, val: bool):
             if not isinstance(val, bool):
-                raise MAirRemoteError("busmode is a bool parameter")
+                raise XAirRemoteError("busmode is a bool parameter")
             self.setter("busmode", 1 if val else 0)
 
         @property
@@ -140,7 +141,7 @@ class Config(IConfig):
         @dimgain.setter
         def dimgain(self, val: int):
             if not isinstance(val, int):
-                raise MAirRemoteError(
+                raise XAirRemoteError(
                     "dimgain is an int parameter, expected value in range -40 to 0"
                 )
             self.setter("dimatt", lin_set(-40, 0, val))
@@ -152,7 +153,7 @@ class Config(IConfig):
         @dim.setter
         def dim(self, val: bool):
             if not isinstance(val, bool):
-                raise MAirRemoteError("dim is a bool parameter")
+                raise XAirRemoteError("dim is a bool parameter")
             self.setter("dim", 1 if val else 0)
 
         @property
@@ -162,7 +163,7 @@ class Config(IConfig):
         @mono.setter
         def mono(self, val: bool):
             if not isinstance(val, bool):
-                raise MAirRemoteError("mono is a bool parameter")
+                raise XAirRemoteError("mono is a bool parameter")
             self.setter("mono", 1 if val else 0)
 
         @property
@@ -172,7 +173,7 @@ class Config(IConfig):
         @mute.setter
         def mute(self, val: bool):
             if not isinstance(val, bool):
-                raise MAirRemoteError("mute is a bool parameter")
+                raise XAirRemoteError("mute is a bool parameter")
             self.setter("mute", 1 if val else 0)
 
         @property
@@ -182,14 +183,14 @@ class Config(IConfig):
         @dimfpl.setter
         def dimfpl(self, val: bool):
             if not isinstance(val, bool):
-                raise MAirRemoteError("dimfpl is a bool parameter")
+                raise XAirRemoteError("dimfpl is a bool parameter")
             self.setter("dimfpl", 1 if val else 0)
 
 
 def _make_links_mixin(kind):
     """Creates a links mixin"""
     return type(
-        f"Links{kind.id_}",
+        f"Links{kind}",
         (),
         {
             "link_eq": bool_prop("linkcfg/eq"),

@@ -1,8 +1,8 @@
-import mair
+import xair_api
 
 
 def main():
-    with mair.connect(kind_id, ip=ip) as mixer:
+    with xair_api.connect(kind_id, ip=ip) as mixer:
         mixer.strip[8].config.name = "sm7b"
         mixer.strip[8].config.on = True
         print(

@@ -1,17 +1,7 @@
 import abc
-from .errors import MAirRemoteError
-from .shared import (
-    Config,
-    Preamp,
-    Gate,
-    Dyn,
-    Insert,
-    EQ,
-    GEQ,
-    Mix,
-    Group,
-    Automix,
-)
+
+from .errors import XAirRemoteError
+from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
 class ILR(abc.ABC):
@@ -45,12 +35,12 @@ class LR(ILR):
         Returns an LR class of a kind.
         """
         LR_cls = type(
-            f"LR{remote.kind.id_}",
+            f"LR{remote.kind}",
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind.id_}", (_cls, cls), {}
+                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
                     )(remote)
                     for _cls in (
                         Config,

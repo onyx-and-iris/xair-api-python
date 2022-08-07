@@ -11,7 +11,7 @@ Function RunTests {
             $line | Tee-Object -FilePath $coverage -Append 
         }
     }
-    Write-Output "$(Get-TimeStamp)" | Out-file $coverage -Append
+    Write-Output "$(Get-TimeStamp)" | Out-File $coverage -Append
 
     Invoke-Expression "genbadge tests -t 90 -i ./tests/.coverage.xml -o ./tests/$kind.svg"
 }
@@ -23,7 +23,7 @@ Function Get-TimeStamp {
 }
 
 if ($MyInvocation.InvocationName -ne ".") {
-    Invoke-Expression ".\venv\Scripts\Activate.ps1"
+    Invoke-Expression ".\.venv\Scripts\Activate.ps1"
 
     RunTests
 

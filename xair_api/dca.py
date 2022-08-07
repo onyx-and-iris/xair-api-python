@@ -1,5 +1,6 @@
 import abc
-from .errors import MAirRemoteError
+
+from .errors import XAirRemoteError
 
 
 class IDCA(abc.ABC):
@@ -35,7 +36,7 @@ class DCA(IDCA):
     @on.setter
     def on(self, val: bool):
         if not isinstance(val, bool):
-            raise MAirRemoteError("on is a boolean parameter")
+            raise XAirRemoteError("on is a boolean parameter")
         self.setter("on", 1 if val else 0)
 
     @property
@@ -45,7 +46,7 @@ class DCA(IDCA):
     @name.setter
     def name(self, val: str):
         if not isinstance(val, str):
-            raise MAirRemoteError("name is a str parameter")
+            raise XAirRemoteError("name is a str parameter")
         self.setter("config/name")[0]
 
     @property
@@ -55,5 +56,5 @@ class DCA(IDCA):
     @color.setter
     def color(self, val: int):
         if not isinstance(val, int):
-            raise MAirRemoteError("color is an int parameter")
+            raise XAirRemoteError("color is an int parameter")
         self.setter("config/color", val)

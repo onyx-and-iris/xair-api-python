@@ -1,4 +1,4 @@
-from math import log, exp
+from math import exp, log
 
 
 def lin_get(min, max, val):

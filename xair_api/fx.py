@@ -1,17 +1,7 @@
 import abc
-from .errors import MAirRemoteError
-from .shared import (
-    Config,
-    Preamp,
-    Gate,
-    Dyn,
-    Insert,
-    EQ,
-    GEQ,
-    Mix,
-    Group,
-    Automix,
-)
+
+from .errors import XAirRemoteError
+from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
 class IFX(abc.ABC):
@@ -46,12 +36,12 @@ class FXSend(IFX):
         Returns an FXSend class of a kind.
         """
         FXSEND_cls = type(
-            f"FXSend{remote.kind.id_}",
+            f"FXSend{remote.kind}",
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind.id_}", (_cls, cls), {}
+                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
                     )(remote, index)
                     for _cls in (Config, Mix, Group)
                 }
@@ -78,5 +68,5 @@ class FXReturn(IFX):
     @type.setter
     def type(self, val: int):
         if not isinstance(val, int):
-            raise MAirRemoteError("type is an integer parameter")
+            raise XAirRemoteError("type is an integer parameter")
         self.setter("type", val)

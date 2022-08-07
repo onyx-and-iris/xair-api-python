@@ -1,8 +1,10 @@
+[![PyPI version](https://badge.fury.io/py/xair-api.svg)](https://badge.fury.io/py/xair-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/onyx-and-iris/xair-api-python/blob/dev/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 ![Tests Status](./tests/MR18.svg?dummy=8484744)
 
-# Mair Remote
+# Xair API
 
 This package offers a python interface for the [Behringer XAir](https://www.behringer.com/series.html?category=R-BEHRINGER-XAIRSERIES), [Midas MR](https://www.midasconsoles.com/catalog.html?catalog=Category&category=C-MIDAS-MIXERS-DIGITALSTAGEBOXMIXERS) series of digital rack mixers. I only have access to an MR18 for testing so if there is an error in the kind maps feel free to raise an issue or PR.
 
@@ -10,54 +12,45 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 ## Prerequisites
 
--   Python 3.9+
+-   Python 3.11 or greater
 
 ## Installation
 
 ```
-git clone https://github.com/onyx-and-iris/xair-api-python
-cd xair-api-python
-```
-
-Just the interface:
-
-```
-pip install .
-```
-
-With development dependencies:
-
-```
-pip install -e .['development']
+pip install xair-api
 ```
 
 ## Usage
 
 ### Connection
 
-An ini file named config.ini, placed into the current working directory of your code may be used to configure the mixers ip. It's contents should resemble:
+A toml file named config.toml, placed into the current working directory of your code may be used to configure the mixers ip. A valid `config.toml` may resemble:
 
-```
+```toml
 [connection]
-ip=<ip address>
+ip=192.168.0.100
 ```
 
-Alternatively you may state it explicitly as an argument to mair.connect()
+Alternatively you may pass it as a keyword argument.
 
-### Example 1
+### Example
 
 ```python
-import mair
+import xair_api
+
 
 def main():
-    with mair.connect(kind_id, ip=ip) as mixer:
-        mixer.strip[8].config.name = 'sm7b'
+    with xair_api.connect(kind_id, ip=ip) as mixer:
+        mixer.strip[8].config.name = "sm7b"
         mixer.strip[8].config.on = True
-        print(f'strip 09 ({mixer.strip[8].config.name}) has been set to {mixer.strip[8].config.on}')
+        print(
+            f"strip 09 ({mixer.strip[8].config.name}) on has been set to {mixer.strip[8].config.on}"
+        )
 
-if __name__ == '__main__':
-    kind_id = 'MR18'
-    ip = '<ip address>'
+
+if __name__ == "__main__":
+    kind_id = "MR18"
+    ip = "192.168.0.100"
 
     main()
 ```
@@ -71,7 +64,7 @@ Currently the following devices are support:
 -   `XR16`
 -   `XR12`
 
-### MAirRemote (higher level)
+### XAirRemote class (higher level)
 
 `mixer.lr`
 
@@ -277,8 +270,7 @@ for example: `config.monitor.chmode`
 
 ### `Tests`
 
-People plug expensive equipment into these mixers, the unit tests adjust parameter values such as gain sliders etc. My advice is
-to unplug all equipment from the mixer before running these tests. No tests alter phantom power state.
+Unplug any/all expensive equipment before running any tests.
 Save your current settings to a snapshot first.
 
 First make sure you installed the [development dependencies](https://github.com/onyx-and-iris/xair-api-python#installation)

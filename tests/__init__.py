@@ -1,13 +1,14 @@
-import mair
-from mair import kinds
+import sys
 import threading
 from dataclasses import dataclass
-import sys
+
+import xair_api
+from xair_api import kinds
 
 kind_id = "MR18"
 ip = "mixer.local"
 
-tests = mair.connect(kind_id, ip=ip)
+tests = xair_api.connect(kind_id, ip=ip)
 
 kind = kinds.get(kind_id)
 

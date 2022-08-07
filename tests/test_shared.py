@@ -1,5 +1,6 @@
 import pytest
-from tests import tests, data
+
+from tests import data, tests
 
 """
 Not every subclass is tested for every superclass to avoid redundancy.

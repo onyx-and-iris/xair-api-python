@@ -15,7 +15,13 @@ class X32KindMap:
 
 
 @dataclass
-class MR18KindMap:
+class KindMap:
+    def __str__(self) -> str:
+        return self.id_.capitalize()
+
+
+@dataclass
+class MR18KindMap(KindMap):
     # note ch 17-18 defined as aux rtn
     id_: str
     num_dca: int = 4
@@ -26,7 +32,7 @@ class MR18KindMap:
 
 
 @dataclass
-class XR16KindMap:
+class XR16KindMap(KindMap):
     id_: str
     num_dca: int = 4
     num_strip: int = 16
@@ -36,7 +42,7 @@ class XR16KindMap:
 
 
 @dataclass
-class XR12KindMap:
+class XR12KindMap(KindMap):
     id_: str
     num_dca: int = 4
     num_strip: int = 12

@@ -1,18 +1,8 @@
 import abc
 from typing import Optional
-from .errors import MAirRemoteError
-from .shared import (
-    Config,
-    Preamp,
-    Gate,
-    Dyn,
-    Insert,
-    EQ,
-    GEQ,
-    Mix,
-    Group,
-    Automix,
-)
+
+from .errors import XAirRemoteError
+from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
 class IRtn(abc.ABC):
@@ -48,12 +38,12 @@ class Aux(IRtn):
         Returns an Aux class of a kind.
         """
         AUX_cls = type(
-            f"Aux{remote.kind.id_}",
+            f"Aux{remote.kind}",
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind.id_}", (_cls, cls), {}
+                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
                     )(remote)
                     for _cls in (
                         Config,

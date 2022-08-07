@@ -1,27 +1,17 @@
 import abc
-from .errors import MAirRemoteError
-from .shared import (
-    Config,
-    Preamp,
-    Gate,
-    Dyn,
-    Insert,
-    EQ,
-    GEQ,
-    Mix,
-    Group,
-    Automix,
-)
+
+from .errors import XAirRemoteError
+from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
-class IBus(abc.ABC):
-    """Abstract Base Class for buses"""
+class IStrip(abc.ABC):
+    """Abstract Base Class for strips"""
 
     def __init__(self, remote, index: int):
         self._remote = remote
         self.index = index + 1
 
-    def getter(self, param: str):
+    def getter(self, param: str) -> tuple:
         self._remote.send(f"{self.address}/{param}")
         return self._remote.info_response
 
@@ -33,40 +23,42 @@ class IBus(abc.ABC):
         pass
 
 
-class Bus(IBus):
-    """Concrete class for buses"""
+class Strip(IStrip):
+    """Concrete class for strips"""
 
     @classmethod
     def make(cls, remote, index):
         """
-        Factory function for buses
+        Factory function for strips
 
         Creates a mixin of shared subclasses, sets them as class attributes.
 
-        Returns a Bus class of a kind.
+        Returns a Strip class of a kind.
         """
-        BUS_cls = type(
-            f"Bus{remote.kind.id_}",
+        STRIP_cls = type(
+            f"Strip{remote.kind}",
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind.id_}", (_cls, cls), {}
+                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
                     )(remote, index)
                     for _cls in (
                         Config,
+                        Preamp,
+                        Gate,
                         Dyn,
                         Insert,
-                        GEQ.make(),
-                        EQ.make_sixband(cls, remote, index),
+                        EQ.make_fourband(cls, remote, index),
                         Mix,
                         Group,
+                        Automix,
                     )
-                }
+                },
             },
         )
-        return BUS_cls(remote, index)
+        return STRIP_cls(remote, index)
 
     @property
     def address(self) -> str:
-        return f"/bus/{self.index}"
+        return f"/ch/{str(self.index).zfill(2)}"
