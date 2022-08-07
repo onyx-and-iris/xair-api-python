@@ -28,7 +28,7 @@ A toml file named config.toml, placed into the current working directory of your
 
 ```toml
 [connection]
-ip=192.168.0.100
+ip=<ip address>
 ```
 
 Alternatively you may pass it as a keyword argument.
@@ -50,7 +50,7 @@ def main():
 
 if __name__ == "__main__":
     kind_id = "MR18"
-    ip = "192.168.0.100"
+    ip = "<ip address>"
 
     main()
 ```
