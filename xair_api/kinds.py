@@ -17,7 +17,7 @@ class X32KindMap:
 @dataclass
 class KindMap:
     def __str__(self) -> str:
-        return self.id_.capitalize()
+        return self.id_
 
 
 @dataclass

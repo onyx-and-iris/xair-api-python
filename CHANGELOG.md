@@ -11,6 +11,12 @@ Before any major/minor/patch patch is released all unit tests will be run to ver
 
 -   [x]
 
+## [1.1.0] - 2022-09-05
+
+### Added
+
+-   tomli/tomllib compatibility layer to support python 3.10
+
 ## [1.0.2] - 2022-08-07
 
 ### Added

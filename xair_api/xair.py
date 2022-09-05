@@ -2,9 +2,13 @@ import abc
 import threading
 import time
 from pathlib import Path
-from typing import Optional, Self
+from typing import Optional
 
-import tomllib
+try:
+    import tomllib
+except ModuleNotFoundError:
+    import tomli as tomllib
+
 from pythonosc.dispatcher import Dispatcher
 from pythonosc.osc_message_builder import OscMessageBuilder
 from pythonosc.osc_server import BlockingOSCUDPServer
@@ -60,7 +64,7 @@ class XAirRemote(abc.ABC):
             raise XAirRemoteError("No valid ip or password detected")
         self.server = OSCClientServer((self.xair_ip, self.xair_port), dispatcher)
 
-    def __enter__(self) -> Self:
+    def __enter__(self):
         self.worker = threading.Thread(target=self.run_server, daemon=True)
         self.worker.start()
         self.validate_connection()

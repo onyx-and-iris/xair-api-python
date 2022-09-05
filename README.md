@@ -12,7 +12,7 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 ## Prerequisites
 
--   Python 3.11 or greater
+-   Python 3.10 or greater
 
 ## Installation
 
@@ -270,12 +270,12 @@ for example: `config.monitor.chmode`
 
 ### `Tests`
 
-Unplug any/all expensive equipment before running any tests.
+Unplug any expensive equipment before running tests.
 Save your current settings to a snapshot first.
 
 First make sure you installed the [development dependencies](https://github.com/onyx-and-iris/xair-api-python#installation)
 
-To run the tests from tests directory:
+To run all tests:
 
 `pytest -v`.
 
