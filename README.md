@@ -42,9 +42,9 @@ import xair_api
 def main():
     with xair_api.connect(kind_id, ip=ip) as mixer:
         mixer.strip[8].config.name = "sm7b"
-        mixer.strip[8].config.on = True
+        mixer.strip[8].mix.on = True
         print(
-            f"strip 09 ({mixer.strip[8].config.name}) on has been set to {mixer.strip[8].config.on}"
+            f"strip 09 ({mixer.strip[8].config.name}) on has been set to {mixer.strip[8].mix.on}"
         )
 
 
