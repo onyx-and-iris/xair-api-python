@@ -273,7 +273,7 @@ tuple containing a class for each mute group
 
 -   `on`: bool, from 0 to 3
 
-for example: `config.mutegroup[0].on = True`
+for example: `config.mute_group[0].on = True`
 
 ### `Tests`
 
