@@ -5,7 +5,7 @@
 
 ## About
 
-A simple demonstration showing how to sync OBS scene switches to Xair states. The script assumes you have OBS connection info saved in
+A simple demonstration showing how to sync XAir states with OBS scene switches. The script assumes you have OBS connection info saved in
 a config file named `config.toml` placed next to `__main__.py`. It also assumes you have scenes named `START` `BRB` `END` and `LIVE`.
 
 A valid `config.toml` file might look like this:
