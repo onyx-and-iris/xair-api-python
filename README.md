@@ -253,7 +253,6 @@ for example: `chlink1_2`, `buslink5_6` etc..
 -   `link_fader_mute`: bool
 -   `amixenable`: bool
 -   `amixlock`: bool
--   `mute_group`: bool
 
 For the subclass `monitor` the following properties are available
 
@@ -267,6 +266,14 @@ For the subclass `monitor` the following properties are available
 -   `dimfpl` bool
 
 for example: `config.monitor.chmode`
+
+#### `mute_group`
+
+tuple containing a class for each mute group
+
+-   `on`: bool, from 0 to 3
+
+for example: `config.mutegroup[0].on = True`
 
 ### `Tests`
 
