@@ -3,11 +3,10 @@ import xair_api
 
 
 class Observer:
-    def __init__(self, cl, mixer):
-        self._cl = cl
+    def __init__(self, mixer):
         self._mixer = mixer
+        self._cl = obs.EventClient()
         self._cl.callback.register(self.on_current_program_scene_changed)
-        print(f"Registered events: {self._cl.callback.get()}")
 
     def on_current_program_scene_changed(self, data):
         scene = data.scene_name
@@ -23,15 +22,13 @@ class Observer:
                 print("Settings strip 02 color")
                 self._mixer.strip[1].config.color = 8
             case "LIVE":
-                self._mixer.dca[0].on = True
-                print(f"DCA 1 is {self._mixer.dca[0].on}")
+                self._mixer.config.mute_group[0].on = False
+                print(f"Mute Group 1 is {self._mixer.config.mute_group[0].on}")
 
 
 if __name__ == "__main__":
-    cl = obs.EventClient()
-
     with xair_api.connect("MR18", ip="mixer.local") as mixer:
-        Observer(cl, mixer)
+        Observer(mixer)
 
         while cmd := input("<Enter> to exit\n"):
             if not cmd:

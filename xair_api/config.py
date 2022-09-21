@@ -35,11 +35,15 @@ class Config(IConfig):
         Returns a Config class of a kind.
         """
         LINKS_cls = _make_links_mixins[remote.kind.id_]
+        MUTEGROUP_cls = type(f"MuteGroup", (Config.MuteGroup, cls), {})
         MONITOR_cls = type(f"ConfigMonitor", (Config.Monitor, cls), {})
         CONFIG_cls = type(
             f"Config{remote.kind}",
             (cls, LINKS_cls),
-            {"monitor": MONITOR_cls(remote)},
+            {
+                "mute_group": tuple(MUTEGROUP_cls(remote, i) for i in range(4)),
+                "monitor": MONITOR_cls(remote),
+            },
         )
         return CONFIG_cls(remote)
 
@@ -67,15 +71,25 @@ class Config(IConfig):
             raise XAirRemoteError("amixlock is a bool parameter")
         self.setter("amixlock", 1 if val else 0)
 
-    @property
-    def mute_group(self) -> bool:
-        return self.getter("mute")[0] == 1
+    class MuteGroup:
+        def __init__(self, remote, i):
+            super(Config.MuteGroup, self).__init__(remote)
+            self.i = i + 1
 
-    @mute_group.setter
-    def mute_group(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("mute_group is a bool parameter")
-        self.setter("mute", 1 if val else 0)
+        @property
+        def address(self) -> str:
+            root = super(Config.MuteGroup, self).address
+            return f"{root}/mute"
+
+        @property
+        def on(self) -> bool:
+            return self.getter(f"{self.i}")[0] == 1
+
+        @on.setter
+        def on(self, val: bool):
+            if not isinstance(val, bool):
+                raise XAirRemoteError("on is a boolean parameter")
+            self.setter(f"{self.i}", 1 if val else 0)
 
     class Monitor:
         @property
