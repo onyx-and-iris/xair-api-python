@@ -22,7 +22,7 @@ class Observer:
                 print("Settings strip 02 color")
                 self._mixer.strip[1].config.color = 8
             case "LIVE":
-                self._mixer.config.mute_group[0].on = False
+                self._mixer.config.mute_group[0].on = True
                 print(f"Mute Group 1 is {self._mixer.config.mute_group[0].on}")
 
 
