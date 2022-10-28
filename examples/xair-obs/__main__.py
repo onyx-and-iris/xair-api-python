@@ -26,10 +26,14 @@ class Observer:
                 print(f"Mute Group 1 is {self._mixer.config.mute_group[0].on}")
 
 
-if __name__ == "__main__":
+def main():
     with xair_api.connect("MR18", ip="mixer.local") as mixer:
         Observer(mixer)
 
         while cmd := input("<Enter> to exit\n"):
             if not cmd:
                 break
+
+
+if __name__ == "__main__":
+    main()

@@ -109,7 +109,7 @@ def _make_remote(kind: KindMap) -> XAirRemote:
     """
     Creates a new XAIR remote class.
 
-    The returned class will subclass MAirRemote.
+    The returned class will subclass XAirRemote.
     """
 
     def init(self, *args, **kwargs):
