@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
 ## API
 
-Currently the following devices are support:
+Currently the following devices are supported:
 
 -   `MR18`
 -   `XR18`
@@ -287,7 +287,7 @@ for example:
 
 ```python
 mixer.send("/ch/01/mix/on", 1)
-mixer.send("/mtx/06/config/name", "somename")
+mixer.send("/bus/2/config/name", "somename")
 ```
 
 Query the value of a command:

@@ -11,6 +11,29 @@ Before any major/minor/patch bump all unit tests will be run to verify they pass
 
 -   [x]
 
+## [2.0.0] - 2022-11-07
+
+Some support for the X32 mixer has been added using an adapter module but the code related to the XAir api has been left largely untouched.
+However, a couple of changes have been made which are breaking, they are as follows:
+
+### Changed
+
+-   FX class added to fx module. This now deals with osc addresses that begin with "/fx/". Call it with mixer.fx.
+-   FxRtn class added to rtn module. This now deals with addresses that begin with "/rtn/". Call it with mixer.fxreturn
+-   Aux class renamed to AuxRtn in rtn module. Call it with mixer.auxreturn.
+
+These changes were made to better resemble the underlying osc api and to better describe the function of the classes.
+
+### Added
+
+-   A small number of X32 tests. More will be added. XAir tests moved into it's own test module.
+-   XAirRemote lower level section added to README.
+-   Links to OSC command documentation added to README.
+
+### Removed
+
+-   mixer.aux was renamed to mixer.auxreturn
+
 ## [1.1.0] - 2022-09-05
 
 ### Added
