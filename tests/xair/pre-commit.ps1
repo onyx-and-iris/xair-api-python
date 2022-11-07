@@ -1,6 +1,7 @@
 Function RunTests {
-    $coverage = "./tests/pytest_coverage.log"
-    $run_tests = "pytest -v --capture=tee-sys --junitxml=./tests/.coverage.xml"
+    "Running tests in directory $PSScriptRoot" | Write-Host
+    $coverage = Join-Path $PSScriptRoot "pytest_coverage.log"
+    $run_tests = "pytest -v $PSScriptRoot --capture=tee-sys --junitxml=$(Join-Path $PSScriptRoot ".coverage.xml")"
     $match_pattern = "^=|^\s*$|^Running|^Using|^plugins|^collecting|^tests"
 
     if ( Test-Path $coverage ) { Clear-Content $coverage }
@@ -13,7 +14,7 @@ Function RunTests {
     }
     Write-Output "$(Get-TimeStamp)" | Out-File $coverage -Append
 
-    Invoke-Expression "genbadge tests -t 90 -i ./tests/.coverage.xml -o ./tests/$kind.svg"
+    Invoke-Expression "genbadge tests -t 90 -i $(Join-Path $PSScriptRoot ".coverage.xml") -o $(Join-Path $PSScriptRoot "$kind.svg")"
 }
 
 Function Get-TimeStamp {

@@ -1,6 +1,6 @@
 import pytest
 
-from tests import data, tests
+from tests.xair import data, tests
 
 """
 Not every subclass is tested for every superclass to avoid redundancy.
@@ -326,7 +326,7 @@ class TestSetAndGetBusDynHigher:
         assert getattr(self.target, param) == value
 
 
-class TestSetAndGetBusDynHigher:
+class TestSetAndGetBusEQHigher:
     """EQ"""
 
     __test__ = True
@@ -368,6 +368,6 @@ class TestSetAndGetFXSendGroupHigher:
         "param,value",
         [("dca", 0), ("dca", 12), ("mute", 3), ("mute", 8)],
     )
-    def test_it_sets_and_gets_bus_bool_params(self, param, value):
+    def test_it_sets_and_gets_fxsend_int_params(self, param, value):
         setattr(self.target, param, value)
         assert getattr(self.target, param) == value
