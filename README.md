@@ -2,7 +2,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/onyx-and-iris/xair-api-python/blob/dev/LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
-![Tests Status](./tests/MR18.svg?dummy=8484744)
+![Tests Status](./tests/xair/MR18.svg?dummy=8484744)
 
 # Xair API
 
@@ -40,6 +40,9 @@ import xair_api
 
 
 def main():
+    kind_id = "XR18"
+    ip = "<ip address>"
+
     with xair_api.connect(kind_id, ip=ip) as mixer:
         mixer.strip[8].config.name = "sm7b"
         mixer.strip[8].mix.on = True
@@ -49,9 +52,6 @@ def main():
 
 
 if __name__ == "__main__":
-    kind_id = "MR18"
-    ip = "<ip address>"
-
     main()
 ```
 
@@ -59,10 +59,12 @@ if __name__ == "__main__":
 
 Currently the following devices are support:
 
--   `XR18`
 -   `MR18`
+-   `XR18`
 -   `XR16`
 -   `XR12`
+
+The `X32` is partially supported. This document covers specifically the `XAir` series, however.
 
 ### XAirRemote class (higher level)
 
@@ -82,6 +84,10 @@ A Bus tuple containing a class for each output bus channel
 
 A DCA tuple containing a class for each DCA group
 
+`mixer.fx`
+
+An FXSend tuple containing a class for each FX channel
+
 `mixer.fxsend`
 
 An FXSend tuple containing a class for each FX Send channel
@@ -90,13 +96,9 @@ An FXSend tuple containing a class for each FX Send channel
 
 An FXReturn tuple containing a class for each FX Return channel
 
-`mixer.aux`
+`mixer.auxreturn`
 
-A class representing aux channel
-
-`mixer.rtn`
-
-An RTN tuple containing a class for each rtn channel
+A class representing auxreturn channel
 
 `mixer.config`
 
@@ -122,12 +124,12 @@ Contains the subclasses:
 Contains the subclasses:
 (`Config`, `Mix`, `Group`)
 
-### `Aux`
+### `FXRtn`
 
 Contains the subclasses:
 (`Config`, `Preamp`, `EQ`, `Mix`, `Group`)
 
-### `Rtn`
+### `AuxRtn`
 
 Contains the subclasses:
 (`Config`, `Preamp`, `EQ`, `Mix`, `Group`)
@@ -275,6 +277,29 @@ tuple containing a class for each mute group
 
 for example: `config.mute_group[0].on = True`
 
+### XAirRemote class (lower level)
+
+Send an OSC command directly to the mixer
+
+-   `send(osc command, value)`
+
+for example:
+
+```python
+mixer.send("/ch/01/mix/on", 1)
+mixer.send("/mtx/06/config/name", "somename")
+```
+
+Query the value of a command:
+
+-   `query(osc command)`
+
+for example:
+
+```python
+print(mixer.query("/ch/01/mix/on"))
+```
+
 ### `Tests`
 
 Unplug any expensive equipment before running tests.
@@ -289,6 +314,11 @@ To run all tests:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## Documentation
+
+[XAir OSC Commands](https://behringer.world/wiki/doku.php?id=x-air_osc)
+[X32 OSC Commands](https://wiki.munichmakerlab.de/images/1/17/UNOFFICIAL_X32_OSC_REMOTE_PROTOCOL_%281%29.pdf)
 
 ## Special Thanks
 
