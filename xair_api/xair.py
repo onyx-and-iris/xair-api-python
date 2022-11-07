@@ -3,7 +3,7 @@ import logging
 import threading
 import time
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 try:
     import tomllib
@@ -31,15 +31,12 @@ class OSCClientServer(BlockingOSCUDPServer):
         super().__init__(("", 0), dispatcher)
         self.xr_address = address
 
-    def send_message(self, address: str, value: str):
+    def send_message(self, address: str, vals: Optional[Union[str, list]]):
         builder = OscMessageBuilder(address=address)
-        if value is None:
-            values = list()
-        elif isinstance(value, list):
-            values = value
-        else:
-            values = [value]
-        for val in values:
+        vals = vals if vals is not None else []
+        if not isinstance(vals, list):
+            vals = [vals]
+        for val in vals:
             builder.add_arg(val)
         msg = builder.build()
         self.socket.sendto(msg.dgram, self.xr_address)
@@ -80,14 +77,13 @@ class XAirRemote(abc.ABC):
     def validate_connection(self):
         self.send("/xinfo")
         time.sleep(self._CONNECT_TIMEOUT)
-        if len(self.info_response) > 0:
-            print(
-                f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
-            )
-        else:
-            print(
+        if not self.info_response:
+            raise XAirRemoteError(
                 "Error: Failed to setup OSC connection to mixer. Please check for correct ip address."
             )
+        print(
+            f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
+        )
 
     def run_server(self):
         self.server.serve_forever()

@@ -5,7 +5,7 @@ from .meta import geq_prop
 from .util import _get_fader_val, _set_fader_val, lin_get, lin_set, log_get, log_set
 
 """
-Classes shared by /ch, /rtn, /rt/aux, /bus, /fxsend, /lr
+Classes shared by /ch, /rtn, /rtn/aux, /bus, /fxsend, /lr
 """
 
 
