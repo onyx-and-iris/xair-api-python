@@ -22,7 +22,6 @@ class Data:
     strip: int = kind.num_strip - 1
     bus: int = kind.num_bus - 1
     fx: int = kind.num_fx - 1
-    rtn: int = kind.num_rtn - 1
 
 
 data = Data()

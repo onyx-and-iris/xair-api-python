@@ -25,26 +25,24 @@ class IRtn(abc.ABC):
         pass
 
 
-class Aux(IRtn):
+class AuxRtn(IRtn):
     """Concrete class for aux"""
 
     @classmethod
-    def make(cls, remote):
+    def make(cls, remote, index=None):
         """
-        Factory function for aux
-
+        Factory function for auxrtn
         Creates a mixin of shared subclasses, sets them as class attributes.
-
-        Returns an Aux class of a kind.
+        Returns an AuxRtn class of a kind.
         """
-        AUX_cls = type(
-            f"Aux{remote.kind}",
+        AUXRTN_cls = type(
+            f"AuxRtn{remote.kind}",
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
                         f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
-                    )(remote)
+                    )(remote, index)
                     for _cls in (
                         Config,
                         Preamp,
@@ -55,32 +53,30 @@ class Aux(IRtn):
                 }
             },
         )
-        return AUX_cls(remote)
+        return AUXRTN_cls(remote, index)
 
     @property
     def address(self):
         return "/rtn/aux"
 
 
-class Rtn(IRtn):
+class FxRtn(IRtn):
     """Concrete class for rtn"""
 
     @classmethod
     def make(cls, remote, index):
         """
-        Factory function for rtn
-
+        Factory function for fxrtn
         Creates a mixin of shared subclasses, sets them as class attributes.
-
-        Returns an Rtn class of a kind.
+        Returns an FxRtn class of a kind.
         """
-        RTN_cls = type(
-            f"Rtn{remote.kind.id_}",
+        FXRTN_cls = type(
+            f"FxRtn{remote.kind}",
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind.id_}", (_cls, cls), {}
+                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
                     )(remote, index)
                     for _cls in (
                         Config,
@@ -92,7 +88,7 @@ class Rtn(IRtn):
                 }
             },
         )
-        return RTN_cls(remote, index)
+        return FXRTN_cls(remote, index)
 
     @property
     def address(self):

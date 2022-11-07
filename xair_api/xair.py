@@ -1,4 +1,5 @@
 import abc
+import logging
 import threading
 import time
 from pathlib import Path
@@ -13,15 +14,15 @@ from pythonosc.dispatcher import Dispatcher
 from pythonosc.osc_message_builder import OscMessageBuilder
 from pythonosc.osc_server import BlockingOSCUDPServer
 
-from . import kinds
+from . import adapter, kinds
 from .bus import Bus
 from .config import Config
 from .dca import DCA
 from .errors import XAirRemoteError
-from .fx import FXReturn, FXSend
+from .fx import FX, FXSend
 from .kinds import KindMap
 from .lr import LR
-from .rtn import Aux, Rtn
+from .rtn import AuxRtn, FxRtn
 from .strip import Strip
 
 
@@ -47,11 +48,11 @@ class OSCClientServer(BlockingOSCUDPServer):
 class XAirRemote(abc.ABC):
     """Handles the communication with the mixer via the OSC protocol"""
 
+    logger = logging.getLogger("xair.xairremote")
+
     _CONNECT_TIMEOUT = 0.5
     _WAIT_TIME = 0.025
     _REFRESH_TIMEOUT = 5
-
-    XAIR_PORT = 10024
 
     info_response = []
 
@@ -59,7 +60,7 @@ class XAirRemote(abc.ABC):
         dispatcher = Dispatcher()
         dispatcher.set_default_handler(self.msg_handler)
         self.xair_ip = kwargs["ip"] or self._ip_from_toml()
-        self.xair_port = kwargs["port"] or self.XAIR_PORT
+        self.xair_port = kwargs["port"]
         if not (self.xair_ip and self.xair_port):
             raise XAirRemoteError("No valid ip or password detected")
         self.server = OSCClientServer((self.xair_ip, self.xair_port), dispatcher)
@@ -80,7 +81,9 @@ class XAirRemote(abc.ABC):
         self.send("/xinfo")
         time.sleep(self._CONNECT_TIMEOUT)
         if len(self.info_response) > 0:
-            print(f"Successfully connected to {self.info_response[2]}.")
+            print(
+                f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
+            )
         else:
             print(
                 "Error: Failed to setup OSC connection to mixer. Please check for correct ip address."
@@ -90,10 +93,12 @@ class XAirRemote(abc.ABC):
         self.server.serve_forever()
 
     def msg_handler(self, addr, *data):
+        self.logger.debug(f"received: {addr} {data if data else ''}")
         self.info_response = data[:]
 
-    def send(self, address: str, param: Optional[str] = None):
-        self.server.send_message(address, param)
+    def send(self, addr: str, param: Optional[str] = None):
+        self.logger.debug(f"sending: {addr} {param if param else ''}")
+        self.server.send_message(addr, param)
         time.sleep(self._WAIT_TIME)
 
     def _query(self, address):
@@ -112,8 +117,26 @@ def _make_remote(kind: KindMap) -> XAirRemote:
     The returned class will subclass XAirRemote.
     """
 
-    def init(self, *args, **kwargs):
-        defaultkwargs = {"ip": None, "port": None}
+    def init_x32(self, *args, **kwargs):
+        defaultkwargs = {"ip": None, "port": 10023}
+        kwargs = defaultkwargs | kwargs
+        XAirRemote.__init__(self, *args, **kwargs)
+        self.kind = kind
+        self.mainst = adapter.MainStereo.make(self)
+        self.mainmono = adapter.MainMono.make(self)
+        self.matrix = tuple(
+            adapter.Matrix.make(self, i) for i in range(kind.num_matrix)
+        )
+        self.strip = tuple(Strip.make(self, i) for i in range(kind.num_strip))
+        self.bus = tuple(adapter.Bus.make(self, i) for i in range(kind.num_bus))
+        self.dca = tuple(DCA(self, i) for i in range(kind.num_dca))
+        self.fx = tuple(FX(self, i) for i in range(kind.num_fx))
+        self.fxreturn = tuple(adapter.FxRtn.make(self, i) for i in range(kind.num_fx))
+        self.config = Config.make(self)
+        self.auxin = tuple(adapter.AuxRtn.make(self, i) for i in range(kind.num_auxrtn))
+
+    def init_xair(self, *args, **kwargs):
+        defaultkwargs = {"ip": None, "port": 10024}
         kwargs = defaultkwargs | kwargs
         XAirRemote.__init__(self, *args, **kwargs)
         self.kind = kind
@@ -121,17 +144,25 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.strip = tuple(Strip.make(self, i) for i in range(kind.num_strip))
         self.bus = tuple(Bus.make(self, i) for i in range(kind.num_bus))
         self.dca = tuple(DCA(self, i) for i in range(kind.num_dca))
+        self.fx = tuple(FX(self, i) for i in range(kind.num_fx))
         self.fxsend = tuple(FXSend.make(self, i) for i in range(kind.num_fx))
-        self.fxreturn = tuple(FXReturn(self, i) for i in range(kind.num_fx))
+        self.fxreturn = tuple(FxRtn.make(self, i) for i in range(kind.num_fx))
         self.config = Config.make(self)
-        self.aux = Aux.make(self)
-        self.rtn = tuple(Rtn.make(self, i) for i in range(kind.num_rtn))
+        self.auxreturn = AuxRtn.make(self)
 
+    if kind.id_ == "X32":
+        return type(
+            f"XAirRemote{kind}",
+            (XAirRemote,),
+            {
+                "__init__": init_x32,
+            },
+        )
     return type(
         f"XAirRemote{kind}",
         (XAirRemote,),
         {
-            "__init__": init,
+            "__init__": init_xair,
         },
     )
 

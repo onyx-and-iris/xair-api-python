@@ -1,4 +1,5 @@
 import abc
+from typing import Optional
 
 from .errors import XAirRemoteError
 from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
@@ -7,8 +8,10 @@ from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Pre
 class ILR(abc.ABC):
     """Abstract Base Class for buses"""
 
-    def __init__(self, remote):
+    def __init__(self, remote, index: Optional[int] = None):
         self._remote = remote
+        if index is not None:
+            self.index = index + 1
 
     def getter(self, param: str):
         self._remote.send(f"{self.address}/{param}")
@@ -26,7 +29,7 @@ class LR(ILR):
     """Concrete class for buses"""
 
     @classmethod
-    def make(cls, remote):
+    def make(cls, remote, index=None):
         """
         Factory function for LR
 
@@ -41,19 +44,19 @@ class LR(ILR):
                 **{
                     _cls.__name__.lower(): type(
                         f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
-                    )(remote)
+                    )(remote, index)
                     for _cls in (
                         Config,
                         Dyn,
                         Insert,
                         GEQ.make(),
-                        EQ.make_sixband(cls, remote),
+                        EQ.make_sixband(cls, remote, index),
                         Mix,
                     )
                 },
             },
         )
-        return LR_cls(remote)
+        return LR_cls(remote, index)
 
     @property
     def address(self) -> str:

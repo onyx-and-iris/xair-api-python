@@ -259,7 +259,7 @@ class TestSetAndGetStripAutomixHigher:
         "param,value",
         [("group", 0), ("group", 2)],
     )
-    def test_it_sets_and_gets_fxsend_int_params(self, param, value):
+    def test_it_sets_and_gets_strip_int_params(self, param, value):
         setattr(self.target, param, value)
         assert getattr(self.target, param) == value
 
@@ -267,7 +267,7 @@ class TestSetAndGetStripAutomixHigher:
         "param,value",
         [("weight", -10.5), ("weight", 3.5)],
     )
-    def test_it_sets_and_gets_fxsend_float_params(self, param, value):
+    def test_it_sets_and_gets_strip_float_params(self, param, value):
         setattr(self.target, param, value)
         assert getattr(self.target, param) == value
 

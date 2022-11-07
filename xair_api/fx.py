@@ -23,6 +23,24 @@ class IFX(abc.ABC):
         pass
 
 
+class FX(IFX):
+    """Concrete class for fx"""
+
+    @property
+    def address(self) -> str:
+        return f"/fx/{self.index}"
+
+    @property
+    def type(self) -> int:
+        return self.getter("type")[0]
+
+    @type.setter
+    def type(self, val: int):
+        if not isinstance(val, int):
+            raise XAirRemoteError("type is an integer parameter")
+        self.setter("type", val)
+
+
 class FXSend(IFX):
     """Concrete class for fxsend"""
 
@@ -52,21 +70,3 @@ class FXSend(IFX):
     @property
     def address(self) -> str:
         return f"/fxsend/{self.index}"
-
-
-class FXReturn(IFX):
-    """Concrete class for fxreturn"""
-
-    @property
-    def address(self) -> str:
-        return f"/fx/{self.index}"
-
-    @property
-    def type(self) -> int:
-        return self.getter("type")[0]
-
-    @type.setter
-    def type(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("type is an integer parameter")
-        self.setter("type", val)
