@@ -51,7 +51,7 @@ class XAirRemote(abc.ABC):
     _WAIT_TIME = 0.025
     _REFRESH_TIMEOUT = 5
 
-    info_response = []
+    _info_response = []
 
     def __init__(self, **kwargs):
         dispatcher = Dispatcher()
@@ -85,21 +85,24 @@ class XAirRemote(abc.ABC):
             f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
         )
 
+    @property
+    def info_response(self):
+        return self._info_response
+
     def run_server(self):
         self.server.serve_forever()
 
     def msg_handler(self, addr, *data):
         self.logger.debug(f"received: {addr} {data if data else ''}")
-        self.info_response = data[:]
+        self._info_response = data[:]
 
     def send(self, addr: str, param: Optional[str] = None):
         self.logger.debug(f"sending: {addr} {param if param else ''}")
         self.server.send_message(addr, param)
         time.sleep(self._WAIT_TIME)
 
-    def _query(self, address):
+    def query(self, address):
         self.send(address)
-        time.sleep(self._WAIT_TIME)
         return self.info_response
 
     def __exit__(self, exc_type, exc_value, exc_tr):
@@ -128,8 +131,8 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.dca = tuple(DCA(self, i) for i in range(kind.num_dca))
         self.fx = tuple(FX(self, i) for i in range(kind.num_fx))
         self.fxreturn = tuple(adapter.FxRtn.make(self, i) for i in range(kind.num_fx))
-        self.config = Config.make(self)
         self.auxin = tuple(adapter.AuxRtn.make(self, i) for i in range(kind.num_auxrtn))
+        self.config = Config.make(self)
 
     def init_xair(self, *args, **kwargs):
         defaultkwargs = {"ip": None, "port": 10024}
@@ -143,8 +146,8 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.fx = tuple(FX(self, i) for i in range(kind.num_fx))
         self.fxsend = tuple(FXSend.make(self, i) for i in range(kind.num_fx))
         self.fxreturn = tuple(FxRtn.make(self, i) for i in range(kind.num_fx))
-        self.config = Config.make(self)
         self.auxreturn = AuxRtn.make(self)
+        self.config = Config.make(self)
 
     if kind.id_ == "X32":
         return type(

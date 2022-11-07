@@ -19,8 +19,8 @@ class X32KindMap(KindMap):
 
 
 @dataclass
-class MR18KindMap(KindMap):
-    # note ch 17-18 defined as aux rtn
+class XR18KindMap(KindMap):
+    # note ch 17-18 defined as aux return
     id_: str
     num_dca: int = 4
     num_strip: int = 16
@@ -48,8 +48,8 @@ class XR12KindMap(KindMap):
 
 _kinds = {
     "X32": X32KindMap(id_="X32"),
-    "XR18": MR18KindMap(id_="XR18"),
-    "MR18": MR18KindMap(id_="MR18"),
+    "MR18": XR18KindMap(id_="MR18"),
+    "XR18": XR18KindMap(id_="XR18"),
     "XR16": XR16KindMap(id_="XR16"),
     "XR12": XR12KindMap(id_="XR12"),
 }
