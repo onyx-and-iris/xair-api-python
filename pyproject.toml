@@ -24,3 +24,5 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 obs = "examples.xair-obs.__main__:main"
+xair = 'scripts:test_xair'
+x32 = 'scripts:test_x32'
