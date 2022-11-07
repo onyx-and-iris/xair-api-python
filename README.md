@@ -86,7 +86,7 @@ A DCA tuple containing a class for each DCA group
 
 `mixer.fx`
 
-An FXSend tuple containing a class for each FX channel
+An FX tuple containing a class for each FX channel
 
 `mixer.fxsend`
 
@@ -318,6 +318,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Documentation
 
 [XAir OSC Commands](https://behringer.world/wiki/doku.php?id=x-air_osc)
+
 [X32 OSC Commands](https://wiki.munichmakerlab.de/images/1/17/UNOFFICIAL_X32_OSC_REMOTE_PROTOCOL_%281%29.pdf)
 
 ## Special Thanks
