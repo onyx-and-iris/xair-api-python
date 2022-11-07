@@ -97,7 +97,7 @@ class XAirRemote(abc.ABC):
         self._info_response = data[:]
 
     def send(self, addr: str, param: Optional[str] = None):
-        self.logger.debug(f"sending: {addr} {param if param else ''}")
+        self.logger.debug(f"sending: {addr} {param if param is not None else ''}")
         self.server.send_message(addr, param)
         time.sleep(self._WAIT_TIME)
 
