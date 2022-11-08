@@ -62,3 +62,11 @@ class Strip(IStrip):
     @property
     def address(self) -> str:
         return f"/ch/{str(self.index).zfill(2)}"
+
+    @property
+    def mute(self) -> bool:
+        return not self.mix.on
+
+    @mute.setter
+    def mute(self, val: bool):
+        self.mix.on = not val

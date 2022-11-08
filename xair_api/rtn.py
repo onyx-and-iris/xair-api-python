@@ -59,6 +59,14 @@ class AuxRtn(IRtn):
     def address(self):
         return "/rtn/aux"
 
+    @property
+    def mute(self) -> bool:
+        return not self.mix.on
+
+    @mute.setter
+    def mute(self, val: bool):
+        self.mix.on = not val
+
 
 class FxRtn(IRtn):
     """Concrete class for rtn"""
@@ -93,3 +101,11 @@ class FxRtn(IRtn):
     @property
     def address(self):
         return f"/rtn/{self.index}"
+
+    @property
+    def mute(self) -> bool:
+        return not self.mix.on
+
+    @mute.setter
+    def mute(self, val: bool):
+        self.mix.on = not val

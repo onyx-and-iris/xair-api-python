@@ -68,3 +68,11 @@ class FXSend(IFX):
     @property
     def address(self) -> str:
         return f"/fxsend/{self.index}"
+
+    @property
+    def mute(self) -> bool:
+        return not self.mix.on
+
+    @mute.setter
+    def mute(self, val: bool):
+        self.mix.on = not val

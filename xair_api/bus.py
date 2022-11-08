@@ -60,3 +60,11 @@ class Bus(IBus):
     @property
     def address(self) -> str:
         return f"/bus/{self.index}"
+
+    @property
+    def mute(self) -> bool:
+        return not self.mix.on
+
+    @mute.setter
+    def mute(self, val: bool):
+        self.mix.on = not val
