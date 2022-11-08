@@ -15,7 +15,7 @@ kind = kinds.get(kind_id)
 
 @dataclass
 class Data:
-    """bounds data to map tests to a kind"""
+    """bounds test data to a kind"""
 
     name: str = kind.id_
     dca: int = kind.num_dca - 1
