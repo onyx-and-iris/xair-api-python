@@ -36,8 +36,6 @@ class FX(IFX):
 
     @type.setter
     def type(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("type is an integer parameter")
         self.setter("type", val)
 
 

@@ -57,8 +57,6 @@ class Config(IConfig):
 
     @amixenable.setter
     def amixenable(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("amixenable is a bool parameter")
         self.setter("amixenable", 1 if val else 0)
 
     @property
@@ -67,8 +65,6 @@ class Config(IConfig):
 
     @amixlock.setter
     def amixlock(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("amixlock is a bool parameter")
         self.setter("amixlock", 1 if val else 0)
 
     class MuteGroup:
@@ -87,8 +83,6 @@ class Config(IConfig):
 
         @on.setter
         def on(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("on is a boolean parameter")
             self.setter(f"{self.i}", 1 if val else 0)
 
     class Monitor:
@@ -112,8 +106,6 @@ class Config(IConfig):
 
         @source.setter
         def source(self, val: int):
-            if not isinstance(val, int):
-                raise XAirRemoteError("source is an int parameter")
             self.setter(f"source", val)
 
         @property
@@ -122,10 +114,8 @@ class Config(IConfig):
 
         @sourcetrim.setter
         def sourcetrim(self, val: float):
-            if not isinstance(val, float):
-                raise XAirRemoteError(
-                    "sourcetrim is a float parameter, expected value in range -18 to 18"
-                )
+            if not -18 <= val <= 18:
+                raise XAirRemoteError("expected value in range -18.0 to 18.0")
             self.setter("sourcetrim", lin_set(-18, 18, val))
 
         @property
@@ -134,8 +124,6 @@ class Config(IConfig):
 
         @chmode.setter
         def chmode(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("chmode is a bool parameter")
             self.setter("chmode", 1 if val else 0)
 
         @property
@@ -144,8 +132,6 @@ class Config(IConfig):
 
         @busmode.setter
         def busmode(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("busmode is a bool parameter")
             self.setter("busmode", 1 if val else 0)
 
         @property
@@ -154,10 +140,8 @@ class Config(IConfig):
 
         @dimgain.setter
         def dimgain(self, val: int):
-            if not isinstance(val, int):
-                raise XAirRemoteError(
-                    "dimgain is an int parameter, expected value in range -40 to 0"
-                )
+            if not -40 <= val <= 0:
+                raise XAirRemoteError("expected value in range -40 to 0")
             self.setter("dimatt", lin_set(-40, 0, val))
 
         @property
@@ -166,8 +150,6 @@ class Config(IConfig):
 
         @dim.setter
         def dim(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("dim is a bool parameter")
             self.setter("dim", 1 if val else 0)
 
         @property
@@ -176,8 +158,6 @@ class Config(IConfig):
 
         @mono.setter
         def mono(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("mono is a bool parameter")
             self.setter("mono", 1 if val else 0)
 
         @property
@@ -186,8 +166,6 @@ class Config(IConfig):
 
         @mute.setter
         def mute(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("mute is a bool parameter")
             self.setter("mute", 1 if val else 0)
 
         @property
@@ -196,8 +174,6 @@ class Config(IConfig):
 
         @dimfpl.setter
         def dimfpl(self, val: bool):
-            if not isinstance(val, bool):
-                raise XAirRemoteError("dimfpl is a bool parameter")
             self.setter("dimfpl", 1 if val else 0)
 
 

@@ -21,8 +21,6 @@ class Config:
 
     @name.setter
     def name(self, val: str):
-        if not isinstance(val, str):
-            raise XAirRemoteError("name is a string parameter")
         self.setter("name", val)
 
     @property
@@ -31,8 +29,6 @@ class Config:
 
     @color.setter
     def color(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("color is an int parameter")
         self.setter("color", val)
 
     @property
@@ -41,8 +37,6 @@ class Config:
 
     @inputsource.setter
     def inputsource(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("inputsource is an int parameter")
         self.setter("insrc", val)
 
     @property
@@ -51,8 +45,6 @@ class Config:
 
     @usbreturn.setter
     def usbreturn(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("usbreturn is an int parameter")
         self.setter("rtnsrc", val)
 
 
@@ -68,10 +60,8 @@ class Preamp:
 
     @usbtrim.setter
     def usbtrim(self, val: float):
-        if not isinstance(val, float):
-            raise XAirRemoteError(
-                "usbtrim is a float parameter, expected value in range -18 to 18"
-            )
+        if not -18 <= val <= 18:
+            raise XAirRemoteError("expected value in range -18.0 to 18.0")
         self.setter("rtntrim", lin_set(-18, 18, val))
 
     @property
@@ -80,8 +70,6 @@ class Preamp:
 
     @usbinput.setter
     def usbinput(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("rtnsw is a bool parameter")
         self.setter("rtnsw", 1 if val else 0)
 
     @property
@@ -90,8 +78,6 @@ class Preamp:
 
     @invert.setter
     def invert(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("invert is a bool parameter")
         self.setter("invert", 1 if val else 0)
 
     @property
@@ -100,8 +86,6 @@ class Preamp:
 
     @highpasson.setter
     def highpasson(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("hpon is a bool parameter")
         self.setter("hpon", 1 if val else 0)
 
     @property
@@ -110,8 +94,8 @@ class Preamp:
 
     @highpassfilter.setter
     def highpassfilter(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("highpassfilter is an int parameter")
+        if not 20 <= val <= 400:
+            raise XAirRemoteError("expected value in range 20 to 400")
         self.setter("hpf", log_set(20, 400, val))
 
 
@@ -127,8 +111,6 @@ class Gate:
 
     @on.setter
     def on(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("on is a boolean parameter")
         self.setter("on", 1 if val else 0)
 
     @property
@@ -139,8 +121,8 @@ class Gate:
     @mode.setter
     def mode(self, val: str):
         opts = ("gate", "exp2", "exp3", "exp4", "duck")
-        if not isinstance(val, str) and val not in opts:
-            raise XAirRemoteError(f"mode is a string parameter, expected one of {opts}")
+        if val not in opts:
+            raise XAirRemoteError(f"expected one of {opts}")
         self.setter("mode", opts.index(val))
 
     @property
@@ -149,10 +131,8 @@ class Gate:
 
     @threshold.setter
     def threshold(self, val: float):
-        if not isinstance(val, float):
-            raise XAirRemoteError(
-                "threshold is a float parameter, expected value in range -80 to 0"
-            )
+        if not -80 <= val <= 0:
+            raise XAirRemoteError("expected value in range -80.0 to 0.0")
         self.setter("thr", lin_set(-80, 0, val))
 
     @property
@@ -161,10 +141,8 @@ class Gate:
 
     @range.setter
     def range(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError(
-                "range is an int parameter, expected value in range 3 to 60"
-            )
+        if not 3 <= val <= 60:
+            raise XAirRemoteError("expected value in range 3 to 60")
         self.setter("range", lin_set(3, 60, val))
 
     @property
@@ -173,10 +151,8 @@ class Gate:
 
     @attack.setter
     def attack(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError(
-                "attack is an int parameter, expected value in range 0 to 120"
-            )
+        if not 0 <= val <= 120:
+            raise XAirRemoteError("expected value in range 0 to 120")
         self.setter("attack", lin_set(0, 120, val))
 
     @property
@@ -186,6 +162,8 @@ class Gate:
 
     @hold.setter
     def hold(self, val: float):
+        if not 0.02 <= val <= 2000:
+            raise XAirRemoteError("expected value in range 0.02 to 2000.0")
         self.setter("hold", log_set(0.02, 2000, val))
 
     @property
@@ -194,10 +172,8 @@ class Gate:
 
     @release.setter
     def release(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError(
-                "release is an int parameter, expected value in range 5 to 4000"
-            )
+        if not 5 <= val <= 4000:
+            raise XAirRemoteError("expected value in range 5 to 4000")
         self.setter("release", log_set(5, 4000, val))
 
     @property
@@ -206,8 +182,6 @@ class Gate:
 
     @keysource.setter
     def keysource(self, val):
-        if not isinstance(val, int):
-            raise XAirRemoteError("keysource is an int parameter")
         self.setter("keysrc", val)
 
     @property
@@ -216,8 +190,6 @@ class Gate:
 
     @filteron.setter
     def filteron(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("filteron is a boolean parameter")
         self.setter("filter/on", 1 if val else 0)
 
     @property
@@ -226,8 +198,6 @@ class Gate:
 
     @filtertype.setter
     def filtertype(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("filtertype is an int parameter")
         self.setter("filter/type", val)
 
     @property
@@ -237,6 +207,8 @@ class Gate:
 
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
+        if not 20 <= val <= 20000:
+            raise XAirRemoteError("expected value in range 20 to 20000")
         self.setter("filter/f", log_set(20, 20000, val))
 
 
@@ -252,8 +224,6 @@ class Dyn:
 
     @on.setter
     def on(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("on is a boolean parameter")
         self.setter("on", 1 if val else 0)
 
     @property
@@ -264,8 +234,8 @@ class Dyn:
     @mode.setter
     def mode(self, val: str):
         opts = ("comp", "exp")
-        if not isinstance(val, str) and val not in opts:
-            raise XAirRemoteError(f"mode is a string parameter, expected one of {opts}")
+        if val not in opts:
+            raise XAirRemoteError(f"expected one of {opts}")
         self.setter("mode", opts.index(val))
 
     @property
@@ -276,8 +246,8 @@ class Dyn:
     @det.setter
     def det(self, val: str):
         opts = ("peak", "rms")
-        if not isinstance(val, str) and val not in opts:
-            raise XAirRemoteError(f"det is a string parameter, expected one of {opts}")
+        if val not in opts:
+            raise XAirRemoteError(f"expected one of {opts}")
         self.setter("det", opts.index(val))
 
     @property
@@ -288,8 +258,8 @@ class Dyn:
     @env.setter
     def env(self, val: str):
         opts = ("lin", "log")
-        if not isinstance(val, str) and val not in opts:
-            raise XAirRemoteError(f"env is a string parameter, expected one of {opts}")
+        if val not in opts:
+            raise XAirRemoteError(f"expected one of {opts}")
         self.setter("env", opts.index(val))
 
     @property
@@ -298,10 +268,8 @@ class Dyn:
 
     @threshold.setter
     def threshold(self, val: float):
-        if not isinstance(val, float):
-            raise XAirRemoteError(
-                "threshold is a float parameter, expected value in range -80 to 0"
-            )
+        if not -60 <= val <= 0:
+            raise XAirRemoteError("expected value in range -60.0 to 0")
         self.setter("thr", lin_set(-60, 0, val))
 
     @property
@@ -311,8 +279,6 @@ class Dyn:
 
     @ratio.setter
     def ratio(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("ratio is an int parameter")
         self.setter("ratio", val)
 
     @property
@@ -321,10 +287,8 @@ class Dyn:
 
     @knee.setter
     def knee(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError(
-                "knee is an int parameter, expected value in range 0 to 5"
-            )
+        if not 0 <= val <= 5:
+            raise XAirRemoteError("expected value in range 0 to 5")
         self.setter("knee", lin_set(0, 5, val))
 
     @property
@@ -333,6 +297,8 @@ class Dyn:
 
     @mgain.setter
     def mgain(self, val: float):
+        if not 0 <= val <= 24:
+            raise XAirRemoteError("expected value in range 0.0 to 24.0")
         self.setter("mgain", lin_set(0, 24, val))
 
     @property
@@ -341,6 +307,8 @@ class Dyn:
 
     @attack.setter
     def attack(self, val: int):
+        if not 0 <= val <= 120:
+            raise XAirRemoteError("expected value in range 0 to 120")
         self.setter("attack", lin_set(0, 120, val))
 
     @property
@@ -350,6 +318,8 @@ class Dyn:
 
     @hold.setter
     def hold(self, val: float):
+        if not 0.02 <= val <= 2000:
+            raise XAirRemoteError("expected value in range 0.02 to 2000.0")
         self.setter("hold", log_set(0.02, 2000, val))
 
     @property
@@ -358,10 +328,8 @@ class Dyn:
 
     @release.setter
     def release(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError(
-                "release is an int parameter, expected value in range 5 to 4000"
-            )
+        if not 5 <= val <= 4000:
+            raise XAirRemoteError("expected value in range 5 to 4000")
         self.setter("release", log_set(5, 4000, val))
 
     @property
@@ -370,10 +338,8 @@ class Dyn:
 
     @mix.setter
     def mix(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError(
-                "mix is an int parameter, expected value in range 0 to 5"
-            )
+        if not 0 <= val <= 100:
+            raise XAirRemoteError("expected value in range 0 to 100")
         self.setter("mix", lin_set(0, 100, val))
 
     @property
@@ -382,8 +348,6 @@ class Dyn:
 
     @keysource.setter
     def keysource(self, val):
-        if not isinstance(val, int):
-            raise XAirRemoteError("keysource is an int parameter")
         self.setter("keysrc", val)
 
     @property
@@ -392,8 +356,6 @@ class Dyn:
 
     @auto.setter
     def auto(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("auto is a boolean parameter")
         self.setter("auto", 1 if val else 0)
 
     @property
@@ -402,8 +364,6 @@ class Dyn:
 
     @filteron.setter
     def filteron(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("filteron is a boolean parameter")
         self.setter("filter/on", 1 if val else 0)
 
     @property
@@ -412,8 +372,6 @@ class Dyn:
 
     @filtertype.setter
     def filtertype(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("filtertype is an int parameter")
         self.setter("filter/type", val)
 
     @property
@@ -423,6 +381,8 @@ class Dyn:
 
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
+        if not 20 <= val <= 20000:
+            raise XAirRemoteError("expected value in range 20 to 20000")
         self.setter("filter/f", log_set(20, 20000, val))
 
 
@@ -438,8 +398,6 @@ class Insert:
 
     @on.setter
     def on(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("on is a boolean parameter")
         self.setter("on", 1 if val else 0)
 
     @property
@@ -448,8 +406,6 @@ class Insert:
 
     @sel.setter
     def sel(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("sel is an int parameter")
         self.setter("sel", val)
 
 
@@ -495,8 +451,6 @@ class EQ:
 
     @on.setter
     def on(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("on is a boolean parameter")
         self.setter("on", 1 if val else 0)
 
     @property
@@ -507,8 +461,8 @@ class EQ:
     @mode.setter
     def mode(self, val: str):
         opts = ("peq", "geq", "teq")
-        if not isinstance(val, str) and val not in opts:
-            raise XAirRemoteError(f"mode is a string parameter, expected one of {opts}")
+        if val not in opts:
+            raise XAirRemoteError(f"expected one of {opts}")
         self.setter("mode", opts.index(val))
 
     class EQBand:
@@ -530,8 +484,6 @@ class EQ:
 
         @type.setter
         def type(self, val: int):
-            if not isinstance(val, int):
-                raise XAirRemoteError("type is an int parameter")
             self.setter(f"type", val)
 
         @property
@@ -541,6 +493,8 @@ class EQ:
 
         @frequency.setter
         def frequency(self, val: float):
+            if not 20 <= val <= 20000:
+                raise XAirRemoteError("expected value in range 20.0 to 20000.0")
             self.setter("f", log_set(20, 20000, val))
 
         @property
@@ -549,6 +503,8 @@ class EQ:
 
         @gain.setter
         def gain(self, val: float):
+            if not -15 <= val <= 15:
+                raise XAirRemoteError("expected value in range -15.0 to 15.0")
             self.setter("g", lin_set(-15, 15, val))
 
         @property
@@ -558,6 +514,8 @@ class EQ:
 
         @quality.setter
         def quality(self, val: float):
+            if not 0.3 <= val <= 10:
+                raise XAirRemoteError("expected value in range 0.3 to 10.0")
             self.setter("q", log_set(0.3, 10, val))
 
 
@@ -600,8 +558,6 @@ class Mix:
 
     @on.setter
     def on(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("on is a boolean parameter")
         self.setter("on", 1 if val else 0)
 
     @property
@@ -619,8 +575,6 @@ class Mix:
 
     @lr.setter
     def lr(self, val: bool):
-        if not isinstance(val, bool):
-            raise XAirRemoteError("lr is a boolean parameter")
         self.setter("lr", 1 if val else 0)
 
 
@@ -636,8 +590,6 @@ class Group:
 
     @dca.setter
     def dca(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("dca is an int parameter")
         self.setter("dca", val)
 
     @property
@@ -646,8 +598,6 @@ class Group:
 
     @mute.setter
     def mute(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("mute is an int parameter")
         self.setter("mute", val)
 
 
@@ -663,8 +613,6 @@ class Automix:
 
     @group.setter
     def group(self, val: int):
-        if not isinstance(val, int):
-            raise XAirRemoteError("group is an int parameter")
         self.setter("group", val)
 
     @property
@@ -673,8 +621,6 @@ class Automix:
 
     @weight.setter
     def weight(self, val: float):
-        if not isinstance(val, float):
-            raise XAirRemoteError(
-                "weight is a float parameter, expected value in range -12 to 12"
-            )
+        if not -12 <= val <= 12:
+            raise XAirRemoteError("expected value in range -12.0 to 12.0")
         self.setter("weight", lin_set(-12, 12, val))
