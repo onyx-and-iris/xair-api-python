@@ -47,20 +47,20 @@ class TestSetAndGetBusConfigHigher:
 """ AUXIN TESTS """
 
 
-class TestSetAndGetAuxInConfigHigher:
-    """Config"""
+class TestSetAndGetAuxInPreampHigher:
+    """Preamp"""
 
     __test__ = True
 
     def setup_class(self):
         self.target = getattr(tests, "auxin")
-        self.target = getattr(self.target[data.auxrtn], "config")
+        self.target = getattr(self.target[data.auxrtn], "preamp")
 
     @pytest.mark.parametrize(
         "param,value",
-        [("name", "test0"), ("name", "test1")],
+        [("invert", True), ("invert", False)],
     )
-    def test_it_sets_and_gets_auxrtn_string_params(self, param, value):
+    def test_it_sets_and_gets_auxrtn_bool_params(self, param, value):
         setattr(self.target, param, value)
         assert getattr(self.target, param) == value
 
@@ -68,20 +68,20 @@ class TestSetAndGetAuxInConfigHigher:
 """ FX RETURN TESTS """
 
 
-class TestSetAndGetFXReturnConfigHigher:
-    """Config"""
+class TestSetAndGetFXReturnEQHigher:
+    """EQ"""
 
     __test__ = True
 
     def setup_class(self):
         self.target = getattr(tests, "fxreturn")
-        self.target = getattr(self.target[data.fx], "config")
+        self.target = getattr(self.target[data.fx], "eq")
 
     @pytest.mark.parametrize(
         "param,value",
-        [("name", "test0"), ("name", "test1")],
+        [("on", True), ("on", False)],
     )
-    def test_it_sets_and_gets_fxrtn_string_params(self, param, value):
+    def test_it_sets_and_gets_fxrtn_bool_params(self, param, value):
         setattr(self.target, param, value)
         assert getattr(self.target, param) == value
 
@@ -89,19 +89,39 @@ class TestSetAndGetFXReturnConfigHigher:
 """ MATRIX TESTS """
 
 
-class TestSetAndGetMatrixConfigHigher:
-    """Config"""
+class TestSetAndGetMatrixDynHigher:
+    """Dyn"""
 
     __test__ = True
 
     def setup_class(self):
         self.target = getattr(tests, "matrix")
-        self.target = getattr(self.target[data.matrix], "config")
+        self.target = getattr(self.target[data.matrix], "dyn")
 
     @pytest.mark.parametrize(
         "param,value",
-        [("name", "test0"), ("name", "test1")],
+        [("mode", "comp"), ("mode", "exp")],
     )
     def test_it_sets_and_gets_matrix_string_params(self, param, value):
+        setattr(self.target, param, value)
+        assert getattr(self.target, param) == value
+
+
+""" MAIN STEREO TESTS """
+
+
+class TestSetAndGetMainStereoInsertHigher:
+    """Insert"""
+
+    __test__ = True
+
+    def setup_class(self):
+        self.target = getattr(tests, "mainst")
+
+    @pytest.mark.parametrize(
+        "param,value",
+        [("mode", "comp"), ("mode", "exp")],
+    )
+    def test_it_sets_and_gets_mainst_string_params(self, param, value):
         setattr(self.target, param, value)
         assert getattr(self.target, param) == value

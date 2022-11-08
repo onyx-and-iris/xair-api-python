@@ -8,7 +8,7 @@ from xair_api import kinds
 kind_id = "X32"
 ip = "x32.local"
 
-tests = xair_api.connect(kind_id, ip=ip)
+tests = xair_api.connect(kind_id, ip=ip, delay=0.008)
 
 kind = kinds.get(kind_id)
 

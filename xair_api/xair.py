@@ -48,8 +48,6 @@ class XAirRemote(abc.ABC):
     logger = logging.getLogger("xair.xairremote")
 
     _CONNECT_TIMEOUT = 0.5
-    _WAIT_TIME = 0.025
-    _REFRESH_TIMEOUT = 5
 
     _info_response = []
 
@@ -58,8 +56,9 @@ class XAirRemote(abc.ABC):
         dispatcher.set_default_handler(self.msg_handler)
         self.xair_ip = kwargs["ip"] or self._ip_from_toml()
         self.xair_port = kwargs["port"]
-        if not (self.xair_ip and self.xair_port):
-            raise XAirRemoteError("No valid ip or password detected")
+        self._delay = kwargs["delay"]
+        if not self.xair_ip:
+            raise XAirRemoteError("No valid ip detected")
         self.server = OSCClientServer((self.xair_ip, self.xair_port), dispatcher)
 
     def __enter__(self):
@@ -79,7 +78,7 @@ class XAirRemote(abc.ABC):
         time.sleep(self._CONNECT_TIMEOUT)
         if not self.info_response:
             raise XAirRemoteError(
-                "Error: Failed to setup OSC connection to mixer. Please check for correct ip address."
+                "Failed to setup OSC connection to mixer. Please check for correct ip address."
             )
         print(
             f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
@@ -99,7 +98,7 @@ class XAirRemote(abc.ABC):
     def send(self, addr: str, param: Optional[str] = None):
         self.logger.debug(f"sending: {addr} {param if param is not None else ''}")
         self.server.send_message(addr, param)
-        time.sleep(self._WAIT_TIME)
+        time.sleep(self._delay)
 
     def query(self, address):
         self.send(address)
@@ -117,7 +116,7 @@ def _make_remote(kind: KindMap) -> XAirRemote:
     """
 
     def init_x32(self, *args, **kwargs):
-        defaultkwargs = {"ip": None, "port": 10023}
+        defaultkwargs = {"ip": None, "port": 10023, "delay": 0.02}
         kwargs = defaultkwargs | kwargs
         XAirRemote.__init__(self, *args, **kwargs)
         self.kind = kind
@@ -135,7 +134,7 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.config = Config.make(self)
 
     def init_xair(self, *args, **kwargs):
-        defaultkwargs = {"ip": None, "port": 10024}
+        defaultkwargs = {"ip": None, "port": 10024, "delay": 0.02}
         kwargs = defaultkwargs | kwargs
         XAirRemote.__init__(self, *args, **kwargs)
         self.kind = kind

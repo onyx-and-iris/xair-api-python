@@ -55,7 +55,7 @@ if __name__ == "__main__":
     main()
 ```
 
-## API
+#### `xair_api.connect(kind_id, ip=ip, delay=delay)`
 
 Currently the following devices are supported:
 
@@ -64,7 +64,16 @@ Currently the following devices are supported:
 -   `XR16`
 -   `XR12`
 
-The `X32` is partially supported. This document covers specifically the `XAir` series, however.
+The `X32` is partially supported. However, this document covers specifically the `XAir` series.
+
+The following keyword arguments may be passed:
+
+-   `ip`: ip address of the mixer
+-   `port`: mixer port, defaults to 10023 for x32 and 10024 for xair
+-   `delay`: a delay between each command, defaults to 20ms.
+    -   a note about delay, stability may rely on network connection. For wired connections the delay can be safely reduced.
+
+## API
 
 ### XAirRemote class (higher level)
 
