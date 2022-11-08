@@ -64,6 +64,8 @@ def geq_prop(param):
         return round(lin_get(-15, 15, self.getter(param)[0]), 1)
 
     def fset(self, val):
+        if not -15 <= val <= 15:
+            raise XAirRemoteError("expected value in range -15.0 to 15.0")
         self.setter(param, lin_set(-15, 15, val))
 
     return property(fget, fset)
