@@ -10,7 +10,7 @@ Before any major/minor/patch bump all unit tests will be run to verify they pass
 ## [Unreleased]
 
 -   [x] delay now settable with keyword arg.
--   [ ] type checks removed, prefer duck typing
+-   [x] type checks removed, prefer duck typing
 
 ## [2.0.0] - 2022-11-07
 
