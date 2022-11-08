@@ -269,12 +269,14 @@ For the subclass `monitor` the following properties are available
 
 -   `level`: float, -inf to 10.0
 -   `source`: int, from 0 to 14
--   `chmode` bool
--   `busmode` bool
--   `dim` bool
--   `mono` bool
--   `mute` bool
--   `dimfpl` bool
+-   `sourcetrim`: float, from -18.0 to 18.0
+-   `chmode`: bool
+-   `busmode`: bool
+-   `dim`: bool
+-   `dimgain`: float, from -40.0 to 0.0
+-   `mono`: bool
+-   `mute`: bool
+-   `dimfpl`: bool
 
 for example: `config.monitor.chmode`
 
