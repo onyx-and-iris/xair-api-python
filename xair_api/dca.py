@@ -38,6 +38,14 @@ class DCA(IDCA):
         self.setter("on", 1 if val else 0)
 
     @property
+    def mute(self) -> bool:
+        return not self.on
+
+    @mute.setter
+    def mute(self, val: bool):
+        self.on = not val
+
+    @property
     def name(self) -> str:
         return self.getter("config/name")[0]
 

@@ -106,6 +106,23 @@ class TestSetAndGetLRGEQHigher:
 """ STRIP TESTS """
 
 
+class TestSetAndGetStripMuteHigher:
+    """Mute"""
+
+    __test__ = True
+
+    def setup_class(self):
+        self.target = getattr(tests, "strip")[data.strip]
+
+    @pytest.mark.parametrize(
+        "param,value",
+        [("mute", True), ("mute", False)],
+    )
+    def test_it_sets_and_gets_strip_mute_bool_params(self, param, value):
+        setattr(self.target, param, value)
+        assert getattr(self.target, param) == value
+
+
 class TestSetAndGetStripMixHigher:
     """Mix"""
 
