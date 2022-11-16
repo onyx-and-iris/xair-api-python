@@ -2,6 +2,7 @@ import abc
 from typing import Optional
 
 from .errors import XAirRemoteError
+from .meta import mute_prop
 from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
@@ -50,7 +51,8 @@ class AuxRtn(IRtn):
                         Mix,
                         Group,
                     )
-                }
+                },
+                "mute": mute_prop(),
             },
         )
         return AUXRTN_cls(remote, index)
@@ -58,14 +60,6 @@ class AuxRtn(IRtn):
     @property
     def address(self):
         return "/rtn/aux"
-
-    @property
-    def mute(self) -> bool:
-        return not self.mix.on
-
-    @mute.setter
-    def mute(self, val: bool):
-        self.mix.on = not val
 
 
 class FxRtn(IRtn):
@@ -93,7 +87,8 @@ class FxRtn(IRtn):
                         Mix,
                         Group,
                     )
-                }
+                },
+                "mute": mute_prop(),
             },
         )
         return FXRTN_cls(remote, index)
@@ -101,11 +96,3 @@ class FxRtn(IRtn):
     @property
     def address(self):
         return f"/rtn/{self.index}"
-
-    @property
-    def mute(self) -> bool:
-        return not self.mix.on
-
-    @mute.setter
-    def mute(self, val: bool):
-        self.mix.on = not val

@@ -1,6 +1,7 @@
 import abc
 
 from .errors import XAirRemoteError
+from .meta import mute_prop
 from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
@@ -35,6 +36,7 @@ class Strip(IStrip):
 
         Returns a Strip class of a kind.
         """
+
         STRIP_cls = type(
             f"Strip{remote.kind}",
             (cls,),
@@ -55,6 +57,7 @@ class Strip(IStrip):
                         Automix,
                     )
                 },
+                "mute": mute_prop(),
             },
         )
         return STRIP_cls(remote, index)
@@ -62,11 +65,3 @@ class Strip(IStrip):
     @property
     def address(self) -> str:
         return f"/ch/{str(self.index).zfill(2)}"
-
-    @property
-    def mute(self) -> bool:
-        return not self.mix.on
-
-    @mute.setter
-    def mute(self, val: bool):
-        self.mix.on = not val

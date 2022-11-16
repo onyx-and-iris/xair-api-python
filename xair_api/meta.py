@@ -69,3 +69,13 @@ def geq_prop(param):
         self.setter(param, lin_set(-15, 15, val))
 
     return property(fget, fset)
+
+
+def mute_prop():
+    def fget(self):
+        return not self.mix.on
+
+    def fset(self, val):
+        self.mix.on = not val
+
+    return property(fget, fset)

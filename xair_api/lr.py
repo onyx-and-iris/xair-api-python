@@ -2,6 +2,7 @@ import abc
 from typing import Optional
 
 from .errors import XAirRemoteError
+from .meta import mute_prop
 from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
@@ -54,6 +55,7 @@ class LR(ILR):
                         Mix,
                     )
                 },
+                "mute": mute_prop(),
             },
         )
         return LR_cls(remote, index)
@@ -61,11 +63,3 @@ class LR(ILR):
     @property
     def address(self) -> str:
         return f"/lr"
-
-    @property
-    def mute(self) -> bool:
-        return not self.mix.on
-
-    @mute.setter
-    def mute(self, val: bool):
-        self.mix.on = not val

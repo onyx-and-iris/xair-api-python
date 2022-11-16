@@ -1,6 +1,7 @@
 import abc
 
 from .errors import XAirRemoteError
+from .meta import mute_prop
 from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
@@ -52,7 +53,8 @@ class Bus(IBus):
                         Mix,
                         Group,
                     )
-                }
+                },
+                "mute": mute_prop(),
             },
         )
         return BUS_cls(remote, index)
@@ -60,11 +62,3 @@ class Bus(IBus):
     @property
     def address(self) -> str:
         return f"/bus/{self.index}"
-
-    @property
-    def mute(self) -> bool:
-        return not self.mix.on
-
-    @mute.setter
-    def mute(self, val: bool):
-        self.mix.on = not val

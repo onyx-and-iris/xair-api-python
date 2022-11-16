@@ -1,6 +1,7 @@
 import abc
 
 from .errors import XAirRemoteError
+from .meta import mute_prop
 from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
 
 
@@ -60,7 +61,8 @@ class FXSend(IFX):
                         f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
                     )(remote, index)
                     for _cls in (Config, Mix, Group)
-                }
+                },
+                "mute": mute_prop(),
             },
         )
         return FXSEND_cls(remote, index)
@@ -68,11 +70,3 @@ class FXSend(IFX):
     @property
     def address(self) -> str:
         return f"/fxsend/{self.index}"
-
-    @property
-    def mute(self) -> bool:
-        return not self.mix.on
-
-    @mute.setter
-    def mute(self, val: bool):
-        self.mix.on = not val
