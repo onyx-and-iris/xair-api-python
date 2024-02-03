@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xair-api"
-version = "2.2.2"
+version = "2.2.3"
 description = "Remote control Behringer X-Air | Midas MR mixers through OSC"
 authors = ["onyx-and-iris <code@onyxandiris.online>"]
 license = "MIT"
