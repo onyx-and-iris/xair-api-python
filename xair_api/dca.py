@@ -11,8 +11,7 @@ class IDCA(abc.ABC):
         self.index = index + 1
 
     def getter(self, param: str) -> tuple:
-        self._remote.send(f"{self.address}/{param}")
-        return self._remote.info_response
+        return self._remote.query(f"{self.address}/{param}")
 
     def setter(self, param: str, val: int):
         self._remote.send(f"{self.address}/{param}", val)

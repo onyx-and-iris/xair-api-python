@@ -98,10 +98,10 @@ class XAirRemote(abc.ABC):
     def send(self, addr: str, param: Optional[str] = None):
         self.logger.debug(f"sending: {addr} {param if param is not None else ''}")
         self.server.send_message(addr, param)
-        time.sleep(self._delay)
 
     def query(self, address):
         self.send(address)
+        time.sleep(self._delay)
         return self.info_response
 
     def __exit__(self, exc_type, exc_value, exc_tr):

@@ -13,8 +13,7 @@ class IConfig(abc.ABC):
         self._remote = remote
 
     def getter(self, param: str):
-        self._remote.send(f"{self.address}/{param}")
-        return self._remote.info_response
+        return self._remote.query(f"{self.address}/{param}")
 
     def setter(self, param: str, val: int):
         self._remote.send(f"{self.address}/{param}", val)
