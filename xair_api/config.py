@@ -90,12 +90,12 @@ class Config(IConfig):
             return f"{root}/solo"
 
         @property
-        @util.from_db
+        @util.db_from
         def level(self) -> float:
             return self.getter("level")[0]
 
         @level.setter
-        @util.to_db
+        @util.db_to
         def level(self, val: float):
             self.setter("level", val)
 

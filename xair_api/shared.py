@@ -561,12 +561,12 @@ class Mix:
         self.setter("on", 1 if val else 0)
 
     @property
-    @util.from_db
+    @util.db_from
     def fader(self) -> float:
         return self.getter("fader")[0]
 
     @fader.setter
-    @util.to_db
+    @util.db_to
     def fader(self, val: float):
         self.setter("fader", val)
 
@@ -636,8 +636,8 @@ class Send:
 
     @classmethod
     def make(cls, _cls, remote, i, index=None):
-        STRIPSEND_cls = type("Send", (cls, _cls), {})
-        return STRIPSEND_cls(remote, i, index)
+        SEND_cls = type("Send", (cls, _cls), {})
+        return SEND_cls(remote, i, index)
 
     @property
     def address(self) -> str:
@@ -645,11 +645,11 @@ class Send:
         return f"{root}/mix/{str(self.i).zfill(2)}"
 
     @property
-    @util.from_db
+    @util.db_from
     def level(self):
         return self.getter("level")[0]
 
     @level.setter
-    @util.to_db
+    @util.db_to
     def level(self, val):
         self.setter("level", val)

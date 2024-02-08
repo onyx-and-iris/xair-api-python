@@ -18,7 +18,7 @@ def log_set(min, max, val):
     return log(val / min) / log(max / min)
 
 
-def from_db(func):
+def db_from(func):
     """fader|level converter for getters"""
 
     @functools.wraps(func)
@@ -41,7 +41,7 @@ def from_db(func):
     return wrapper
 
 
-def to_db(func):
+def db_to(func):
     """fader|level converter for setters"""
 
     @functools.wraps(func)
