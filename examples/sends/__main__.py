@@ -11,8 +11,11 @@ def main():
             send.level = -22.8
 
         mixer.strip[15].send[0].level = -16.3
+        print(mixer.strip[15].send[0].level)
         mixer.auxreturn.send[0].level = -15.3
+        print(mixer.auxreturn.send[0].level)
         mixer.fxreturn[0].send[0].level = -14.3
+        print(mixer.fxreturn[0].send[0].level)
 
 
 if __name__ == "__main__":
