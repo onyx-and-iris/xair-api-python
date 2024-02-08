@@ -1,9 +1,8 @@
 import abc
 
-from . import kinds
+from . import kinds, util
 from .errors import XAirRemoteError
 from .meta import bool_prop
-from .util import _get_level_val, _set_level_val, lin_get, lin_set
 
 
 class IConfig(abc.ABC):
@@ -91,13 +90,14 @@ class Config(IConfig):
             return f"{root}/solo"
 
         @property
+        @util.from_db
         def level(self) -> float:
-            retval = self.getter("level")[0]
-            return _get_level_val(retval)
+            return self.getter("level")[0]
 
         @level.setter
+        @util.to_db
         def level(self, val: float):
-            _set_level_val(self, val)
+            self.setter("level", val)
 
         @property
         def source(self) -> int:
@@ -109,13 +109,13 @@ class Config(IConfig):
 
         @property
         def sourcetrim(self) -> float:
-            return round(lin_get(-18, 18, self.getter("sourcetrim")[0]), 1)
+            return round(util.lin_get(-18, 18, self.getter("sourcetrim")[0]), 1)
 
         @sourcetrim.setter
         def sourcetrim(self, val: float):
             if not -18 <= val <= 18:
                 raise XAirRemoteError("expected value in range -18.0 to 18.0")
-            self.setter("sourcetrim", lin_set(-18, 18, val))
+            self.setter("sourcetrim", util.lin_set(-18, 18, val))
 
         @property
         def chmode(self) -> bool:
@@ -135,13 +135,13 @@ class Config(IConfig):
 
         @property
         def dimgain(self) -> int:
-            return int(lin_get(-40, 0, self.getter("dimatt")[0]))
+            return int(util.lin_get(-40, 0, self.getter("dimatt")[0]))
 
         @dimgain.setter
         def dimgain(self, val: int):
             if not -40 <= val <= 0:
                 raise XAirRemoteError("expected value in range -40 to 0")
-            self.setter("dimatt", lin_set(-40, 0, val))
+            self.setter("dimatt", util.lin_set(-40, 0, val))
 
         @property
         def dim(self) -> bool:
