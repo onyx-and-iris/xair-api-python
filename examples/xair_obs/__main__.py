@@ -1,12 +1,19 @@
 import obsws_python as obs
+
 import xair_api
 
 
 class Observer:
     def __init__(self, mixer):
         self._mixer = mixer
-        self._cl = obs.EventClient()
-        self._cl.callback.register(self.on_current_program_scene_changed)
+        self._client = obs.EventClient()
+        self._client.callback.register(self.on_current_program_scene_changed)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, exc_traceback):
+        self._client.disconnect()
 
     def on_current_program_scene_changed(self, data):
         scene = data.scene_name
@@ -28,11 +35,9 @@ class Observer:
 
 def main():
     with xair_api.connect("MR18", ip="mixer.local") as mixer:
-        Observer(mixer)
-
-        while cmd := input("<Enter> to exit\n"):
-            if not cmd:
-                break
+        with Observer(mixer):
+            while _ := input("Press <Enter> to exit\n"):
+                pass
 
 
 if __name__ == "__main__":
