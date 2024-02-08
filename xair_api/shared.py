@@ -467,10 +467,7 @@ class EQ:
 
     class EQBand:
         def __init__(self, i, remote, index):
-            if index is None:
-                super(EQ.EQBand, self).__init__(remote)
-            else:
-                super(EQ.EQBand, self).__init__(remote, index)
+            super(EQ.EQBand, self).__init__(remote, index)
             self.i = i
 
         @property
@@ -629,9 +626,7 @@ class Automix:
 
 class Send:
     def __init__(self, remote, i, index: Optional[int] = None):
-        self._remote = remote
-        if index is not None:
-            self.index = index + 1
+        super(Send, self).__init__(remote, index)
         self.i = i + 1
 
     @classmethod
