@@ -630,9 +630,9 @@ class Send:
         self.i = i + 1
 
     @classmethod
-    def make(cls, _cls, remote, i, index=None):
+    def make(cls, _cls, i, remote, index=None):
         SEND_cls = type("Send", (cls, _cls), {})
-        return SEND_cls(remote, i, index)
+        return SEND_cls(i, remote, index)
 
     @property
     def address(self) -> str:
