@@ -7,7 +7,7 @@ from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Pre
 
 
 class ILR(abc.ABC):
-    """Abstract Base Class for buses"""
+    """Abstract Base Class for lr"""
 
     def __init__(self, remote, index: Optional[int] = None):
         self._remote = remote
@@ -26,7 +26,7 @@ class ILR(abc.ABC):
 
 
 class LR(ILR):
-    """Concrete class for buses"""
+    """Concrete class for lr"""
 
     @classmethod
     def make(cls, remote, index=None):

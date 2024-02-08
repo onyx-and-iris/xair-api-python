@@ -19,7 +19,7 @@ from .shared import (
 
 
 class IRtn(abc.ABC):
-    """Abstract Base Class for aux"""
+    """Abstract Base Class for rtn"""
 
     def __init__(self, remote, index: Optional[int] = None):
         self._remote = remote
@@ -38,7 +38,7 @@ class IRtn(abc.ABC):
 
 
 class AuxRtn(IRtn):
-    """Concrete class for aux"""
+    """Concrete class for auxrtn"""
 
     @classmethod
     def make(cls, remote, index=None):
@@ -80,7 +80,7 @@ class AuxRtn(IRtn):
 
 
 class FxRtn(IRtn):
-    """Concrete class for rtn"""
+    """Concrete class for fxrtn"""
 
     @classmethod
     def make(cls, remote, index):
