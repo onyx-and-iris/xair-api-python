@@ -66,7 +66,7 @@ class AuxRtn(IRtn):
                     )
                 },
                 "send": tuple(
-                    Send.make(cls, remote, i)
+                    Send.make(cls, i, remote)
                     for i in range(remote.kind.num_bus + remote.kind.num_fx)
                 ),
                 "mute": mute_prop(),
@@ -108,7 +108,7 @@ class FxRtn(IRtn):
                     )
                 },
                 "send": tuple(
-                    Send.make(cls, remote, i, index)
+                    Send.make(cls, i, remote, index)
                     for i in range(remote.kind.num_bus + remote.kind.num_fx)
                 ),
                 "mute": mute_prop(),

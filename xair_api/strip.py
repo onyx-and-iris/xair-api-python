@@ -69,7 +69,7 @@ class Strip(IStrip):
                     )
                 },
                 "send": tuple(
-                    Send.make(cls, remote, i, index)
+                    Send.make(cls, i, remote, index)
                     for i in range(remote.kind.num_bus + remote.kind.num_fx)
                 ),
                 "mute": mute_prop(),

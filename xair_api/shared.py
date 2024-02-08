@@ -625,7 +625,7 @@ class Automix:
 
 
 class Send:
-    def __init__(self, remote, i, index: Optional[int] = None):
+    def __init__(self, i, remote, index: Optional[int] = None):
         super(Send, self).__init__(remote, index)
         self.i = i + 1
 
