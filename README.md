@@ -12,7 +12,7 @@ For an outline of past/future changes refer to: [CHANGELOG](CHANGELOG.md)
 
 ## Prerequisites
 
--   Python 3.10 or greater
+- Python 3.10 or greater
 
 ## Installation
 
@@ -59,19 +59,19 @@ if __name__ == "__main__":
 
 Currently the following devices are supported:
 
--   `MR18`
--   `XR18`
--   `XR16`
--   `XR12`
+- `MR18`
+- `XR18`
+- `XR16`
+- `XR12`
 
 The `X32` is partially supported. However, this document covers specifically the `XAir` series.
 
 The following keyword arguments may be passed:
 
--   `ip`: ip address of the mixer
--   `port`: mixer port, defaults to 10023 for x32 and 10024 for xair
--   `delay`: a delay between each command, defaults to 20ms.
-    -   a note about delay, stability may rely on network connection. For wired connections the delay can be safely reduced.
+- `ip`: ip address of the mixer
+- `port`: mixer port, defaults to 10023 for x32 and 10024 for xair
+- `delay`: a delay between each command (applies to the getters). Defaults to 20ms.
+  - a note about delay, stability may rely on network connection. For wired connections the delay can be safely reduced.
 
 ## API
 
@@ -149,134 +149,134 @@ For each subclass the corresponding properties are available.
 
 `Config`
 
--   `name`: string
--   `color`: int, from 0, 16
--   `inputsource`: int
--   `usbreturn`: int
+- `name`: string
+- `color`: int, from 0, 16
+- `inputsource`: int
+- `usbreturn`: int
 
 `Preamp`
 
--   `on`: bool
--   `usbtrim`: float, from -18.0 to 18.0
--   `usbinput`: bool
--   `invert`: bool
--   `highpasson`: bool
--   `highpassfilter`: int, from 20 to 400
+- `on`: bool
+- `usbtrim`: float, from -18.0 to 18.0
+- `usbinput`: bool
+- `invert`: bool
+- `highpasson`: bool
+- `highpassfilter`: int, from 20 to 400
 
 `Gate`
 
--   `on`: bool
--   `mode`: str, one of ('gate', 'exp2', 'exp3', 'exp4', 'duck')
--   `threshold`: float, from -80.0 to 0.0
--   `range`: int, from 3 to 60
--   `attack`: int, from 0 to 120
--   `hold`: float, from 0.02 to 2000
--   `release`: int, from 5 to 4000
--   `keysource`, from 0 to 22
--   `filteron`: bool
--   `filtertype`: int, from 0 to 8
--   `filterfreq`: float, from 20 to 20000
+- `on`: bool
+- `mode`: str, one of ('gate', 'exp2', 'exp3', 'exp4', 'duck')
+- `threshold`: float, from -80.0 to 0.0
+- `range`: int, from 3 to 60
+- `attack`: int, from 0 to 120
+- `hold`: float, from 0.02 to 2000
+- `release`: int, from 5 to 4000
+- `keysource`, from 0 to 22
+- `filteron`: bool
+- `filtertype`: int, from 0 to 8
+- `filterfreq`: float, from 20 to 20000
 
 `Dyn`
 
--   `on`: bool
--   `mode`: str, one of ('comp', 'exp')
--   `det`: str, one of ('peak', 'rms')
--   `env`: str, one of ('lin', 'log')
--   `threshold`: float, from -60.0 to 0.0
--   `ratio`: int, from 0 to 11
--   `knee`: int, from 0 to 5
--   `mgain`: float, from 0.0 to 24.0
--   `attack`: int, from 0 to 120
--   `hold`: float, from 0.02 to 2000
--   `release`: int, from 5 to 4000
--   `mix`: int, from 0 to 100
--   `keysource`: int, from 0 to 22
--   `auto`: bool
--   `filteron`: bool
--   `filtertype`: int, from 0 to 8
--   `filterfreq`: float, from 20 to 20000
+- `on`: bool
+- `mode`: str, one of ('comp', 'exp')
+- `det`: str, one of ('peak', 'rms')
+- `env`: str, one of ('lin', 'log')
+- `threshold`: float, from -60.0 to 0.0
+- `ratio`: int, from 0 to 11
+- `knee`: int, from 0 to 5
+- `mgain`: float, from 0.0 to 24.0
+- `attack`: int, from 0 to 120
+- `hold`: float, from 0.02 to 2000
+- `release`: int, from 5 to 4000
+- `mix`: int, from 0 to 100
+- `keysource`: int, from 0 to 22
+- `auto`: bool
+- `filteron`: bool
+- `filtertype`: int, from 0 to 8
+- `filterfreq`: float, from 20 to 20000
 
 `Insert`
 
--   `on`: bool
--   `sel`: int
+- `on`: bool
+- `sel`: int
 
 `GEQ`
 The following method names preceded by `slider_`
 
--   `20`, `25`, `31_5`, `40`, `50`, `63`, `80`, `100`, `125`, `160`,
--   `200`, `250`, `315`, `400`, `500`, `630`, `800`, `1k`, `1k25`, `1k6`, `2k`,
--   `2k5`, `3k15`, `4k`, `5k`, `6k3`, `8k`, `10k`, `12k5`, `16k`, `20k`: float, from -15.0 to 15.0
+- `20`, `25`, `31_5`, `40`, `50`, `63`, `80`, `100`, `125`, `160`,
+- `200`, `250`, `315`, `400`, `500`, `630`, `800`, `1k`, `1k25`, `1k6`, `2k`,
+- `2k5`, `3k15`, `4k`, `5k`, `6k3`, `8k`, `10k`, `12k5`, `16k`, `20k`: float, from -15.0 to 15.0
 
 for example: `slider_20`, `slider_6k3` etc..
 
 `EQ`
 
--   `on`: bool
--   `mode`: str, one of ('peq', 'geq', 'teq')
+- `on`: bool
+- `mode`: str, one of ('peq', 'geq', 'teq')
 
 For the subclasses: `low`, `low2`, `lomid`, `himid`, `high2`, `high` the following properties are available:
 
--   `type`: int, from 0 to 5
--   `frequency`: float, from 20.0 to 20000.0
--   `gain`: float, -15.0 to 15.0
--   `quality`: float, from 0.3 to 10.0
+- `type`: int, from 0 to 5
+- `frequency`: float, from 20.0 to 20000.0
+- `gain`: float, -15.0 to 15.0
+- `quality`: float, from 0.3 to 10.0
 
 for example: `eq.low2.type`
 
 `Mix`
 
--   `on`: bool
--   `fader`: float, -inf, to 10.0
--   `lr`: bool
+- `on`: bool
+- `fader`: float, -inf, to 10.0
+- `lr`: bool
 
 `Group`
 
--   `dca`: int, from 0 to 15
--   `mute`: int, from 0 to 15
+- `dca`: int, from 0 to 15
+- `mute`: int, from 0 to 15
 
 `Automix`
 
--   `group`: int, from 0 to 2
--   `weight`: float, from -12.0 to 12.0
+- `group`: int, from 0 to 2
+- `weight`: float, from -12.0 to 12.0
 
 ### `DCA`
 
--   `on`: bool
--   `name`: str
--   `color`: int, from 0 to 15
+- `on`: bool
+- `name`: str
+- `color`: int, from 0 to 15
 
 ### `Config`
 
 The following method names preceded by `chlink`
 
--   `1_2`, `3_4`, `5_6`, `7_8`, `9_10`, `11_12`, `13_14`, `15_16`
+- `1_2`, `3_4`, `5_6`, `7_8`, `9_10`, `11_12`, `13_14`, `15_16`
 
 The following method names preceded by `buslink`
 
--   `1_2`, `3_4`, `5_6`
+- `1_2`, `3_4`, `5_6`
 
 for example: `chlink1_2`, `buslink5_6` etc..
 
--   `link_eq`: bool
--   `link_dyn`: bool
--   `link_fader_mute`: bool
--   `amixenable`: bool
--   `amixlock`: bool
+- `link_eq`: bool
+- `link_dyn`: bool
+- `link_fader_mute`: bool
+- `amixenable`: bool
+- `amixlock`: bool
 
 For the subclass `monitor` the following properties are available
 
--   `level`: float, -inf to 10.0
--   `source`: int, from 0 to 14
--   `sourcetrim`: float, from -18.0 to 18.0
--   `chmode`: bool
--   `busmode`: bool
--   `dim`: bool
--   `dimgain`: float, from -40.0 to 0.0
--   `mono`: bool
--   `mute`: bool
--   `dimfpl`: bool
+- `level`: float, -inf to 10.0
+- `source`: int, from 0 to 14
+- `sourcetrim`: float, from -18.0 to 18.0
+- `chmode`: bool
+- `busmode`: bool
+- `dim`: bool
+- `dimgain`: float, from -40.0 to 0.0
+- `mono`: bool
+- `mute`: bool
+- `dimfpl`: bool
 
 for example: `config.monitor.chmode`
 
@@ -284,7 +284,7 @@ for example: `config.monitor.chmode`
 
 tuple containing a class for each mute group
 
--   `on`: bool, from 0 to 3
+- `on`: bool, from 0 to 3
 
 for example: `config.mute_group[0].on = True`
 
@@ -292,7 +292,7 @@ for example: `config.mute_group[0].on = True`
 
 Send an OSC command directly to the mixer
 
--   `send(osc command, value)`
+- `send(osc command, value)`
 
 for example:
 
@@ -303,7 +303,7 @@ mixer.send("/bus/2/config/name", "somename")
 
 Query the value of a command:
 
--   `query(osc command)`
+- `query(osc command)`
 
 for example:
 
