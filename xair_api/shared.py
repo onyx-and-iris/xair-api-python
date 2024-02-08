@@ -1,8 +1,8 @@
-from typing import Union
+from typing import Optional, Union
 
+from . import util
 from .errors import XAirRemoteError
 from .meta import geq_prop
-from .util import _get_fader_val, _set_fader_val, lin_get, lin_set, log_get, log_set
 
 """
 Classes shared by /ch, /rtn, /rtn/aux, /bus, /fxsend, /lr
@@ -56,13 +56,13 @@ class Preamp:
 
     @property
     def usbtrim(self) -> float:
-        return round(lin_get(-18, 18, self.getter("rtntrim")[0]), 1)
+        return round(util.lin_get(-18, 18, self.getter("rtntrim")[0]), 1)
 
     @usbtrim.setter
     def usbtrim(self, val: float):
         if not -18 <= val <= 18:
             raise XAirRemoteError("expected value in range -18.0 to 18.0")
-        self.setter("rtntrim", lin_set(-18, 18, val))
+        self.setter("rtntrim", util.lin_set(-18, 18, val))
 
     @property
     def usbinput(self) -> bool:
@@ -90,13 +90,13 @@ class Preamp:
 
     @property
     def highpassfilter(self) -> int:
-        return int(log_get(20, 400, self.getter("hpf")[0]))
+        return int(util.log_get(20, 400, self.getter("hpf")[0]))
 
     @highpassfilter.setter
     def highpassfilter(self, val: int):
         if not 20 <= val <= 400:
             raise XAirRemoteError("expected value in range 20 to 400")
-        self.setter("hpf", log_set(20, 400, val))
+        self.setter("hpf", util.log_set(20, 400, val))
 
 
 class Gate:
@@ -127,54 +127,54 @@ class Gate:
 
     @property
     def threshold(self) -> float:
-        return round(lin_get(-80, 0, self.getter("thr")[0]), 1)
+        return round(util.lin_get(-80, 0, self.getter("thr")[0]), 1)
 
     @threshold.setter
     def threshold(self, val: float):
         if not -80 <= val <= 0:
             raise XAirRemoteError("expected value in range -80.0 to 0.0")
-        self.setter("thr", lin_set(-80, 0, val))
+        self.setter("thr", util.lin_set(-80, 0, val))
 
     @property
     def range(self) -> int:
-        return int(lin_get(3, 60, self.getter("range")[0]))
+        return int(util.lin_get(3, 60, self.getter("range")[0]))
 
     @range.setter
     def range(self, val: int):
         if not 3 <= val <= 60:
             raise XAirRemoteError("expected value in range 3 to 60")
-        self.setter("range", lin_set(3, 60, val))
+        self.setter("range", util.lin_set(3, 60, val))
 
     @property
     def attack(self) -> int:
-        return int(lin_get(0, 120, self.getter("attack")[0]))
+        return int(util.lin_get(0, 120, self.getter("attack")[0]))
 
     @attack.setter
     def attack(self, val: int):
         if not 0 <= val <= 120:
             raise XAirRemoteError("expected value in range 0 to 120")
-        self.setter("attack", lin_set(0, 120, val))
+        self.setter("attack", util.lin_set(0, 120, val))
 
     @property
     def hold(self) -> Union[float, int]:
-        val = log_get(0.02, 2000, self.getter("hold")[0])
+        val = util.log_get(0.02, 2000, self.getter("hold")[0])
         return round(val, 1) if val < 100 else int(val)
 
     @hold.setter
     def hold(self, val: float):
         if not 0.02 <= val <= 2000:
             raise XAirRemoteError("expected value in range 0.02 to 2000.0")
-        self.setter("hold", log_set(0.02, 2000, val))
+        self.setter("hold", util.log_set(0.02, 2000, val))
 
     @property
     def release(self) -> int:
-        return int(log_get(5, 4000, self.getter("release")[0]))
+        return int(util.log_get(5, 4000, self.getter("release")[0]))
 
     @release.setter
     def release(self, val: int):
         if not 5 <= val <= 4000:
             raise XAirRemoteError("expected value in range 5 to 4000")
-        self.setter("release", log_set(5, 4000, val))
+        self.setter("release", util.log_set(5, 4000, val))
 
     @property
     def keysource(self):
@@ -202,14 +202,14 @@ class Gate:
 
     @property
     def filterfreq(self) -> Union[float, int]:
-        retval = log_get(20, 20000, self.getter("filter/f")[0])
+        retval = util.log_get(20, 20000, self.getter("filter/f")[0])
         return int(retval) if retval > 1000 else round(retval, 1)
 
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
         if not 20 <= val <= 20000:
             raise XAirRemoteError("expected value in range 20 to 20000")
-        self.setter("filter/f", log_set(20, 20000, val))
+        self.setter("filter/f", util.log_set(20, 20000, val))
 
 
 class Dyn:
@@ -264,13 +264,13 @@ class Dyn:
 
     @property
     def threshold(self) -> float:
-        return round(lin_get(-60, 0, self.getter("thr")[0]), 1)
+        return round(util.lin_get(-60, 0, self.getter("thr")[0]), 1)
 
     @threshold.setter
     def threshold(self, val: float):
         if not -60 <= val <= 0:
             raise XAirRemoteError("expected value in range -60.0 to 0")
-        self.setter("thr", lin_set(-60, 0, val))
+        self.setter("thr", util.lin_set(-60, 0, val))
 
     @property
     def ratio(self) -> Union[float, int]:
@@ -283,64 +283,64 @@ class Dyn:
 
     @property
     def knee(self) -> int:
-        return int(lin_get(0, 5, self.getter("knee")[0]))
+        return int(util.lin_get(0, 5, self.getter("knee")[0]))
 
     @knee.setter
     def knee(self, val: int):
         if not 0 <= val <= 5:
             raise XAirRemoteError("expected value in range 0 to 5")
-        self.setter("knee", lin_set(0, 5, val))
+        self.setter("knee", util.lin_set(0, 5, val))
 
     @property
     def mgain(self) -> float:
-        return round(lin_get(0, 24, self.getter("mgain")[0]), 1)
+        return round(util.lin_get(0, 24, self.getter("mgain")[0]), 1)
 
     @mgain.setter
     def mgain(self, val: float):
         if not 0 <= val <= 24:
             raise XAirRemoteError("expected value in range 0.0 to 24.0")
-        self.setter("mgain", lin_set(0, 24, val))
+        self.setter("mgain", util.lin_set(0, 24, val))
 
     @property
     def attack(self) -> int:
-        return int(lin_get(0, 120, self.getter("attack")[0]))
+        return int(util.lin_get(0, 120, self.getter("attack")[0]))
 
     @attack.setter
     def attack(self, val: int):
         if not 0 <= val <= 120:
             raise XAirRemoteError("expected value in range 0 to 120")
-        self.setter("attack", lin_set(0, 120, val))
+        self.setter("attack", util.lin_set(0, 120, val))
 
     @property
     def hold(self) -> Union[float, int]:
-        val = log_get(0.02, 2000, self.getter("hold")[0])
+        val = util.log_get(0.02, 2000, self.getter("hold")[0])
         return round(val, 1) if val < 100 else int(val)
 
     @hold.setter
     def hold(self, val: float):
         if not 0.02 <= val <= 2000:
             raise XAirRemoteError("expected value in range 0.02 to 2000.0")
-        self.setter("hold", log_set(0.02, 2000, val))
+        self.setter("hold", util.log_set(0.02, 2000, val))
 
     @property
     def release(self) -> int:
-        return int(log_get(5, 4000, self.getter("release")[0]))
+        return int(util.log_get(5, 4000, self.getter("release")[0]))
 
     @release.setter
     def release(self, val: int):
         if not 5 <= val <= 4000:
             raise XAirRemoteError("expected value in range 5 to 4000")
-        self.setter("release", log_set(5, 4000, val))
+        self.setter("release", util.log_set(5, 4000, val))
 
     @property
     def mix(self) -> int:
-        return int(lin_get(0, 100, self.getter("mix")[0]))
+        return int(util.lin_get(0, 100, self.getter("mix")[0]))
 
     @mix.setter
     def mix(self, val: int):
         if not 0 <= val <= 100:
             raise XAirRemoteError("expected value in range 0 to 100")
-        self.setter("mix", lin_set(0, 100, val))
+        self.setter("mix", util.lin_set(0, 100, val))
 
     @property
     def keysource(self):
@@ -376,14 +376,14 @@ class Dyn:
 
     @property
     def filterfreq(self) -> Union[float, int]:
-        retval = log_get(20, 20000, self.getter("filter/f")[0])
+        retval = util.log_get(20, 20000, self.getter("filter/f")[0])
         return int(retval) if retval > 1000 else round(retval, 1)
 
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
         if not 20 <= val <= 20000:
             raise XAirRemoteError("expected value in range 20 to 20000")
-        self.setter("filter/f", log_set(20, 20000, val))
+        self.setter("filter/f", util.log_set(20, 20000, val))
 
 
 class Insert:
@@ -488,35 +488,35 @@ class EQ:
 
         @property
         def frequency(self) -> float:
-            retval = log_get(20, 20000, self.getter("f")[0])
+            retval = util.log_get(20, 20000, self.getter("f")[0])
             return round(retval, 1)
 
         @frequency.setter
         def frequency(self, val: float):
             if not 20 <= val <= 20000:
                 raise XAirRemoteError("expected value in range 20.0 to 20000.0")
-            self.setter("f", log_set(20, 20000, val))
+            self.setter("f", util.log_set(20, 20000, val))
 
         @property
         def gain(self) -> float:
-            return round(lin_get(-15, 15, self.getter("g")[0]), 1)
+            return round(util.lin_get(-15, 15, self.getter("g")[0]), 1)
 
         @gain.setter
         def gain(self, val: float):
             if not -15 <= val <= 15:
                 raise XAirRemoteError("expected value in range -15.0 to 15.0")
-            self.setter("g", lin_set(-15, 15, val))
+            self.setter("g", util.lin_set(-15, 15, val))
 
         @property
         def quality(self) -> float:
-            retval = log_get(0.3, 10, self.getter("q")[0])
+            retval = util.log_get(0.3, 10, self.getter("q")[0])
             return round(retval, 1)
 
         @quality.setter
         def quality(self, val: float):
             if not 0.3 <= val <= 10:
                 raise XAirRemoteError("expected value in range 0.3 to 10.0")
-            self.setter("q", log_set(0.3, 10, val))
+            self.setter("q", util.log_set(0.3, 10, val))
 
 
 class GEQ:
@@ -561,13 +561,14 @@ class Mix:
         self.setter("on", 1 if val else 0)
 
     @property
+    @util.from_db
     def fader(self) -> float:
-        retval = self.getter("fader")[0]
-        return _get_fader_val(retval)
+        return self.getter("fader")[0]
 
     @fader.setter
+    @util.to_db
     def fader(self, val: float):
-        _set_fader_val(self, val)
+        self.setter("fader", val)
 
     @property
     def lr(self) -> bool:
@@ -617,10 +618,38 @@ class Automix:
 
     @property
     def weight(self) -> float:
-        return round(lin_get(-12, 12, self.getter("weight")[0]), 1)
+        return round(util.lin_get(-12, 12, self.getter("weight")[0]), 1)
 
     @weight.setter
     def weight(self, val: float):
         if not -12 <= val <= 12:
             raise XAirRemoteError("expected value in range -12.0 to 12.0")
-        self.setter("weight", lin_set(-12, 12, val))
+        self.setter("weight", util.lin_set(-12, 12, val))
+
+
+class Send:
+    def __init__(self, remote, i, index: Optional[int] = None):
+        self._remote = remote
+        if index is not None:
+            self.index = index + 1
+        self.i = i + 1
+
+    @classmethod
+    def make(cls, _cls, remote, i, index=None):
+        STRIPSEND_cls = type("Send", (cls, _cls), {})
+        return STRIPSEND_cls(remote, i, index)
+
+    @property
+    def address(self) -> str:
+        root = super(Send, self).address
+        return f"{root}/mix/{str(self.i).zfill(2)}"
+
+    @property
+    @util.from_db
+    def level(self):
+        return self.getter("level")[0]
+
+    @level.setter
+    @util.to_db
+    def level(self, val):
+        self.setter("level", val)

@@ -2,7 +2,19 @@ import abc
 
 from .errors import XAirRemoteError
 from .meta import mute_prop
-from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
+from .shared import (
+    EQ,
+    GEQ,
+    Automix,
+    Config,
+    Dyn,
+    Gate,
+    Group,
+    Insert,
+    Mix,
+    Preamp,
+    Send,
+)
 
 
 class IStrip(abc.ABC):
@@ -56,6 +68,10 @@ class Strip(IStrip):
                         Automix,
                     )
                 },
+                "send": tuple(
+                    Send.make(cls, remote, i, index)
+                    for i in range(remote.kind.num_bus + remote.kind.num_fx)
+                ),
                 "mute": mute_prop(),
             },
         )

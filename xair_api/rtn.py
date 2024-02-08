@@ -3,7 +3,19 @@ from typing import Optional
 
 from .errors import XAirRemoteError
 from .meta import mute_prop
-from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
+from .shared import (
+    EQ,
+    GEQ,
+    Automix,
+    Config,
+    Dyn,
+    Gate,
+    Group,
+    Insert,
+    Mix,
+    Preamp,
+    Send,
+)
 
 
 class IRtn(abc.ABC):
@@ -32,7 +44,9 @@ class AuxRtn(IRtn):
     def make(cls, remote, index=None):
         """
         Factory function for auxrtn
+
         Creates a mixin of shared subclasses, sets them as class attributes.
+
         Returns an AuxRtn class of a kind.
         """
         AUXRTN_cls = type(
@@ -51,6 +65,10 @@ class AuxRtn(IRtn):
                         Group,
                     )
                 },
+                "send": tuple(
+                    Send.make(cls, remote, i)
+                    for i in range(remote.kind.num_bus + remote.kind.num_fx)
+                ),
                 "mute": mute_prop(),
             },
         )
@@ -68,7 +86,9 @@ class FxRtn(IRtn):
     def make(cls, remote, index):
         """
         Factory function for fxrtn
+
         Creates a mixin of shared subclasses, sets them as class attributes.
+
         Returns an FxRtn class of a kind.
         """
         FXRTN_cls = type(
@@ -87,6 +107,10 @@ class FxRtn(IRtn):
                         Group,
                     )
                 },
+                "send": tuple(
+                    Send.make(cls, remote, i, index)
+                    for i in range(remote.kind.num_bus + remote.kind.num_fx)
+                ),
                 "mute": mute_prop(),
             },
         )
