@@ -8,6 +8,11 @@ def ex_obs():
     subprocess.run([sys.executable, str(path)])
 
 
+def ex_sends():
+    path = Path.cwd() / "examples" / "sends" / "."
+    subprocess.run([sys.executable, str(path)])
+
+
 def test_xair():
     path = Path.cwd() / "tests" / "xair"
     subprocess.run(["pytest", "-v", str(path)])

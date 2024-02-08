@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xair-api"
-version = "2.2.3"
+version = "2.2.4a0"
 description = "Remote control Behringer X-Air | Midas MR mixers through OSC"
 authors = ["onyx-and-iris <code@onyxandiris.online>"]
 license = "MIT"
@@ -24,5 +24,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 obs = "scripts:ex_obs"
+sends = "scripts:ex_sends"
 xair = "scripts:test_xair"
 x32 = "scripts:test_x32"
