@@ -1,3 +1,4 @@
+import functools
 from math import exp, log
 
 
@@ -17,61 +18,48 @@ def log_set(min, max, val):
     return log(val / min) / log(max / min)
 
 
-def _get_fader_val(retval):
-    if retval >= 1:
-        return 10
-    elif retval >= 0.5:
-        return round((40 * retval) - 30, 1)
-    elif retval >= 0.25:
-        return round((80 * retval) - 50, 1)
-    elif retval >= 0.0625:
-        return round((160 * retval) - 70, 1)
-    elif retval >= 0:
-        return round((480 * retval) - 90, 1)
-    else:
-        return -90
+def from_db(func):
+    """fader|level converter for getters"""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        retval = func(*args, **kwargs)
+
+        if retval >= 1:
+            return 10
+        elif retval >= 0.5:
+            return round((40 * retval) - 30, 1)
+        elif retval >= 0.25:
+            return round((80 * retval) - 50, 1)
+        elif retval >= 0.0625:
+            return round((160 * retval) - 70, 1)
+        elif retval >= 0:
+            return round((480 * retval) - 90, 1)
+        else:
+            return -90
+
+    return wrapper
 
 
-def _set_fader_val(self, val):
-    if val >= 10:
-        self.setter("fader", 1)
-    elif val >= -10:
-        self.setter("fader", (val + 30) / 40)
-    elif val >= -30:
-        self.setter("fader", (val + 50) / 80)
-    elif val >= -60:
-        self.setter("fader", (val + 70) / 160)
-    elif val >= -90:
-        self.setter("fader", (val + 90) / 480)
-    else:
-        self.setter("fader", 0)
+def to_db(func):
+    """fader|level converter for setters"""
 
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        param, val = args
+        if val >= 10:
+            val = 1
+        elif val >= -10:
+            val = (val + 30) / 40
+        elif val >= -30:
+            val = (val + 50) / 80
+        elif val >= -60:
+            val = (val + 70) / 160
+        elif val >= -90:
+            val = (val + 90) / 480
+        else:
+            val = 0
 
-def _get_level_val(retval):
-    if retval >= 1:
-        return 10
-    elif retval >= 0.5:
-        return round((40 * retval) - 30, 1)
-    elif retval >= 0.25:
-        return round((80 * retval) - 50, 1)
-    elif retval >= 0.0625:
-        return round((160 * retval) - 70, 1)
-    elif retval >= 0:
-        return round((480 * retval) - 90, 1)
-    else:
-        return -90
+        func(param, val, **kwargs)
 
-
-def _set_level_val(self, val):
-    if val >= 10:
-        self.setter("level", 1)
-    elif val >= -10:
-        self.setter("level", (val + 30) / 40)
-    elif val >= -30:
-        self.setter("level", (val + 50) / 80)
-    elif val >= -60:
-        self.setter("level", (val + 70) / 160)
-    elif val >= -90:
-        self.setter("level", (val + 90) / 480)
-    else:
-        self.setter("level", 0)
+    return wrapper
