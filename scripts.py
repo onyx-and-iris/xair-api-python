@@ -1,10 +1,11 @@
 import subprocess
+import sys
 from pathlib import Path
 
 
 def ex_obs():
     path = Path.cwd() / "examples" / "xair_obs" / "."
-    subprocess.run(["py", str(path)])
+    subprocess.run([sys.executable, str(path)])
 
 
 def test_xair():
