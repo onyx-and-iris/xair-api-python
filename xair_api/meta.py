@@ -51,13 +51,6 @@ def float_prop(param):
 
 
 def geq_prop(param):
-    # fmt: off
-    opts = {
-        "1k": 1000, "1k25": 1250, "1k6": 1600, "2k": 2000, "3k15": 3150, "4k": 4000,
-        "5k": 5000, "6k3": 6300, "8k": 8000, "10k": 10000, "12k5": 12500, "16k": 16000,
-        "20k": 20000,
-    }
-    # fmt: on
     param = param.replace("_", ".")
 
     def fget(self) -> float:
