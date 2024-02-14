@@ -9,8 +9,18 @@ Before any major/minor/patch bump all unit tests will be run to verify they pass
 
 ## [Unreleased]
 
-- [x] Send class mixed into Strip, AuxRtn, FxRtn. May now be accessed with {Class}.send
-- [x] Sends example added
+- [ ]
+
+## [2.2.4] - 2022-02-14
+
+### Added
+
+- Send class mixed into Strip, AuxRtn, FxRtn. May now be accessed with {Class}.send
+- Sends example added
+
+### Changed
+
+- delay kwarg now applies to getters. See [Issue #6](https://github.com/onyx-and-iris/xair-api-python/issues/6).
 
 ## [2.2.0] - 2022-11-08
 
