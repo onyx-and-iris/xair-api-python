@@ -481,7 +481,7 @@ class EQ:
 
         @type.setter
         def type(self, val: int):
-            self.setter(f"type", val)
+            self.setter("type", val)
 
         @property
         def frequency(self) -> float:
@@ -528,7 +528,7 @@ class GEQ:
                     f"slider_{param}": geq_prop(param)
                     for param in [
                         "20", "25", "31_5", "40", "50", "63", "80", "100", "125",
-                        "160", "200", "250", "315" "400", "500", "630", "800", "1k",
+                        "160", "200", "250", "315", "400", "500", "630", "800", "1k",
                         "1k25", "1k6", "2k", "2k5", "3k15", "4k", "5k", "6k3", "8k",
                         "10k", "12k5", "16k", "20k",
                     ]
@@ -641,10 +641,10 @@ class Send:
 
     @property
     @util.db_from
-    def level(self):
+    def level(self) -> float:
         return self.getter("level")[0]
 
     @level.setter
     @util.db_to
-    def level(self, val):
+    def level(self, val: float):
         self.setter("level", val)

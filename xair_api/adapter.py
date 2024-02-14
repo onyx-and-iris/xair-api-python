@@ -25,13 +25,13 @@ class FxRtn(IFxRtn):
 class MainStereo(ILR):
     @property
     def address(self) -> str:
-        return f"/main/st"
+        return "/main/st"
 
 
 class MainMono(ILR):
     @property
     def address(self) -> str:
-        return f"/main/m"
+        return "/main/m"
 
 
 class Matrix(ILR):

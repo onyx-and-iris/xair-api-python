@@ -33,8 +33,8 @@ class Config(IConfig):
         Returns a Config class of a kind.
         """
         LINKS_cls = _make_links_mixins[remote.kind.id_]
-        MUTEGROUP_cls = type(f"MuteGroup", (Config.MuteGroup, cls), {})
-        MONITOR_cls = type(f"ConfigMonitor", (Config.Monitor, cls), {})
+        MUTEGROUP_cls = type("MuteGroup", (Config.MuteGroup, cls), {})
+        MONITOR_cls = type("ConfigMonitor", (Config.Monitor, cls), {})
         CONFIG_cls = type(
             f"Config{remote.kind}",
             (cls, LINKS_cls),
@@ -47,7 +47,7 @@ class Config(IConfig):
 
     @property
     def address(self) -> str:
-        return f"/config"
+        return "/config"
 
     @property
     def amixenable(self) -> bool:
@@ -105,7 +105,7 @@ class Config(IConfig):
 
         @source.setter
         def source(self, val: int):
-            self.setter(f"source", val)
+            self.setter("source", val)
 
         @property
         def sourcetrim(self) -> float:

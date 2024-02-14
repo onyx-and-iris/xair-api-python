@@ -1,7 +1,5 @@
 import abc
 
-from .errors import XAirRemoteError
-
 
 class IDCA(abc.ABC):
     """Abstract Base Class for DCA groups"""
@@ -50,7 +48,7 @@ class DCA(IDCA):
 
     @name.setter
     def name(self, val: str):
-        self.setter("config/name")[0]
+        self.setter("config/name", val)
 
     @property
     def color(self) -> int:

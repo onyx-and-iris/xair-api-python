@@ -1,9 +1,8 @@
 import abc
 from typing import Optional
 
-from .errors import XAirRemoteError
 from .meta import mute_prop
-from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
+from .shared import EQ, GEQ, Config, Dyn, Insert, Mix
 
 
 class ILR(abc.ABC):
@@ -61,4 +60,4 @@ class LR(ILR):
 
     @property
     def address(self) -> str:
-        return f"/lr"
+        return "/lr"

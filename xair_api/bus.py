@@ -1,8 +1,7 @@
 import abc
 
-from .errors import XAirRemoteError
 from .meta import mute_prop
-from .shared import EQ, GEQ, Automix, Config, Dyn, Gate, Group, Insert, Mix, Preamp
+from .shared import EQ, GEQ, Config, Dyn, Group, Insert, Mix
 
 
 class IBus(abc.ABC):
