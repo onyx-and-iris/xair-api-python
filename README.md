@@ -121,7 +121,7 @@ Contains the subclasses:
 ### `Strip`
 
 Contains the subclasses:
-(`Config`, `Preamp`, `Gate`, `Dyn`, `Insert`, `GEQ`, `EQ`, `Mix`, `Group`, `Automix`)
+(`Config`, `Preamp`, `Gate`, `Dyn`, `Insert`, `GEQ`, `EQ`, `Mix`, `Group`, `Automix`, `Send`)
 
 ### `Bus`
 
@@ -136,12 +136,12 @@ Contains the subclasses:
 ### `FXRtn`
 
 Contains the subclasses:
-(`Config`, `Preamp`, `EQ`, `Mix`, `Group`)
+(`Config`, `Preamp`, `EQ`, `Mix`, `Group`, `Send`)
 
 ### `AuxRtn`
 
 Contains the subclasses:
-(`Config`, `Preamp`, `EQ`, `Mix`, `Group`)
+(`Config`, `Preamp`, `EQ`, `Mix`, `Group`, `Send`)
 
 ### `Subclasses`
 
@@ -287,6 +287,12 @@ tuple containing a class for each mute group
 - `on`: bool, from 0 to 3
 
 for example: `config.mute_group[0].on = True`
+
+### `Send`
+
+- `level`: float, -inf to 10.0
+
+for example: `mixer.strip[10].send[3].level = -16.5`
 
 ### XAirRemote class (lower level)
 

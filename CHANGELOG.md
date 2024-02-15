@@ -11,6 +11,16 @@ Before any major/minor/patch bump all unit tests will be run to verify they pass
 
 - [ ]
 
+## [2.3.1] - 2024-02-15
+
+### Changed
+
+- Module level loggers implemented
+  - class loggers are now child loggers
+- Passing an incorrect kind_id to the entry point now raises an XAirRemoteError.
+- Passing a value out of bounds to a setter now logs a warning instead of raising an exception.
+- Send class added to README.
+
 ## [2.2.4] - 2024-02-14
 
 ### Added
