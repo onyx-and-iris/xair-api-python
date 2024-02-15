@@ -1,4 +1,7 @@
 import abc
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class IDCA(abc.ABC):
@@ -7,6 +10,7 @@ class IDCA(abc.ABC):
     def __init__(self, remote, index: int):
         self._remote = remote
         self.index = index + 1
+        self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str) -> tuple:
         return self._remote.query(f"{self.address}/{param}")

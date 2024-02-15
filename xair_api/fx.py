@@ -1,7 +1,10 @@
 import abc
+import logging
 
 from .meta import mute_prop
 from .shared import Config, Group, Mix
+
+logger = logging.getLogger(__name__)
 
 
 class IFX(abc.ABC):
@@ -10,6 +13,7 @@ class IFX(abc.ABC):
     def __init__(self, remote, index: int):
         self._remote = remote
         self.index = index + 1
+        self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
         return self._remote.query(f"{self.address}/{param}")

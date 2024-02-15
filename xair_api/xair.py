@@ -25,6 +25,8 @@ from .lr import LR
 from .rtn import AuxRtn, FxRtn
 from .strip import Strip
 
+logger = logging.getLogger(__name__)
+
 
 class OSCClientServer(BlockingOSCUDPServer):
     def __init__(self, address: str, dispatcher: Dispatcher):
@@ -45,8 +47,6 @@ class OSCClientServer(BlockingOSCUDPServer):
 class XAirRemote(abc.ABC):
     """Handles the communication with the mixer via the OSC protocol"""
 
-    logger = logging.getLogger("xair.xairremote")
-
     _CONNECT_TIMEOUT = 0.5
 
     _info_response = []
@@ -57,6 +57,7 @@ class XAirRemote(abc.ABC):
         self.xair_ip = kwargs["ip"] or self._ip_from_toml()
         self.xair_port = kwargs["port"]
         self._delay = kwargs["delay"]
+        self.logger = logger.getChild(self.__class__.__name__)
         if not self.xair_ip:
             raise XAirRemoteError("No valid ip detected")
         self.server = OSCClientServer((self.xair_ip, self.xair_port), dispatcher)

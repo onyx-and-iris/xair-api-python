@@ -1,8 +1,11 @@
 import abc
+import logging
 from typing import Optional
 
 from .meta import mute_prop
 from .shared import EQ, Config, Group, Mix, Preamp, Send
+
+logger = logging.getLogger(__name__)
 
 
 class IRtn(abc.ABC):
@@ -12,6 +15,7 @@ class IRtn(abc.ABC):
         self._remote = remote
         if index is not None:
             self.index = index + 1
+        self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
         return self._remote.query(f"{self.address}/{param}")
