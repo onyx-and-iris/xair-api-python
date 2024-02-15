@@ -21,3 +21,7 @@ def test_xair():
 def test_x32():
     path = Path.cwd() / "tests" / "x32"
     subprocess.run(["pytest", "-v", str(path)])
+
+
+def test_all():
+    subprocess.run(["tox"])
