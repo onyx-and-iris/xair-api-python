@@ -117,7 +117,9 @@ class Config(IConfig):
         @sourcetrim.setter
         def sourcetrim(self, val: float):
             if not -18 <= val <= 18:
-                self.logger.warning("expected value in range -18.0 to 18.0")
+                self.logger.warning(
+                    f"sourcetrim got {val}, expected value in range -18.0 to 18.0"
+                )
             self.setter("sourcetrim", util.lin_set(-18, 18, val))
 
         @property
@@ -143,7 +145,9 @@ class Config(IConfig):
         @dimgain.setter
         def dimgain(self, val: int):
             if not -40 <= val <= 0:
-                self.logger.warning("expected value in range -40 to 0")
+                self.logger.warning(
+                    f"dimgain got {val}, expected value in range -40 to 0"
+                )
             self.setter("dimatt", util.lin_set(-40, 0, val))
 
         @property

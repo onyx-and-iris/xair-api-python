@@ -60,7 +60,9 @@ class Preamp:
     @usbtrim.setter
     def usbtrim(self, val: float):
         if not -18 <= val <= 18:
-            self.logger.warning("expected value in range -18.0 to 18.0")
+            self.logger.warning(
+                f"usbtrim got {val}, expected value in range -18.0 to 18.0"
+            )
         self.setter("rtntrim", util.lin_set(-18, 18, val))
 
     @property
@@ -94,7 +96,9 @@ class Preamp:
     @highpassfilter.setter
     def highpassfilter(self, val: int):
         if not 20 <= val <= 400:
-            self.logger.warning("expected value in range 20 to 400")
+            self.logger.warning(
+                f"highpassfilter got {val}, expected value in range 20 to 400"
+            )
         self.setter("hpf", util.log_set(20, 400, val))
 
 
@@ -121,7 +125,7 @@ class Gate:
     def mode(self, val: str):
         opts = ("gate", "exp2", "exp3", "exp4", "duck")
         if val not in opts:
-            self.logger.warning(f"expected one of {opts}")
+            self.logger.warning(f"mode got {val}, expected one of {opts}")
         self.setter("mode", opts.index(val))
 
     @property
@@ -131,7 +135,9 @@ class Gate:
     @threshold.setter
     def threshold(self, val: float):
         if not -80 <= val <= 0:
-            self.logger.warning("expected value in range -80.0 to 0.0")
+            self.logger.warning(
+                f"threshold got {val}, expected value in range -80.0 to 0.0"
+            )
         self.setter("thr", util.lin_set(-80, 0, val))
 
     @property
@@ -141,7 +147,7 @@ class Gate:
     @range.setter
     def range(self, val: int):
         if not 3 <= val <= 60:
-            self.logger.warning("expected value in range 3 to 60")
+            self.logger.warning(f"range got {val}, expected value in range 3 to 60")
         self.setter("range", util.lin_set(3, 60, val))
 
     @property
@@ -151,7 +157,7 @@ class Gate:
     @attack.setter
     def attack(self, val: int):
         if not 0 <= val <= 120:
-            self.logger.warning("expected value in range 0 to 120")
+            self.logger.warning(f"attack got {val}, expected value in range 0 to 120")
         self.setter("attack", util.lin_set(0, 120, val))
 
     @property
@@ -162,7 +168,9 @@ class Gate:
     @hold.setter
     def hold(self, val: float):
         if not 0.02 <= val <= 2000:
-            self.logger.warning("expected value in range 0.02 to 2000.0")
+            self.logger.warning(
+                f"hold got {val}, expected value in range 0.02 to 2000.0"
+            )
         self.setter("hold", util.log_set(0.02, 2000, val))
 
     @property
@@ -172,7 +180,7 @@ class Gate:
     @release.setter
     def release(self, val: int):
         if not 5 <= val <= 4000:
-            self.logger.warning("expected value in range 5 to 4000")
+            self.logger.warning(f"release got {val}, expected value in range 5 to 4000")
         self.setter("release", util.log_set(5, 4000, val))
 
     @property
@@ -207,7 +215,9 @@ class Gate:
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
         if not 20 <= val <= 20000:
-            self.logger.warning("expected value in range 20 to 20000")
+            self.logger.warning(
+                f"filterfreq got {val}, expected value in range 20 to 20000"
+            )
         self.setter("filter/f", util.log_set(20, 20000, val))
 
 
@@ -234,7 +244,7 @@ class Dyn:
     def mode(self, val: str):
         opts = ("comp", "exp")
         if val not in opts:
-            self.logger.warning(f"expected one of {opts}")
+            self.logger.warning(f"mode got {val}, expected one of {opts}")
         self.setter("mode", opts.index(val))
 
     @property
@@ -246,7 +256,7 @@ class Dyn:
     def det(self, val: str):
         opts = ("peak", "rms")
         if val not in opts:
-            self.logger.warning(f"expected one of {opts}")
+            self.logger.warning(f"det got {val}, expected one of {opts}")
         self.setter("det", opts.index(val))
 
     @property
@@ -258,7 +268,7 @@ class Dyn:
     def env(self, val: str):
         opts = ("lin", "log")
         if val not in opts:
-            self.logger.warning(f"expected one of {opts}")
+            self.logger.warning(f"env got {val}, expected one of {opts}")
         self.setter("env", opts.index(val))
 
     @property
@@ -268,7 +278,9 @@ class Dyn:
     @threshold.setter
     def threshold(self, val: float):
         if not -60 <= val <= 0:
-            self.logger.warning("expected value in range -60.0 to 0")
+            self.logger.warning(
+                f"threshold got {val}, expected value in range -60.0 to 0"
+            )
         self.setter("thr", util.lin_set(-60, 0, val))
 
     @property
@@ -287,7 +299,7 @@ class Dyn:
     @knee.setter
     def knee(self, val: int):
         if not 0 <= val <= 5:
-            self.logger.warning("expected value in range 0 to 5")
+            self.logger.warning(f"knee got {val}, expected value in range 0 to 5")
         self.setter("knee", util.lin_set(0, 5, val))
 
     @property
@@ -297,7 +309,7 @@ class Dyn:
     @mgain.setter
     def mgain(self, val: float):
         if not 0 <= val <= 24:
-            self.logger.warning("expected value in range 0.0 to 24.0")
+            self.logger.warning(f"mgain got {val}, expected value in range 0.0 to 24.0")
         self.setter("mgain", util.lin_set(0, 24, val))
 
     @property
@@ -307,7 +319,7 @@ class Dyn:
     @attack.setter
     def attack(self, val: int):
         if not 0 <= val <= 120:
-            self.logger.warning("expected value in range 0 to 120")
+            self.logger.warning(f"attack got {val}, expected value in range 0 to 120")
         self.setter("attack", util.lin_set(0, 120, val))
 
     @property
@@ -318,7 +330,9 @@ class Dyn:
     @hold.setter
     def hold(self, val: float):
         if not 0.02 <= val <= 2000:
-            self.logger.warning("expected value in range 0.02 to 2000.0")
+            self.logger.warning(
+                f"hold got {val}, expected value in range 0.02 to 2000.0"
+            )
         self.setter("hold", util.log_set(0.02, 2000, val))
 
     @property
@@ -328,7 +342,7 @@ class Dyn:
     @release.setter
     def release(self, val: int):
         if not 5 <= val <= 4000:
-            self.logger.warning("expected value in range 5 to 4000")
+            self.logger.warning(f"release got {val}, expected value in range 5 to 4000")
         self.setter("release", util.log_set(5, 4000, val))
 
     @property
@@ -338,7 +352,7 @@ class Dyn:
     @mix.setter
     def mix(self, val: int):
         if not 0 <= val <= 100:
-            self.logger.warning("expected value in range 0 to 100")
+            self.logger.warning(f"mix got {val}, expected value in range 0 to 100")
         self.setter("mix", util.lin_set(0, 100, val))
 
     @property
@@ -381,7 +395,9 @@ class Dyn:
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
         if not 20 <= val <= 20000:
-            self.logger.warning("expected value in range 20 to 20000")
+            self.logger.warning(
+                f"filterfreq got {val}, expected value in range 20 to 20000"
+            )
         self.setter("filter/f", util.log_set(20, 20000, val))
 
 
@@ -461,7 +477,7 @@ class EQ:
     def mode(self, val: str):
         opts = ("peq", "geq", "teq")
         if val not in opts:
-            self.logger.warning(f"expected one of {opts}")
+            self.logger.warning(f"mode got {val}, expected one of {opts}")
         self.setter("mode", opts.index(val))
 
     class EQBand:
@@ -490,7 +506,9 @@ class EQ:
         @frequency.setter
         def frequency(self, val: float):
             if not 20 <= val <= 20000:
-                self.logger.warning("expected value in range 20.0 to 20000.0")
+                self.logger.warning(
+                    f"frequency got {val}, expected value in range 20.0 to 20000.0"
+                )
             self.setter("f", util.log_set(20, 20000, val))
 
         @property
@@ -500,7 +518,9 @@ class EQ:
         @gain.setter
         def gain(self, val: float):
             if not -15 <= val <= 15:
-                self.logger.warning("expected value in range -15.0 to 15.0")
+                self.logger.warning(
+                    f"gain got {val}, expected value in range -15.0 to 15.0"
+                )
             self.setter("g", util.lin_set(-15, 15, val))
 
         @property
@@ -511,7 +531,9 @@ class EQ:
         @quality.setter
         def quality(self, val: float):
             if not 0.3 <= val <= 10:
-                self.logger.warning("expected value in range 0.3 to 10.0")
+                self.logger.warning(
+                    f"quality got {val}, expected value in range 0.3 to 10.0"
+                )
             self.setter("q", util.log_set(0.3, 10, val))
 
 
@@ -619,7 +641,9 @@ class Automix:
     @weight.setter
     def weight(self, val: float):
         if not -12 <= val <= 12:
-            self.logger.warning("expected value in range -12.0 to 12.0")
+            self.logger.warning(
+                f"weight got {val}, expected value in range -12.0 to 12.0"
+            )
         self.setter("weight", util.lin_set(-12, 12, val))
 
 
