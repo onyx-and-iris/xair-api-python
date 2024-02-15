@@ -80,7 +80,7 @@ class XAirRemote(abc.ABC):
             raise XAirRemoteError(
                 "Failed to setup OSC connection to mixer. Please check for correct ip address."
             )
-        print(
+        self.logger.info(
             f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
         )
 
@@ -174,9 +174,10 @@ def request_remote_obj(kind_id: str, *args, **kwargs) -> XAirRemote:
 
     Returns a reference to an XAirRemote class of a kind
     """
+
     XAIRREMOTE_cls = None
     try:
         XAIRREMOTE_cls = _remotes[kind_id]
-    except ValueError as e:
-        raise SystemExit(e)
+    except KeyError as e:
+        raise XAirRemoteError(f"Unknown mixer kind '{kind_id}'") from e
     return XAIRREMOTE_cls(*args, **kwargs)
