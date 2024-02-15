@@ -1,4 +1,3 @@
-from .errors import XAirRemoteError
 from .util import lin_get, lin_set
 
 
@@ -58,7 +57,7 @@ def geq_prop(param):
 
     def fset(self, val):
         if not -15 <= val <= 15:
-            raise XAirRemoteError("expected value in range -15.0 to 15.0")
+            self.logger.warning("expected value in range -15.0 to 15.0")
         self.setter(param, lin_set(-15, 15, val))
 
     return property(fget, fset)

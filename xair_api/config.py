@@ -1,8 +1,10 @@
 import abc
+import logging
 
 from . import kinds, util
-from .errors import XAirRemoteError
 from .meta import bool_prop
+
+logger = logging.getLogger(__name__)
 
 
 class IConfig(abc.ABC):
@@ -10,6 +12,7 @@ class IConfig(abc.ABC):
 
     def __init__(self, remote):
         self._remote = remote
+        self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
         return self._remote.query(f"{self.address}/{param}")
@@ -114,7 +117,7 @@ class Config(IConfig):
         @sourcetrim.setter
         def sourcetrim(self, val: float):
             if not -18 <= val <= 18:
-                raise XAirRemoteError("expected value in range -18.0 to 18.0")
+                self.logger.warning("expected value in range -18.0 to 18.0")
             self.setter("sourcetrim", util.lin_set(-18, 18, val))
 
         @property
@@ -140,7 +143,7 @@ class Config(IConfig):
         @dimgain.setter
         def dimgain(self, val: int):
             if not -40 <= val <= 0:
-                raise XAirRemoteError("expected value in range -40 to 0")
+                self.logger.warning("expected value in range -40 to 0")
             self.setter("dimatt", util.lin_set(-40, 0, val))
 
         @property
