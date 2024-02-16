@@ -7,7 +7,7 @@ from .errors import XAirRemoteConnectionTimeoutError
 
 def timeout(func):
     """
-    Times out the login function once time elapsed exceeds remote.connect_timeout.
+    Times out the validate_connection function once time elapsed exceeds remote.connect_timeout.
     """
 
     @functools.wraps(func)
