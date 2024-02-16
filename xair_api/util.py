@@ -1,5 +1,34 @@
 import functools
+import time
 from math import exp, log
+
+from .errors import XAirRemoteConnectionTimeoutError
+
+
+def timeout(func):
+    """
+    Times out the login function once time elapsed exceeds remote.connect_timeout.
+    """
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        remote, *_ = args
+
+        err = None
+        start = time.time()
+        while time.time() < start + remote.connect_timeout:
+            try:
+                func(*args, **kwargs)
+                remote.logger.debug(f"login time: {round(time.time() - start, 2)}")
+                err = None
+                break
+            except XAirRemoteConnectionTimeoutError as e:
+                err = e
+                continue
+        if err:
+            raise err
+
+    return wrapper
 
 
 def lin_get(min, max, val):
