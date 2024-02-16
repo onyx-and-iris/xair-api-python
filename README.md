@@ -55,7 +55,7 @@ if __name__ == "__main__":
     main()
 ```
 
-#### `xair_api.connect(kind_id, ip=ip, delay=delay)`
+#### `xair_api.connect(kind_id, ip=ip, delay=0.02, connect_timeout=2)`
 
 Currently the following devices are supported:
 
@@ -72,6 +72,7 @@ The following keyword arguments may be passed:
 - `port`: mixer port, defaults to 10023 for x32 and 10024 for xair
 - `delay`: a delay between each command (applies to the getters). Defaults to 20ms.
   - a note about delay, stability may rely on network connection. For wired connections the delay can be safely reduced.
+- `connect_timeout`: amount of time to wait for a validated connection. Defaults to 2s.
 
 ## API
 
@@ -316,6 +317,14 @@ for example:
 ```python
 print(mixer.query("/ch/01/mix/on"))
 ```
+
+### Errors
+
+- `errors.XAirRemoteError`: Base error class for XAIR Remote.
+- `errors.XAirRemoteConnectionTimeoutError`:Exception raised when a connection attempt times out.
+  - The following attributes are available:
+    - `ip`: IP of the mixer.
+    - `port`: Port of the mixer.
 
 ### `Tests`
 
