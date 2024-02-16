@@ -11,6 +11,14 @@ Before any major/minor/patch bump all unit tests will be run to verify they pass
 
 - [ ]
 
+## [2.3.2] - 2024-02-16
+
+### Added
+
+- Configurable kwarg `connect_timeout` added. Defaults to 2 seconds.
+- New error class `XAirRemoteConnectionTimeoutError`. Raised if a connection validation times out.
+- timeout kwarg + Errors section added to README.
+
 ## [2.3.1] - 2024-02-15
 
 ### Changed
