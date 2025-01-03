@@ -20,6 +20,7 @@ from .config import Config
 from .dca import DCA
 from .errors import XAirRemoteConnectionTimeoutError, XAirRemoteError
 from .fx import FX, FXSend
+from .headamp import HeadAmp
 from .kinds import KindMap
 from .lr import LR
 from .rtn import AuxRtn, FxRtn
@@ -134,6 +135,7 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.fxreturn = tuple(adapter.FxRtn.make(self, i) for i in range(kind.num_fx))
         self.auxin = tuple(adapter.AuxRtn.make(self, i) for i in range(kind.num_auxrtn))
         self.config = Config.make(self)
+        self.headamp = tuple(adapter.HeadAmp(self, i) for i in range(kind.num_headamp))
 
     def init_xair(self, *args, **kwargs):
         defaultkwargs = {
@@ -154,6 +156,7 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.fxreturn = tuple(FxRtn.make(self, i) for i in range(kind.num_fx))
         self.auxreturn = AuxRtn.make(self)
         self.config = Config.make(self)
+        self.headamp = tuple(HeadAmp(self, i) for i in range(kind.num_strip))
 
     if kind.id_ == "X32":
         return type(

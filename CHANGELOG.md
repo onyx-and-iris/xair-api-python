@@ -9,7 +9,7 @@ Before any major/minor/patch bump all unit tests will be run to verify they pass
 
 ## [Unreleased]
 
-- [ ]
+- [x] Add preamp class to all kinds for enabling phantom power and setting preamp gain.
 
 ## [2.3.2] - 2024-02-16
 

@@ -16,6 +16,7 @@ class X32KindMap(KindMap):
     num_fx: int = 8
     num_auxrtn: int = 8
     num_matrix: int = 6
+    num_headamp: int = 127
 
 
 @dataclass
