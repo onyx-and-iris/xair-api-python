@@ -1,3 +1,5 @@
+# Warning this script enables the phantom power for strip 09
+
 import logging
 
 import xair_api

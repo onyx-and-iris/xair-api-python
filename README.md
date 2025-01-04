@@ -1,7 +1,6 @@
 [![PyPI version](https://badge.fury.io/py/xair-api.svg)](https://badge.fury.io/py/xair-api)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/onyx-and-iris/xair-api-python/blob/dev/LICENSE)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Imports: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 ![Tests Status](./tests/xair/MR18.svg?dummy=8484744)
 
 # Xair API
@@ -114,6 +113,10 @@ A class representing auxreturn channel
 
 A class representing the main config settings
 
+`mixer.headamp`
+
+A class representing the channel preamps (phantom power/gain).
+
 ### `LR`
 
 Contains the subclasses:
@@ -143,6 +146,13 @@ Contains the subclasses:
 
 Contains the subclasses:
 (`Config`, `Preamp`, `EQ`, `Mix`, `Group`, `Send`)
+
+### `HeadAmp`
+
+The following properties are available:
+
+- `gain`: float, from -12.0 to 60.0
+- `phantom`: bool
 
 ### `Subclasses`
 
