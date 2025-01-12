@@ -7,6 +7,9 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/onyx-and-iris/xair-api-python"
 
+[tool.poetry.requires-plugins]
+poethepoet = "^0.32.1"
+
 [tool.poetry.dependencies]
 python = "^3.10"
 python-osc = "^1.8.0"
