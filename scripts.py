@@ -4,12 +4,16 @@ from pathlib import Path
 
 
 def ex_obs():
-    path = Path.cwd() / "examples" / "xair_obs" / "."
-    subprocess.run([sys.executable, str(path)])
+    subprocess.run(["tox", "r", "-e", "obs"])
 
 
 def ex_sends():
     path = Path.cwd() / "examples" / "sends" / "."
+    subprocess.run([sys.executable, str(path)])
+
+
+def ex_headamp():
+    path = Path.cwd() / "examples" / "headamp" / "."
     subprocess.run([sys.executable, str(path)])
 
 

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "xair-api"
-version = "2.4.0"
+version = "2.4.1"
 description = "Remote control Behringer X-Air | Midas MR mixers through OSC"
 authors = ["onyx-and-iris <code@onyxandiris.online>"]
 license = "MIT"
@@ -29,6 +29,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.poe.tasks]
 obs.script = "scripts:ex_obs"
 sends.script = "scripts:ex_sends"
+headamp.script = "scripts:ex_headamp"
 xair.script = "scripts:test_xair"
 x32.script = "scripts:test_x32"
 all.script = "scripts:test_all"
@@ -44,6 +45,14 @@ allowlist_externals = poetry
 commands =
   poetry install -v
   poetry run pytest tests/
+
+[testenv:obs]
+setenv = VIRTUALENV_DISCOVERY=pyenv
+allowlist_externals = poetry
+deps = obsws-python
+commands =
+  poetry install -v --without dev
+  poetry run python examples/xair_obs/
 """
 
 [tool.ruff]
