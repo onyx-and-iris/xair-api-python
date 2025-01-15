@@ -39,18 +39,18 @@ import xair_api
 
 
 def main():
-    kind_id = "XR18"
-    ip = "<ip address>"
+    kind_id = 'XR18'
+    ip = '<ip address>'
 
     with xair_api.connect(kind_id, ip=ip) as mixer:
-        mixer.strip[8].config.name = "sm7b"
+        mixer.strip[8].config.name = 'sm7b'
         mixer.strip[8].mix.on = True
         print(
-            f"strip 09 ({mixer.strip[8].config.name}) on has been set to {mixer.strip[8].mix.on}"
+            f'strip 09 ({mixer.strip[8].config.name}) on has been set to {mixer.strip[8].mix.on}'
         )
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 ```
 
@@ -314,8 +314,8 @@ Send an OSC command directly to the mixer
 for example:
 
 ```python
-mixer.send("/ch/01/mix/on", 1)
-mixer.send("/bus/2/config/name", "somename")
+mixer.send('/ch/01/mix/on', 1)
+mixer.send('/bus/2/config/name', 'somename')
 ```
 
 Query the value of a command:
@@ -325,7 +325,7 @@ Query the value of a command:
 for example:
 
 ```python
-print(mixer.query("/ch/01/mix/on"))
+print(mixer.query('/ch/01/mix/on'))
 ```
 
 ### Errors
