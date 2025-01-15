@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 
 class OSCClientServer(BlockingOSCUDPServer):
     def __init__(self, address: str, dispatcher: Dispatcher):
-        super().__init__(("", 0), dispatcher)
+        super().__init__(('', 0), dispatcher)
         self.xr_address = address
 
     def send_message(self, address: str, vals: Optional[Union[str, list]]):
@@ -53,13 +53,13 @@ class XAirRemote(abc.ABC):
     def __init__(self, **kwargs):
         dispatcher = Dispatcher()
         dispatcher.set_default_handler(self.msg_handler)
-        self.xair_ip = kwargs["ip"] or self._ip_from_toml()
-        self.xair_port = kwargs["port"]
-        self._delay = kwargs["delay"]
-        self.connect_timeout = kwargs["connect_timeout"]
+        self.xair_ip = kwargs['ip'] or self._ip_from_toml()
+        self.xair_port = kwargs['port']
+        self._delay = kwargs['delay']
+        self.connect_timeout = kwargs['connect_timeout']
         self.logger = logger.getChild(self.__class__.__name__)
         if not self.xair_ip:
-            raise XAirRemoteError("No valid ip detected")
+            raise XAirRemoteError('No valid ip detected')
         self.server = OSCClientServer((self.xair_ip, self.xair_port), dispatcher)
 
     def __enter__(self):
@@ -69,17 +69,17 @@ class XAirRemote(abc.ABC):
         return self
 
     def _ip_from_toml(self) -> str:
-        filepath = Path.cwd() / "config.toml"
-        with open(filepath, "rb") as f:
+        filepath = Path.cwd() / 'config.toml'
+        with open(filepath, 'rb') as f:
             conn = tomllib.load(f)
-        return conn["connection"].get("ip")
+        return conn['connection'].get('ip')
 
     @util.timeout
     def validate_connection(self):
-        if not self.query("/xinfo"):
+        if not self.query('/xinfo'):
             raise XAirRemoteConnectionTimeoutError(self.xair_ip, self.xair_port)
         self.logger.info(
-            f"Successfully connected to {self.info_response[2]} at {self.info_response[0]}."
+            f'Successfully connected to {self.info_response[2]} at {self.info_response[0]}.'
         )
 
     @property
@@ -115,10 +115,10 @@ def _make_remote(kind: KindMap) -> XAirRemote:
 
     def init_x32(self, *args, **kwargs):
         defaultkwargs = {
-            "ip": None,
-            "port": 10023,
-            "delay": 0.02,
-            "connect_timeout": 2,
+            'ip': None,
+            'port': 10023,
+            'delay': 0.02,
+            'connect_timeout': 2,
         }
         kwargs = defaultkwargs | kwargs
         XAirRemote.__init__(self, *args, **kwargs)
@@ -139,10 +139,10 @@ def _make_remote(kind: KindMap) -> XAirRemote:
 
     def init_xair(self, *args, **kwargs):
         defaultkwargs = {
-            "ip": None,
-            "port": 10024,
-            "delay": 0.02,
-            "connect_timeout": 2,
+            'ip': None,
+            'port': 10024,
+            'delay': 0.02,
+            'connect_timeout': 2,
         }
         kwargs = defaultkwargs | kwargs
         XAirRemote.__init__(self, *args, **kwargs)
@@ -158,19 +158,19 @@ def _make_remote(kind: KindMap) -> XAirRemote:
         self.config = Config.make(self)
         self.headamp = tuple(HeadAmp(self, i) for i in range(kind.num_strip))
 
-    if kind.id_ == "X32":
+    if kind.id_ == 'X32':
         return type(
-            f"XAirRemote{kind}",
+            f'XAirRemote{kind}',
             (XAirRemote,),
             {
-                "__init__": init_x32,
+                '__init__': init_x32,
             },
         )
     return type(
-        f"XAirRemote{kind}",
+        f'XAirRemote{kind}',
         (XAirRemote,),
         {
-            "__init__": init_xair,
+            '__init__': init_xair,
         },
     )
 

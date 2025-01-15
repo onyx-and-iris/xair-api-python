@@ -6,7 +6,7 @@ logging.basicConfig(level=logging.DEBUG)
 
 
 def main():
-    with xair_api.connect("XR18", ip="mixer.local") as mixer:
+    with xair_api.connect('XR18', ip='mixer.local') as mixer:
         for send in mixer.strip[0].send:
             send.level = -22.8
 
@@ -20,5 +20,5 @@ def main():
         print(mixer.fxreturn[0].send[0].level)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

@@ -12,473 +12,473 @@ class Config:
     @property
     def address(self) -> str:
         root = super(Config, self).address
-        return f"{root}/config"
+        return f'{root}/config'
 
     @property
     def name(self) -> str:
-        return self.getter("name")[0]
+        return self.getter('name')[0]
 
     @name.setter
     def name(self, val: str):
-        self.setter("name", val)
+        self.setter('name', val)
 
     @property
     def color(self) -> int:
-        return self.getter("color")[0]
+        return self.getter('color')[0]
 
     @color.setter
     def color(self, val: int):
-        self.setter("color", val)
+        self.setter('color', val)
 
     @property
     def inputsource(self) -> int:
-        return self.getter("insrc")[0]
+        return self.getter('insrc')[0]
 
     @inputsource.setter
     def inputsource(self, val: int):
-        self.setter("insrc", val)
+        self.setter('insrc', val)
 
     @property
     def usbreturn(self) -> int:
-        return self.getter("rtnsrc")[0]
+        return self.getter('rtnsrc')[0]
 
     @usbreturn.setter
     def usbreturn(self, val: int):
-        self.setter("rtnsrc", val)
+        self.setter('rtnsrc', val)
 
 
 class Preamp:
     @property
     def address(self) -> str:
         root = super(Preamp, self).address
-        return f"{root}/preamp"
+        return f'{root}/preamp'
 
     @property
     def usbtrim(self) -> float:
-        return round(util.lin_get(-18, 18, self.getter("rtntrim")[0]), 1)
+        return round(util.lin_get(-18, 18, self.getter('rtntrim')[0]), 1)
 
     @usbtrim.setter
     def usbtrim(self, val: float):
         if not -18 <= val <= 18:
             self.logger.warning(
-                f"usbtrim got {val}, expected value in range -18.0 to 18.0"
+                f'usbtrim got {val}, expected value in range -18.0 to 18.0'
             )
-        self.setter("rtntrim", util.lin_set(-18, 18, val))
+        self.setter('rtntrim', util.lin_set(-18, 18, val))
 
     @property
     def usbinput(self) -> bool:
-        return self.getter("rtnsw")[0] == 1
+        return self.getter('rtnsw')[0] == 1
 
     @usbinput.setter
     def usbinput(self, val: bool):
-        self.setter("rtnsw", 1 if val else 0)
+        self.setter('rtnsw', 1 if val else 0)
 
     @property
     def invert(self) -> bool:
-        return self.getter("invert")[0] == 1
+        return self.getter('invert')[0] == 1
 
     @invert.setter
     def invert(self, val: bool):
-        self.setter("invert", 1 if val else 0)
+        self.setter('invert', 1 if val else 0)
 
     @property
     def highpasson(self) -> bool:
-        return self.getter("hpon")[0] == 1
+        return self.getter('hpon')[0] == 1
 
     @highpasson.setter
     def highpasson(self, val: bool):
-        self.setter("hpon", 1 if val else 0)
+        self.setter('hpon', 1 if val else 0)
 
     @property
     def highpassfilter(self) -> int:
-        return int(util.log_get(20, 400, self.getter("hpf")[0]))
+        return int(util.log_get(20, 400, self.getter('hpf')[0]))
 
     @highpassfilter.setter
     def highpassfilter(self, val: int):
         if not 20 <= val <= 400:
             self.logger.warning(
-                f"highpassfilter got {val}, expected value in range 20 to 400"
+                f'highpassfilter got {val}, expected value in range 20 to 400'
             )
-        self.setter("hpf", util.log_set(20, 400, val))
+        self.setter('hpf', util.log_set(20, 400, val))
 
 
 class Gate:
     @property
     def address(self) -> str:
         root = super(Gate, self).address
-        return f"{root}/gate"
+        return f'{root}/gate'
 
     @property
     def on(self) -> bool:
-        return self.getter("on")[0] == 1
+        return self.getter('on')[0] == 1
 
     @on.setter
     def on(self, val: bool):
-        self.setter("on", 1 if val else 0)
+        self.setter('on', 1 if val else 0)
 
     @property
     def mode(self) -> str:
-        opts = ("gate", "exp2", "exp3", "exp4", "duck")
-        return opts[self.getter("mode")[0]]
+        opts = ('gate', 'exp2', 'exp3', 'exp4', 'duck')
+        return opts[self.getter('mode')[0]]
 
     @mode.setter
     def mode(self, val: str):
-        opts = ("gate", "exp2", "exp3", "exp4", "duck")
+        opts = ('gate', 'exp2', 'exp3', 'exp4', 'duck')
         if val not in opts:
-            self.logger.warning(f"mode got {val}, expected one of {opts}")
-        self.setter("mode", opts.index(val))
+            self.logger.warning(f'mode got {val}, expected one of {opts}')
+        self.setter('mode', opts.index(val))
 
     @property
     def threshold(self) -> float:
-        return round(util.lin_get(-80, 0, self.getter("thr")[0]), 1)
+        return round(util.lin_get(-80, 0, self.getter('thr')[0]), 1)
 
     @threshold.setter
     def threshold(self, val: float):
         if not -80 <= val <= 0:
             self.logger.warning(
-                f"threshold got {val}, expected value in range -80.0 to 0.0"
+                f'threshold got {val}, expected value in range -80.0 to 0.0'
             )
-        self.setter("thr", util.lin_set(-80, 0, val))
+        self.setter('thr', util.lin_set(-80, 0, val))
 
     @property
     def range(self) -> int:
-        return int(util.lin_get(3, 60, self.getter("range")[0]))
+        return int(util.lin_get(3, 60, self.getter('range')[0]))
 
     @range.setter
     def range(self, val: int):
         if not 3 <= val <= 60:
-            self.logger.warning(f"range got {val}, expected value in range 3 to 60")
-        self.setter("range", util.lin_set(3, 60, val))
+            self.logger.warning(f'range got {val}, expected value in range 3 to 60')
+        self.setter('range', util.lin_set(3, 60, val))
 
     @property
     def attack(self) -> int:
-        return int(util.lin_get(0, 120, self.getter("attack")[0]))
+        return int(util.lin_get(0, 120, self.getter('attack')[0]))
 
     @attack.setter
     def attack(self, val: int):
         if not 0 <= val <= 120:
-            self.logger.warning(f"attack got {val}, expected value in range 0 to 120")
-        self.setter("attack", util.lin_set(0, 120, val))
+            self.logger.warning(f'attack got {val}, expected value in range 0 to 120')
+        self.setter('attack', util.lin_set(0, 120, val))
 
     @property
     def hold(self) -> Union[float, int]:
-        val = util.log_get(0.02, 2000, self.getter("hold")[0])
+        val = util.log_get(0.02, 2000, self.getter('hold')[0])
         return round(val, 1) if val < 100 else int(val)
 
     @hold.setter
     def hold(self, val: float):
         if not 0.02 <= val <= 2000:
             self.logger.warning(
-                f"hold got {val}, expected value in range 0.02 to 2000.0"
+                f'hold got {val}, expected value in range 0.02 to 2000.0'
             )
-        self.setter("hold", util.log_set(0.02, 2000, val))
+        self.setter('hold', util.log_set(0.02, 2000, val))
 
     @property
     def release(self) -> int:
-        return int(util.log_get(5, 4000, self.getter("release")[0]))
+        return int(util.log_get(5, 4000, self.getter('release')[0]))
 
     @release.setter
     def release(self, val: int):
         if not 5 <= val <= 4000:
-            self.logger.warning(f"release got {val}, expected value in range 5 to 4000")
-        self.setter("release", util.log_set(5, 4000, val))
+            self.logger.warning(f'release got {val}, expected value in range 5 to 4000')
+        self.setter('release', util.log_set(5, 4000, val))
 
     @property
     def keysource(self):
-        return self.getter("keysrc")[0]
+        return self.getter('keysrc')[0]
 
     @keysource.setter
     def keysource(self, val):
-        self.setter("keysrc", val)
+        self.setter('keysrc', val)
 
     @property
     def filteron(self):
-        return self.getter("filter/on")[0] == 1
+        return self.getter('filter/on')[0] == 1
 
     @filteron.setter
     def filteron(self, val: bool):
-        self.setter("filter/on", 1 if val else 0)
+        self.setter('filter/on', 1 if val else 0)
 
     @property
     def filtertype(self) -> int:
-        return int(self.getter("filter/type")[0])
+        return int(self.getter('filter/type')[0])
 
     @filtertype.setter
     def filtertype(self, val: int):
-        self.setter("filter/type", val)
+        self.setter('filter/type', val)
 
     @property
     def filterfreq(self) -> Union[float, int]:
-        retval = util.log_get(20, 20000, self.getter("filter/f")[0])
+        retval = util.log_get(20, 20000, self.getter('filter/f')[0])
         return int(retval) if retval > 1000 else round(retval, 1)
 
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
         if not 20 <= val <= 20000:
             self.logger.warning(
-                f"filterfreq got {val}, expected value in range 20 to 20000"
+                f'filterfreq got {val}, expected value in range 20 to 20000'
             )
-        self.setter("filter/f", util.log_set(20, 20000, val))
+        self.setter('filter/f', util.log_set(20, 20000, val))
 
 
 class Dyn:
     @property
     def address(self) -> str:
         root = super(Dyn, self).address
-        return f"{root}/dyn"
+        return f'{root}/dyn'
 
     @property
     def on(self) -> bool:
-        return self.getter("on")[0] == 1
+        return self.getter('on')[0] == 1
 
     @on.setter
     def on(self, val: bool):
-        self.setter("on", 1 if val else 0)
+        self.setter('on', 1 if val else 0)
 
     @property
     def mode(self) -> str:
-        opts = ("comp", "exp")
-        return opts[self.getter("mode")[0]]
+        opts = ('comp', 'exp')
+        return opts[self.getter('mode')[0]]
 
     @mode.setter
     def mode(self, val: str):
-        opts = ("comp", "exp")
+        opts = ('comp', 'exp')
         if val not in opts:
-            self.logger.warning(f"mode got {val}, expected one of {opts}")
-        self.setter("mode", opts.index(val))
+            self.logger.warning(f'mode got {val}, expected one of {opts}')
+        self.setter('mode', opts.index(val))
 
     @property
     def det(self) -> str:
-        opts = ("peak", "rms")
-        return opts[self.getter("det")[0]]
+        opts = ('peak', 'rms')
+        return opts[self.getter('det')[0]]
 
     @det.setter
     def det(self, val: str):
-        opts = ("peak", "rms")
+        opts = ('peak', 'rms')
         if val not in opts:
-            self.logger.warning(f"det got {val}, expected one of {opts}")
-        self.setter("det", opts.index(val))
+            self.logger.warning(f'det got {val}, expected one of {opts}')
+        self.setter('det', opts.index(val))
 
     @property
     def env(self) -> str:
-        opts = ("lin", "log")
-        return opts[self.getter("env")[0]]
+        opts = ('lin', 'log')
+        return opts[self.getter('env')[0]]
 
     @env.setter
     def env(self, val: str):
-        opts = ("lin", "log")
+        opts = ('lin', 'log')
         if val not in opts:
-            self.logger.warning(f"env got {val}, expected one of {opts}")
-        self.setter("env", opts.index(val))
+            self.logger.warning(f'env got {val}, expected one of {opts}')
+        self.setter('env', opts.index(val))
 
     @property
     def threshold(self) -> float:
-        return round(util.lin_get(-60, 0, self.getter("thr")[0]), 1)
+        return round(util.lin_get(-60, 0, self.getter('thr')[0]), 1)
 
     @threshold.setter
     def threshold(self, val: float):
         if not -60 <= val <= 0:
             self.logger.warning(
-                f"threshold got {val}, expected value in range -60.0 to 0"
+                f'threshold got {val}, expected value in range -60.0 to 0'
             )
-        self.setter("thr", util.lin_set(-60, 0, val))
+        self.setter('thr', util.lin_set(-60, 0, val))
 
     @property
     def ratio(self) -> Union[float, int]:
         opts = (1.1, 1.3, 1.5, 2.0, 2.5, 3.0, 4.0, 5.0, 7.0, 10, 20, 100)
-        return opts[self.getter("ratio")[0]]
+        return opts[self.getter('ratio')[0]]
 
     @ratio.setter
     def ratio(self, val: int):
-        self.setter("ratio", val)
+        self.setter('ratio', val)
 
     @property
     def knee(self) -> int:
-        return int(util.lin_get(0, 5, self.getter("knee")[0]))
+        return int(util.lin_get(0, 5, self.getter('knee')[0]))
 
     @knee.setter
     def knee(self, val: int):
         if not 0 <= val <= 5:
-            self.logger.warning(f"knee got {val}, expected value in range 0 to 5")
-        self.setter("knee", util.lin_set(0, 5, val))
+            self.logger.warning(f'knee got {val}, expected value in range 0 to 5')
+        self.setter('knee', util.lin_set(0, 5, val))
 
     @property
     def mgain(self) -> float:
-        return round(util.lin_get(0, 24, self.getter("mgain")[0]), 1)
+        return round(util.lin_get(0, 24, self.getter('mgain')[0]), 1)
 
     @mgain.setter
     def mgain(self, val: float):
         if not 0 <= val <= 24:
-            self.logger.warning(f"mgain got {val}, expected value in range 0.0 to 24.0")
-        self.setter("mgain", util.lin_set(0, 24, val))
+            self.logger.warning(f'mgain got {val}, expected value in range 0.0 to 24.0')
+        self.setter('mgain', util.lin_set(0, 24, val))
 
     @property
     def attack(self) -> int:
-        return int(util.lin_get(0, 120, self.getter("attack")[0]))
+        return int(util.lin_get(0, 120, self.getter('attack')[0]))
 
     @attack.setter
     def attack(self, val: int):
         if not 0 <= val <= 120:
-            self.logger.warning(f"attack got {val}, expected value in range 0 to 120")
-        self.setter("attack", util.lin_set(0, 120, val))
+            self.logger.warning(f'attack got {val}, expected value in range 0 to 120')
+        self.setter('attack', util.lin_set(0, 120, val))
 
     @property
     def hold(self) -> Union[float, int]:
-        val = util.log_get(0.02, 2000, self.getter("hold")[0])
+        val = util.log_get(0.02, 2000, self.getter('hold')[0])
         return round(val, 1) if val < 100 else int(val)
 
     @hold.setter
     def hold(self, val: float):
         if not 0.02 <= val <= 2000:
             self.logger.warning(
-                f"hold got {val}, expected value in range 0.02 to 2000.0"
+                f'hold got {val}, expected value in range 0.02 to 2000.0'
             )
-        self.setter("hold", util.log_set(0.02, 2000, val))
+        self.setter('hold', util.log_set(0.02, 2000, val))
 
     @property
     def release(self) -> int:
-        return int(util.log_get(5, 4000, self.getter("release")[0]))
+        return int(util.log_get(5, 4000, self.getter('release')[0]))
 
     @release.setter
     def release(self, val: int):
         if not 5 <= val <= 4000:
-            self.logger.warning(f"release got {val}, expected value in range 5 to 4000")
-        self.setter("release", util.log_set(5, 4000, val))
+            self.logger.warning(f'release got {val}, expected value in range 5 to 4000')
+        self.setter('release', util.log_set(5, 4000, val))
 
     @property
     def mix(self) -> int:
-        return int(util.lin_get(0, 100, self.getter("mix")[0]))
+        return int(util.lin_get(0, 100, self.getter('mix')[0]))
 
     @mix.setter
     def mix(self, val: int):
         if not 0 <= val <= 100:
-            self.logger.warning(f"mix got {val}, expected value in range 0 to 100")
-        self.setter("mix", util.lin_set(0, 100, val))
+            self.logger.warning(f'mix got {val}, expected value in range 0 to 100')
+        self.setter('mix', util.lin_set(0, 100, val))
 
     @property
     def keysource(self):
-        return self.getter("keysrc")[0]
+        return self.getter('keysrc')[0]
 
     @keysource.setter
     def keysource(self, val):
-        self.setter("keysrc", val)
+        self.setter('keysrc', val)
 
     @property
     def auto(self) -> bool:
-        return self.getter("auto")[0] == 1
+        return self.getter('auto')[0] == 1
 
     @auto.setter
     def auto(self, val: bool):
-        self.setter("auto", 1 if val else 0)
+        self.setter('auto', 1 if val else 0)
 
     @property
     def filteron(self):
-        return self.getter("filter/on")[0] == 1
+        return self.getter('filter/on')[0] == 1
 
     @filteron.setter
     def filteron(self, val: bool):
-        self.setter("filter/on", 1 if val else 0)
+        self.setter('filter/on', 1 if val else 0)
 
     @property
     def filtertype(self) -> int:
-        return int(self.getter("filter/type")[0])
+        return int(self.getter('filter/type')[0])
 
     @filtertype.setter
     def filtertype(self, val: int):
-        self.setter("filter/type", val)
+        self.setter('filter/type', val)
 
     @property
     def filterfreq(self) -> Union[float, int]:
-        retval = util.log_get(20, 20000, self.getter("filter/f")[0])
+        retval = util.log_get(20, 20000, self.getter('filter/f')[0])
         return int(retval) if retval > 1000 else round(retval, 1)
 
     @filterfreq.setter
     def filterfreq(self, val: Union[float, int]):
         if not 20 <= val <= 20000:
             self.logger.warning(
-                f"filterfreq got {val}, expected value in range 20 to 20000"
+                f'filterfreq got {val}, expected value in range 20 to 20000'
             )
-        self.setter("filter/f", util.log_set(20, 20000, val))
+        self.setter('filter/f', util.log_set(20, 20000, val))
 
 
 class Insert:
     @property
     def address(self) -> str:
         root = super(Insert, self).address
-        return f"{root}/insert"
+        return f'{root}/insert'
 
     @property
     def on(self) -> bool:
-        return self.getter("on")[0] == 1
+        return self.getter('on')[0] == 1
 
     @on.setter
     def on(self, val: bool):
-        self.setter("on", 1 if val else 0)
+        self.setter('on', 1 if val else 0)
 
     @property
     def sel(self) -> int:
-        return self.getter("sel")[0]
+        return self.getter('sel')[0]
 
     @sel.setter
     def sel(self, val: int):
-        self.setter("sel", val)
+        self.setter('sel', val)
 
 
 class EQ:
     @classmethod
     def make_fourband(cls, _cls, remote, index=None):
-        EQBand_cls = type("EQBand", (EQ.EQBand, _cls), {})
+        EQBand_cls = type('EQBand', (EQ.EQBand, _cls), {})
         return type(
-            "EQ",
+            'EQ',
             (cls,),
             {
-                "low": EQBand_cls(1, remote, index),
-                "lomid": EQBand_cls(2, remote, index),
-                "himid": EQBand_cls(3, remote, index),
-                "high": EQBand_cls(4, remote, index),
+                'low': EQBand_cls(1, remote, index),
+                'lomid': EQBand_cls(2, remote, index),
+                'himid': EQBand_cls(3, remote, index),
+                'high': EQBand_cls(4, remote, index),
             },
         )
 
     @classmethod
     def make_sixband(cls, _cls, remote, index=None):
-        EQBand_cls = type("EQBand", (EQ.EQBand, _cls), {})
+        EQBand_cls = type('EQBand', (EQ.EQBand, _cls), {})
         return type(
-            "EQ",
+            'EQ',
             (cls,),
             {
-                "low": EQBand_cls(1, remote, index),
-                "low2": EQBand_cls(2, remote, index),
-                "lomid": EQBand_cls(3, remote, index),
-                "himid": EQBand_cls(4, remote, index),
-                "high2": EQBand_cls(5, remote, index),
-                "high": EQBand_cls(6, remote, index),
+                'low': EQBand_cls(1, remote, index),
+                'low2': EQBand_cls(2, remote, index),
+                'lomid': EQBand_cls(3, remote, index),
+                'himid': EQBand_cls(4, remote, index),
+                'high2': EQBand_cls(5, remote, index),
+                'high': EQBand_cls(6, remote, index),
             },
         )
 
     @property
     def address(self) -> str:
         root = super(EQ, self).address
-        return f"{root}/eq"
+        return f'{root}/eq'
 
     @property
     def on(self) -> bool:
-        return self.getter("on")[0] == 1
+        return self.getter('on')[0] == 1
 
     @on.setter
     def on(self, val: bool):
-        self.setter("on", 1 if val else 0)
+        self.setter('on', 1 if val else 0)
 
     @property
     def mode(self) -> str:
-        opts = ("peq", "geq", "teq")
-        return opts[self.getter("mode")[0]]
+        opts = ('peq', 'geq', 'teq')
+        return opts[self.getter('mode')[0]]
 
     @mode.setter
     def mode(self, val: str):
-        opts = ("peq", "geq", "teq")
+        opts = ('peq', 'geq', 'teq')
         if val not in opts:
-            self.logger.warning(f"mode got {val}, expected one of {opts}")
-        self.setter("mode", opts.index(val))
+            self.logger.warning(f'mode got {val}, expected one of {opts}')
+        self.setter('mode', opts.index(val))
 
     class EQBand:
         def __init__(self, i, remote, index):
@@ -488,53 +488,53 @@ class EQ:
         @property
         def address(self) -> str:
             root = super(EQ.EQBand, self).address
-            return f"{root}/eq/{self.i}"
+            return f'{root}/eq/{self.i}'
 
         @property
         def type(self) -> int:
-            return int(self.getter("type")[0])
+            return int(self.getter('type')[0])
 
         @type.setter
         def type(self, val: int):
-            self.setter("type", val)
+            self.setter('type', val)
 
         @property
         def frequency(self) -> float:
-            retval = util.log_get(20, 20000, self.getter("f")[0])
+            retval = util.log_get(20, 20000, self.getter('f')[0])
             return round(retval, 1)
 
         @frequency.setter
         def frequency(self, val: float):
             if not 20 <= val <= 20000:
                 self.logger.warning(
-                    f"frequency got {val}, expected value in range 20.0 to 20000.0"
+                    f'frequency got {val}, expected value in range 20.0 to 20000.0'
                 )
-            self.setter("f", util.log_set(20, 20000, val))
+            self.setter('f', util.log_set(20, 20000, val))
 
         @property
         def gain(self) -> float:
-            return round(util.lin_get(-15, 15, self.getter("g")[0]), 1)
+            return round(util.lin_get(-15, 15, self.getter('g')[0]), 1)
 
         @gain.setter
         def gain(self, val: float):
             if not -15 <= val <= 15:
                 self.logger.warning(
-                    f"gain got {val}, expected value in range -15.0 to 15.0"
+                    f'gain got {val}, expected value in range -15.0 to 15.0'
                 )
-            self.setter("g", util.lin_set(-15, 15, val))
+            self.setter('g', util.lin_set(-15, 15, val))
 
         @property
         def quality(self) -> float:
-            retval = util.log_get(0.3, 10, self.getter("q")[0])
+            retval = util.log_get(0.3, 10, self.getter('q')[0])
             return round(retval, 1)
 
         @quality.setter
         def quality(self, val: float):
             if not 0.3 <= val <= 10:
                 self.logger.warning(
-                    f"quality got {val}, expected value in range 0.3 to 10.0"
+                    f'quality got {val}, expected value in range 0.3 to 10.0'
                 )
-            self.setter("q", util.log_set(0.3, 10, val))
+            self.setter('q', util.log_set(0.3, 10, val))
 
 
 class GEQ:
@@ -561,90 +561,90 @@ class GEQ:
     @property
     def address(self) -> str:
         root = super(GEQ, self).address
-        return f"{root}/geq"
+        return f'{root}/geq'
 
 
 class Mix:
     @property
     def address(self) -> str:
         root = super(Mix, self).address
-        return f"{root}/mix"
+        return f'{root}/mix'
 
     @property
     def on(self) -> bool:
-        return self.getter("on")[0] == 1
+        return self.getter('on')[0] == 1
 
     @on.setter
     def on(self, val: bool):
-        self.setter("on", 1 if val else 0)
+        self.setter('on', 1 if val else 0)
 
     @property
     @util.db_from
     def fader(self) -> float:
-        return self.getter("fader")[0]
+        return self.getter('fader')[0]
 
     @fader.setter
     @util.db_to
     def fader(self, val: float):
-        self.setter("fader", val)
+        self.setter('fader', val)
 
     @property
     def lr(self) -> bool:
-        return self.getter("lr")[0] == 1
+        return self.getter('lr')[0] == 1
 
     @lr.setter
     def lr(self, val: bool):
-        self.setter("lr", 1 if val else 0)
+        self.setter('lr', 1 if val else 0)
 
 
 class Group:
     @property
     def address(self) -> str:
         root = super(Group, self).address
-        return f"{root}/grp"
+        return f'{root}/grp'
 
     @property
     def dca(self) -> int:
-        return self.getter("dca")[0]
+        return self.getter('dca')[0]
 
     @dca.setter
     def dca(self, val: int):
-        self.setter("dca", val)
+        self.setter('dca', val)
 
     @property
     def mute(self) -> int:
-        return self.getter("mute")[0]
+        return self.getter('mute')[0]
 
     @mute.setter
     def mute(self, val: int):
-        self.setter("mute", val)
+        self.setter('mute', val)
 
 
 class Automix:
     @property
     def address(self) -> str:
         root = super(Automix, self).address
-        return f"{root}/automix"
+        return f'{root}/automix'
 
     @property
     def group(self) -> int:
-        return self.getter("group")[0]
+        return self.getter('group')[0]
 
     @group.setter
     def group(self, val: int):
-        self.setter("group", val)
+        self.setter('group', val)
 
     @property
     def weight(self) -> float:
-        return round(util.lin_get(-12, 12, self.getter("weight")[0]), 1)
+        return round(util.lin_get(-12, 12, self.getter('weight')[0]), 1)
 
     @weight.setter
     def weight(self, val: float):
         if not -12 <= val <= 12:
             self.logger.warning(
-                f"weight got {val}, expected value in range -12.0 to 12.0"
+                f'weight got {val}, expected value in range -12.0 to 12.0'
             )
-        self.setter("weight", util.lin_set(-12, 12, val))
+        self.setter('weight', util.lin_set(-12, 12, val))
 
 
 class Send:
@@ -654,20 +654,20 @@ class Send:
 
     @classmethod
     def make(cls, _cls, i, remote, index=None):
-        SEND_cls = type("Send", (cls, _cls), {})
+        SEND_cls = type('Send', (cls, _cls), {})
         return SEND_cls(i, remote, index)
 
     @property
     def address(self) -> str:
         root = super(Send, self).address
-        return f"{root}/mix/{str(self.i).zfill(2)}"
+        return f'{root}/mix/{str(self.i).zfill(2)}'
 
     @property
     @util.db_from
     def level(self) -> float:
-        return self.getter("level")[0]
+        return self.getter('level')[0]
 
     @level.setter
     @util.db_to
     def level(self, val: float):
-        self.setter("level", val)
+        self.setter('level', val)

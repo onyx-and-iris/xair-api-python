@@ -16,10 +16,10 @@ class IBus(abc.ABC):
         self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
-        return self._remote.query(f"{self.address}/{param}")
+        return self._remote.query(f'{self.address}/{param}')
 
     def setter(self, param: str, val: int):
-        self._remote.send(f"{self.address}/{param}", val)
+        self._remote.send(f'{self.address}/{param}', val)
 
     @abc.abstractmethod
     def address(self):
@@ -39,12 +39,12 @@ class Bus(IBus):
         Returns a Bus class of a kind.
         """
         BUS_cls = type(
-            f"Bus{remote.kind}",
+            f'Bus{remote.kind}',
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
+                        f'{_cls.__name__}{remote.kind}', (_cls, cls), {}
                     )(remote, index)
                     for _cls in (
                         Config,
@@ -56,11 +56,11 @@ class Bus(IBus):
                         Group,
                     )
                 },
-                "mute": mute_prop(),
+                'mute': mute_prop(),
             },
         )
         return BUS_cls(remote, index)
 
     @property
     def address(self) -> str:
-        return f"/bus/{self.index}"
+        return f'/bus/{self.index}'

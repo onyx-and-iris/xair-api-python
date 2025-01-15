@@ -16,10 +16,10 @@ class IFX(abc.ABC):
         self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
-        return self._remote.query(f"{self.address}/{param}")
+        return self._remote.query(f'{self.address}/{param}')
 
     def setter(self, param: str, val: int):
-        self._remote.send(f"{self.address}/{param}", val)
+        self._remote.send(f'{self.address}/{param}', val)
 
     @abc.abstractmethod
     def address(self):
@@ -31,15 +31,15 @@ class FX(IFX):
 
     @property
     def address(self) -> str:
-        return f"/fx/{self.index}"
+        return f'/fx/{self.index}'
 
     @property
     def type(self) -> int:
-        return self.getter("type")[0]
+        return self.getter('type')[0]
 
     @type.setter
     def type(self, val: int):
-        self.setter("type", val)
+        self.setter('type', val)
 
 
 class FXSend(IFX):
@@ -55,20 +55,20 @@ class FXSend(IFX):
         Returns an FXSend class of a kind.
         """
         FXSEND_cls = type(
-            f"FXSend{remote.kind}",
+            f'FXSend{remote.kind}',
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
+                        f'{_cls.__name__}{remote.kind}', (_cls, cls), {}
                     )(remote, index)
                     for _cls in (Config, Mix, Group)
                 },
-                "mute": mute_prop(),
+                'mute': mute_prop(),
             },
         )
         return FXSEND_cls(remote, index)
 
     @property
     def address(self) -> str:
-        return f"/fxsend/{self.index}"
+        return f'/fxsend/{self.index}'

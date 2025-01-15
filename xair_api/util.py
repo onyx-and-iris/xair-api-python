@@ -19,7 +19,7 @@ def timeout(func):
         while time.time() < start + remote.connect_timeout:
             try:
                 func(*args, **kwargs)
-                remote.logger.debug(f"login time: {round(time.time() - start, 2)}")
+                remote.logger.debug(f'login time: {round(time.time() - start, 2)}')
                 err = None
                 break
             except XAirRemoteConnectionTimeoutError as e:

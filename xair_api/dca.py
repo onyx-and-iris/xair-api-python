@@ -13,10 +13,10 @@ class IDCA(abc.ABC):
         self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str) -> tuple:
-        return self._remote.query(f"{self.address}/{param}")
+        return self._remote.query(f'{self.address}/{param}')
 
     def setter(self, param: str, val: int):
-        self._remote.send(f"{self.address}/{param}", val)
+        self._remote.send(f'{self.address}/{param}', val)
 
     @abc.abstractmethod
     def address(self):
@@ -28,15 +28,15 @@ class DCA(IDCA):
 
     @property
     def address(self) -> str:
-        return f"/dca/{self.index}"
+        return f'/dca/{self.index}'
 
     @property
     def on(self) -> bool:
-        return self.getter("on")[0] == 1
+        return self.getter('on')[0] == 1
 
     @on.setter
     def on(self, val: bool):
-        self.setter("on", 1 if val else 0)
+        self.setter('on', 1 if val else 0)
 
     @property
     def mute(self) -> bool:
@@ -48,16 +48,16 @@ class DCA(IDCA):
 
     @property
     def name(self) -> str:
-        return self.getter("config/name")[0]
+        return self.getter('config/name')[0]
 
     @name.setter
     def name(self, val: str):
-        self.setter("config/name", val)
+        self.setter('config/name', val)
 
     @property
     def color(self) -> int:
-        return self.getter("config/color")[0]
+        return self.getter('config/color')[0]
 
     @color.setter
     def color(self, val: int):
-        self.setter("config/color", val)
+        self.setter('config/color', val)

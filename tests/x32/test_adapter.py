@@ -11,11 +11,11 @@ class TestSetAndGetStripMuteHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "strip")[data.strip]
+        self.target = getattr(tests, 'strip')[data.strip]
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("mute", True), ("mute", False)],
+        'param,value',
+        [('mute', True), ('mute', False)],
     )
     def test_it_sets_and_gets_strip_mute_bool_params(self, param, value):
         setattr(self.target, param, value)
@@ -28,12 +28,12 @@ class TestSetAndGetStripMixHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "strip")
-        self.target = getattr(self.target[data.strip], "mix")
+        self.target = getattr(tests, 'strip')
+        self.target = getattr(self.target[data.strip], 'mix')
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("on", True), ("on", False)],
+        'param,value',
+        [('on', True), ('on', False)],
     )
     def test_it_sets_and_gets_strip_bool_params(self, param, value):
         setattr(self.target, param, value)
@@ -49,12 +49,12 @@ class TestSetAndGetBusConfigHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "bus")
-        self.target = getattr(self.target[data.bus], "config")
+        self.target = getattr(tests, 'bus')
+        self.target = getattr(self.target[data.bus], 'config')
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("color", 0), ("color", 15)],
+        'param,value',
+        [('color', 0), ('color', 15)],
     )
     def test_it_sets_and_gets_bus_int_params(self, param, value):
         setattr(self.target, param, value)
@@ -70,12 +70,12 @@ class TestSetAndGetAuxInPreampHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "auxin")
-        self.target = getattr(self.target[data.auxrtn], "preamp")
+        self.target = getattr(tests, 'auxin')
+        self.target = getattr(self.target[data.auxrtn], 'preamp')
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("invert", True), ("invert", False)],
+        'param,value',
+        [('invert', True), ('invert', False)],
     )
     def test_it_sets_and_gets_auxrtn_bool_params(self, param, value):
         setattr(self.target, param, value)
@@ -91,12 +91,12 @@ class TestSetAndGetFXReturnEQHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "fxreturn")
-        self.target = getattr(self.target[data.fx], "eq")
+        self.target = getattr(tests, 'fxreturn')
+        self.target = getattr(self.target[data.fx], 'eq')
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("on", True), ("on", False)],
+        'param,value',
+        [('on', True), ('on', False)],
     )
     def test_it_sets_and_gets_fxrtn_bool_params(self, param, value):
         setattr(self.target, param, value)
@@ -112,12 +112,12 @@ class TestSetAndGetMatrixDynHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "matrix")
-        self.target = getattr(self.target[data.matrix], "dyn")
+        self.target = getattr(tests, 'matrix')
+        self.target = getattr(self.target[data.matrix], 'dyn')
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("mode", "comp"), ("mode", "exp")],
+        'param,value',
+        [('mode', 'comp'), ('mode', 'exp')],
     )
     def test_it_sets_and_gets_matrix_string_params(self, param, value):
         setattr(self.target, param, value)
@@ -133,11 +133,11 @@ class TestSetAndGetMainStereoInsertHigher:
     __test__ = True
 
     def setup_class(self):
-        self.target = getattr(tests, "mainst")
+        self.target = getattr(tests, 'mainst')
 
     @pytest.mark.parametrize(
-        "param,value",
-        [("mode", "comp"), ("mode", "exp")],
+        'param,value',
+        [('mode', 'comp'), ('mode', 'exp')],
     )
     def test_it_sets_and_gets_mainst_string_params(self, param, value):
         setattr(self.target, param, value)

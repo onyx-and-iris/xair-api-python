@@ -46,11 +46,11 @@ class XR12KindMap(KindMap):
 
 
 _kinds = {
-    "X32": X32KindMap(id_="X32"),
-    "MR18": XR18KindMap(id_="MR18"),
-    "XR18": XR18KindMap(id_="XR18"),
-    "XR16": XR16KindMap(id_="XR16"),
-    "XR12": XR12KindMap(id_="XR12"),
+    'X32': X32KindMap(id_='X32'),
+    'MR18': XR18KindMap(id_='MR18'),
+    'XR18': XR18KindMap(id_='XR18'),
+    'XR16': XR16KindMap(id_='XR16'),
+    'XR12': XR12KindMap(id_='XR12'),
 }
 
 

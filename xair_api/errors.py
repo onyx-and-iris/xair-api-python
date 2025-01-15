@@ -10,5 +10,5 @@ class XAirRemoteConnectionTimeoutError(XAirRemoteError):
         self.port = port
 
         super().__init__(
-            f"Timeout attempting to connect to mixer at {self.ip}:{self.port}"
+            f'Timeout attempting to connect to mixer at {self.ip}:{self.port}'
         )

@@ -15,10 +15,10 @@ class IHeadAmp(abc.ABC):
         self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
-        return self._remote.query(f"{self.address}/{param}")
+        return self._remote.query(f'{self.address}/{param}')
 
     def setter(self, param: str, val: int):
-        self._remote.send(f"{self.address}/{param}", val)
+        self._remote.send(f'{self.address}/{param}', val)
 
     @abc.abstractmethod
     def address(self):
@@ -30,20 +30,20 @@ class HeadAmp(IHeadAmp):
 
     @property
     def address(self):
-        return f"/headamp/{str(self.index).zfill(2)}"
+        return f'/headamp/{str(self.index).zfill(2)}'
 
     @property
     def gain(self):
-        return round(util.lin_get(-12, 60, self.getter("gain")[0]), 1)
+        return round(util.lin_get(-12, 60, self.getter('gain')[0]), 1)
 
     @gain.setter
     def gain(self, val):
-        self.setter("gain", util.lin_set(-12, 60, val))
+        self.setter('gain', util.lin_set(-12, 60, val))
 
     @property
     def phantom(self):
-        return self.getter("phantom")[0] == 1
+        return self.getter('phantom')[0] == 1
 
     @phantom.setter
     def phantom(self, val):
-        self.setter("phantom", 1 if val else 0)
+        self.setter('phantom', 1 if val else 0)

@@ -18,10 +18,10 @@ class IRtn(abc.ABC):
         self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str):
-        return self._remote.query(f"{self.address}/{param}")
+        return self._remote.query(f'{self.address}/{param}')
 
     def setter(self, param: str, val: int):
-        self._remote.send(f"{self.address}/{param}", val)
+        self._remote.send(f'{self.address}/{param}', val)
 
     @abc.abstractmethod
     def address(self):
@@ -41,12 +41,12 @@ class AuxRtn(IRtn):
         Returns an AuxRtn class of a kind.
         """
         AUXRTN_cls = type(
-            f"AuxRtn{remote.kind}",
+            f'AuxRtn{remote.kind}',
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
+                        f'{_cls.__name__}{remote.kind}', (_cls, cls), {}
                     )(remote, index)
                     for _cls in (
                         Config,
@@ -56,18 +56,18 @@ class AuxRtn(IRtn):
                         Group,
                     )
                 },
-                "send": tuple(
+                'send': tuple(
                     Send.make(cls, i, remote)
                     for i in range(remote.kind.num_bus + remote.kind.num_fx)
                 ),
-                "mute": mute_prop(),
+                'mute': mute_prop(),
             },
         )
         return AUXRTN_cls(remote, index)
 
     @property
     def address(self):
-        return "/rtn/aux"
+        return '/rtn/aux'
 
 
 class FxRtn(IRtn):
@@ -83,12 +83,12 @@ class FxRtn(IRtn):
         Returns an FxRtn class of a kind.
         """
         FXRTN_cls = type(
-            f"FxRtn{remote.kind}",
+            f'FxRtn{remote.kind}',
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
+                        f'{_cls.__name__}{remote.kind}', (_cls, cls), {}
                     )(remote, index)
                     for _cls in (
                         Config,
@@ -98,15 +98,15 @@ class FxRtn(IRtn):
                         Group,
                     )
                 },
-                "send": tuple(
+                'send': tuple(
                     Send.make(cls, i, remote, index)
                     for i in range(remote.kind.num_bus + remote.kind.num_fx)
                 ),
-                "mute": mute_prop(),
+                'mute': mute_prop(),
             },
         )
         return FXRTN_cls(remote, index)
 
     @property
     def address(self):
-        return f"/rtn/{self.index}"
+        return f'/rtn/{self.index}'

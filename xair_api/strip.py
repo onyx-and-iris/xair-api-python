@@ -16,10 +16,10 @@ class IStrip(abc.ABC):
         self.logger = logger.getChild(self.__class__.__name__)
 
     def getter(self, param: str) -> tuple:
-        return self._remote.query(f"{self.address}/{param}")
+        return self._remote.query(f'{self.address}/{param}')
 
     def setter(self, param: str, val: int):
-        self._remote.send(f"{self.address}/{param}", val)
+        self._remote.send(f'{self.address}/{param}', val)
 
     @abc.abstractmethod
     def address(self):
@@ -40,12 +40,12 @@ class Strip(IStrip):
         """
 
         STRIP_cls = type(
-            f"Strip{remote.kind}",
+            f'Strip{remote.kind}',
             (cls,),
             {
                 **{
                     _cls.__name__.lower(): type(
-                        f"{_cls.__name__}{remote.kind}", (_cls, cls), {}
+                        f'{_cls.__name__}{remote.kind}', (_cls, cls), {}
                     )(remote, index)
                     for _cls in (
                         Config,
@@ -59,15 +59,15 @@ class Strip(IStrip):
                         Automix,
                     )
                 },
-                "send": tuple(
+                'send': tuple(
                     Send.make(cls, i, remote, index)
                     for i in range(remote.kind.num_bus + remote.kind.num_fx)
                 ),
-                "mute": mute_prop(),
+                'mute': mute_prop(),
             },
         )
         return STRIP_cls(remote, index)
 
     @property
     def address(self) -> str:
-        return f"/ch/{str(self.index).zfill(2)}"
+        return f'/ch/{str(self.index).zfill(2)}'

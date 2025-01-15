@@ -5,8 +5,8 @@ from dataclasses import dataclass
 import xair_api
 from xair_api import kinds
 
-kind_id = "MR18"
-ip = "mixer.local"
+kind_id = 'MR18'
+ip = 'mixer.local'
 
 tests = xair_api.connect(kind_id, ip=ip)
 
@@ -28,7 +28,7 @@ data = Data()
 
 
 def setup_module():
-    print(f"\nRunning tests for kind [{data.name}]\n", file=sys.stdout)
+    print(f'\nRunning tests for kind [{data.name}]\n', file=sys.stdout)
     tests.worker = threading.Thread(target=tests.run_server)
     tests.worker.daemon = True
     tests.worker.start()

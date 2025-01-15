@@ -50,7 +50,7 @@ def float_prop(param):
 
 
 def geq_prop(param):
-    param = param.replace("_", ".")
+    param = param.replace('_', '.')
 
     def fget(self) -> float:
         return round(lin_get(-15, 15, self.getter(param)[0]), 1)
@@ -58,7 +58,7 @@ def geq_prop(param):
     def fset(self, val):
         if not -15 <= val <= 15:
             self.logger.warning(
-                f"slider_{param} got {val}, expected value in range -15.0 to 15.0"
+                f'slider_{param} got {val}, expected value in range -15.0 to 15.0'
             )
         self.setter(param, lin_set(-15, 15, val))
 
