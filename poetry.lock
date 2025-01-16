@@ -371,5 +371,5 @@ virtualenv = "*"
 
 [metadata]
 lock-version = "2.1"
-python-versions = "<4.0,>=3.10"
-content-hash = "6cd4c5329b1df022fdec343a52a0fda804c33234b208aab94025e6798ea6820d"
+python-versions = ">=3.10"
+content-hash = "dbba803b0ac29e3120c3f302260b600a8ef58bfac91c41a58f242804f17b89ba"
