@@ -1,13 +1,48 @@
-import obsws_python as obs
+import threading
+from logging import config
+
+import obsws_python as obsws
 
 import xair_api
 
+config.dictConfig(
+    {
+        'version': 1,
+        'formatters': {
+            'standard': {
+                'format': '%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s'
+            }
+        },
+        'handlers': {
+            'stream': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'standard',
+            }
+        },
+        'loggers': {
+            'xair_api.xair': {
+                'handlers': ['stream'],
+                'level': 'DEBUG',
+                'propagate': False,
+            }
+        },
+        'root': {'handlers': ['stream'], 'level': 'WARNING'},
+    }
+)
+
 
 class Observer:
-    def __init__(self, mixer):
+    def __init__(self, mixer, stop_event):
         self._mixer = mixer
-        self._client = obs.EventClient()
-        self._client.callback.register(self.on_current_program_scene_changed)
+        self._stop_event = stop_event
+        self._client = obsws.EventClient()
+        self._client.callback.register(
+            (
+                self.on_current_program_scene_changed,
+                self.on_exit_started,
+            )
+        )
 
     def __enter__(self):
         return self
@@ -32,12 +67,16 @@ class Observer:
                 self._mixer.config.mute_group[0].on = True
                 print(f'Mute Group 1 is {self._mixer.config.mute_group[0].on}')
 
+    def on_exit_started(self, _):
+        self._stop_event.set()
+
 
 def main():
     with xair_api.connect('MR18', ip='mixer.local') as mixer:
-        with Observer(mixer):
-            while _ := input('Press <Enter> to exit\n'):
-                pass
+        stop_event = threading.Event()
+
+        with Observer(mixer, stop_event):
+            stop_event.wait()
 
 
 if __name__ == '__main__':

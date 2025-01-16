@@ -19,7 +19,7 @@ password = "mystrongpass"
 
 ## Use
 
-Change the xair ip argument from `mixer.local` to the ip of your xair mixer. Run the code and switch between scenes in OBS.
+Change the xair ip argument from `mixer.local` to the ip of your xair mixer. Run the code and switch between scenes in OBS. Closing OBS will end the script.
 
 ## Notes
 
