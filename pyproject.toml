@@ -31,29 +31,33 @@ build-backend = "poetry.core.masonry.api"
 obs.script = "scripts:ex_obs"
 sends.script = "scripts:ex_sends"
 headamp.script = "scripts:ex_headamp"
-xair.script = "scripts:test_xair"
-x32.script = "scripts:test_x32"
-all.script = "scripts:test_all"
+test-xair.script = "scripts:test_xair"
+test-x32.script = "scripts:test_x32"
+test-all.script = "scripts:test_all"
 
 [tool.tox]
 legacy_tox_ini = """
-[tox]
-envlist = py310,py311,py312
+    [tox]
+    envlist = py310,py311,py312,py313
 
-[testenv]
-setenv = VIRTUALENV_DISCOVERY=pyenv
-allowlist_externals = poetry
-commands =
-  poetry install -v
-  poetry run pytest tests/
+    [testenv]
+    passenv = 
+      TEST_MODULE
+    setenv = VIRTUALENV_DISCOVERY=pyenv
+    allowlist_externals = poetry
+    commands_pre =
+      poetry install --no-interaction --no-root
+    commands =
+      poetry run pytest tests/{env:TEST_MODULE}
 
-[testenv:obs]
-setenv = VIRTUALENV_DISCOVERY=pyenv
-allowlist_externals = poetry
-deps = obsws-python
-commands =
-  poetry install -v --without dev
-  poetry run python examples/xair_obs/
+    [testenv:obs]
+    setenv = VIRTUALENV_DISCOVERY=pyenv
+    allowlist_externals = poetry
+    deps = obsws-python
+    commands_pre =
+      poetry install --no-interaction --no-root --without dev
+    commands =
+      poetry run python examples/xair_obs
 """
 
 [tool.ruff]

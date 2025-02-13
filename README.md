@@ -339,14 +339,14 @@ print(mixer.query('/ch/01/mix/on'))
 
 ### `Tests`
 
-Unplug any expensive equipment before running tests.
-Save your current settings to a snapshot first.
+Install [poetry](https://python-poetry.org/docs/#installation) and then:
 
-First make sure you installed the [development dependencies](https://github.com/onyx-and-iris/xair-api-python#installation)
+```powershell
+poetry poe test-xair
+poetry poe test-x32
+```
 
-To run all tests:
-
-`pytest -v`.
+Unplug any expensive equipment and save your current settings to a snapshot first.
 
 ## License
 
