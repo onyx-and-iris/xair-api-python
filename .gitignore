@@ -130,7 +130,7 @@ dmypy.json
 
 # config, quick test
 config.toml
-quick.py
+test-*.py
 tools/*
 !tools/README.md
 
