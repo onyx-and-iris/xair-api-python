@@ -525,7 +525,8 @@ class EQ:
 
         @property
         def quality(self) -> float:
-            retval = util.log_get(0.3, 10, self.getter('q')[0])
+            raw_value = self.getter('q')[0]
+            retval = util.log_get(0.3, 10, 1.0 - raw_value)
             return round(retval, 1)
 
         @quality.setter
@@ -534,7 +535,7 @@ class EQ:
                 self.logger.warning(
                     f'quality got {val}, expected value in range 0.3 to 10.0'
                 )
-            self.setter('q', util.log_set(0.3, 10, val))
+            self.setter('q', 1.0 - util.log_set(0.3, 10, val))
 
 
 class GEQ:
