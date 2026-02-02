@@ -525,8 +525,7 @@ class EQ:
 
         @property
         def quality(self) -> float:
-            raw_value = self.getter('q')[0]
-            retval = util.log_get(0.3, 10, 1.0 - raw_value)
+            retval = util.log_get(0.3, 10, 1.0 - self.getter('q')[0])
             return round(retval, 1)
 
         @quality.setter
