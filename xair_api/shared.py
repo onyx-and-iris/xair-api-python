@@ -118,12 +118,12 @@ class Gate:
 
     @property
     def mode(self) -> str:
-        opts = ('gate', 'exp2', 'exp3', 'exp4', 'duck')
+        opts = ('exp2', 'exp3', 'exp4', 'gate', 'duck')
         return opts[self.getter('mode')[0]]
 
     @mode.setter
     def mode(self, val: str):
-        opts = ('gate', 'exp2', 'exp3', 'exp4', 'duck')
+        opts = ('exp2', 'exp3', 'exp4', 'gate', 'duck')
         if val not in opts:
             self.logger.warning(f'mode got {val}, expected one of {opts}')
         self.setter('mode', opts.index(val))

@@ -1,6 +1,6 @@
 [project]
 name = "xair-api"
-version = "2.4.2"
+version = "2.4.3"
 description = "Remote control Behringer X-Air | Midas MR mixers through OSC"
 authors = [{ name = "Onyx and Iris", email = "code@onyxandiris.online" }]
 license = { text = "MIT" }
